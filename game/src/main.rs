@@ -1,46 +1,73 @@
 extern crate amethyst;
+extern crate amethyst_extra;
+#[macro_use]
+extern crate log;
+extern crate rand;
 
+use amethyst::animation::*;
+use amethyst::assets::*;
+use amethyst::audio::*;
+use amethyst::core::cgmath::{Matrix4, Vector3};
+use amethyst::core::*;
+use amethyst::ecs::*;
+use amethyst::input::*;
 use amethyst::prelude::*;
-use amethyst::input::{is_close_requested, is_key_down}; 
-use amethyst::renderer::{DisplayConfig, DrawFlat, Event, Pipeline, PosNormTex,
-                         RenderBundle, Stage, VirtualKeyCode};
+use amethyst::renderer::mouse::set_mouse_cursor_none;
+use amethyst::renderer::*;
+use amethyst::ui::*;
+use amethyst::Result;
+use amethyst_extra::*;
+use amethyst::utils::scene::BasicScenePrefab;
 
-struct Example;
+use std::env;
 
-impl<'a, 'b> State<GameData<'a, 'b>> for Example {
-    fn handle_event(&mut self, _: StateData<GameData>, event: Event) -> Trans<GameData<'a, 'b>> {
-        if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
-            Trans::Quit
-        } else {
-            Trans::None
-        }
-    }
+mod data;
+mod states;
+mod systems;
+mod utils;
 
-    fn update(&mut self, data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
-        data.data.update(&data.world);
-        Trans::None
-    }
-}
+pub use data::*;
+pub use states::*;
+pub use systems::*;
+pub use utils::*;
 
-fn main() -> Result<(), amethyst::Error> {
+fn main() -> Result<()> {
     amethyst::start_logger(Default::default());
-
-    let path = format!(
-        "{}/resources/display_config.ron",
-        env!("CARGO_MANIFEST_DIR")
+    
+    let asset_loader = AssetLoader::new(
+        &format!("{}/assets", working_dir()).to_string(),
+        "base",
     );
-    let config = DisplayConfig::load(&path);
+    let display_config_path = asset_loader.resolve_path("config/display.ron").unwrap();
+    let key_bindings_path = asset_loader.resolve_path("config/input.ron").unwrap();
 
-    let pipe = Pipeline::build().with_stage(
-        Stage::with_backbuffer()
-            .clear_target([0.00196, 0.23726, 0.21765, 1.0], 1.0)
-            .with_pass(DrawFlat::<PosNormTex>::new()),
-    );
-
-    let game_data = GameDataBuilder::default()
-        .with_bundle(RenderBundle::new(pipe, Some(config)))?;
-    let mut game = Application::build("./", Example)?
-        .build(game_data)?;
-    game.run();
+    let game_data_builder = GameDataBuilder::default()
+        .with_bundle(
+            InputBundle::<String, String>::new().with_bindings_from_file(&key_bindings_path)?
+        )?
+        .with(
+            FollowMouseSystem::<String, String>::default(),
+            "follow_mouse",
+            &[],
+        )
+        .with_bundle(TransformBundle::new().with_dep(&[
+            "follow_mouse",
+        ]))?
+        .with_bundle(UiBundle::<String, String>::new())?
+        .with_bundle(AnimationBundle::<u32, Material>::new(
+            "animation_control_system",
+            "sampler_interpolation_system",
+        ))?
+        .with_bundle(AudioBundle::new(|music: &mut Music| music.music.next()))?
+        .with(PrefabLoaderSystem::<BasicScenePrefab<Vec<PosTex>>>::default(), "", &[])
+        .with(TimedDestroySystem, "timed_destroy", &[])
+        .with(NormalOrthoCameraSystem::default(), "aspect_ratio", &[])
+        .with(VisibilitySortingSystem::new(), "visibility", &["transform_system"])
+        .with_basic_renderer(display_config_path, DrawFlat::<PosTex>::new().with_transparency(ColorMask::all(), ALPHA, None), true)?;
+    let resources_directory = format!("");
+    Application::build(resources_directory, TestState)?
+        .with_resource(asset_loader)
+        .build(game_data_builder)?
+        .run();
     Ok(())
 }
