@@ -15,9 +15,9 @@ use amethyst::prelude::*;
 use amethyst::renderer::mouse::set_mouse_cursor_none;
 use amethyst::renderer::*;
 use amethyst::ui::*;
+use amethyst::utils::scene::BasicScenePrefab;
 use amethyst::Result;
 use amethyst_extra::*;
-use amethyst::utils::scene::BasicScenePrefab;
 
 use std::env;
 
@@ -33,37 +33,50 @@ pub use utils::*;
 
 fn main() -> Result<()> {
     amethyst::start_logger(Default::default());
-    
-    let asset_loader = AssetLoader::new(
-        &format!("{}/assets", get_working_dir()).to_string(),
-        "base",
-    );
+
+    let asset_loader =
+        AssetLoader::new(&format!("{}/assets", get_working_dir()).to_string(), "base");
     let display_config_path = asset_loader.resolve_path("config/display.ron").unwrap();
     let key_bindings_path = asset_loader.resolve_path("config/input.ron").unwrap();
 
+    let config = DisplayConfig::load(&display_config_path);
+
+    let pipe = Pipeline::build().with_stage(
+        Stage::with_backbuffer()
+            .clear_target([1.0, 0.0, 0.0, 1.0], 1.0)
+            .with_pass(DrawFlat::<PosTex>::new().with_transparency(ColorMask::all(), ALPHA, None)),
+    );
+
     let game_data_builder = GameDataBuilder::default()
         .with_bundle(
-            InputBundle::<String, String>::new().with_bindings_from_file(&key_bindings_path)?
+            InputBundle::<String, String>::new().with_bindings_from_file(&key_bindings_path)?,
         )?
         .with(
             FollowMouseSystem::<String, String>::default(),
             "follow_mouse",
             &[],
         )
-        .with_bundle(TransformBundle::new().with_dep(&[
-            "follow_mouse",
-        ]))?
+        .with_bundle(TransformBundle::new().with_dep(&["follow_mouse"]))?
         .with_bundle(UiBundle::<String, String>::new())?
         .with_bundle(AnimationBundle::<u32, Material>::new(
             "animation_control_system",
             "sampler_interpolation_system",
         ))?
-        .with_bundle(AudioBundle::new(|music: &mut Music| music.music.next()))?
-        .with(PrefabLoaderSystem::<BasicScenePrefab<Vec<PosTex>>>::default(), "", &[])
+        .with_bundle(AudioBundle::new(|_: &mut Time| None))?
+        .with(
+            PrefabLoaderSystem::<BasicScenePrefab<Vec<PosTex>>>::default(),
+            "",
+            &[],
+        )
         .with(TimedDestroySystem, "timed_destroy", &[])
         .with(NormalOrthoCameraSystem::default(), "aspect_ratio", &[])
-        .with(VisibilitySortingSystem::new(), "visibility", &["transform_system"])
-        .with_basic_renderer(display_config_path, DrawFlat::<PosTex>::new().with_transparency(ColorMask::all(), ALPHA, None), true)?;
+        .with(
+            VisibilitySortingSystem::new(),
+            "visibility",
+            &["transform_system"],
+        )
+        .with_bundle(RenderBundle::new(pipe, Some(config)))?;
+
     let resources_directory = format!("");
     Application::build(resources_directory, TestState)?
         .with_resource(asset_loader)

@@ -5,7 +5,6 @@ authors = ["The Amethyst team for Ludum Dare 42"]
 
 [dependencies]
 amethyst = { path = "../amethyst", features = ["nightly"] }
-amethyst-extra = { path = "../amethyst-extra"}
-#amethyst-extra = { git = "https://github.com/jojolepro/amethyst-extra" }
+amethyst-extra = { path = "../amethyst-extra" }
 log = "0.4.3"
 rand = "0.5.5"
