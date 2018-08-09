@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Opening (and closing!) a window - Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html" class="active"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="pong_tutorial/pong_tutorial_01.html#opening-and-closing-a-window" id="opening-and-closing-a-window"><h1>Opening (and closing!) a window</h1></a>
+<p>Let's start a new project:</p>
+<p><code>amethyst new pong</code></p>
+<p>If you run this project with <code>cargo run</code>, you'll end up with a window titled
+&quot;pong&quot; that renders a really delightful shade of green. Press <code>Esc</code> to quit. If
+you're having trouble getting the project to run, double check the
+<a href="./getting_started.html">Getting Started</a> guide.</p>
+<p>We've opened and closed a window, so we're basically done! But let's write this
+functionality ourselves so we're sure we know what's going on.</p>
+<p>In <code>src</code> there's a <code>main.rs</code> file. Delete everything, then add these imports:</p>
+<pre><code class="language-rust ignore">extern crate amethyst;
+
+use amethyst::prelude::*;
+use amethyst::input::{is_close_requested, is_key};
+use amethyst::renderer::{DisplayConfig, DrawFlat, Event, KeyboardInput,
+                         Pipeline, PosTex, RenderBundle, Stage,
+                         VirtualKeyCode, WindowEvent};
+</code></pre>
+<p>We'll be learning more about these as we go through this tutorial. The prelude
+includes the basic (and most important) types like <code>Application</code>, <code>World</code>, and
+<code>State</code>.</p>
+<p>Now we create our core game struct:</p>
+<pre><code class="language-rust ignore">pub struct Pong;
+</code></pre>
+<p>We'll be implementing the <a href="https://www.amethyst.rs/doc/master/doc/amethyst/trait.State.html"><code>State</code></a> trait on this struct, which is used by
+Amethyst's state machine to start, stop, and update the game. But for now we'll
+just implement two methods:</p>
+<pre><code class="language-rust ignore">impl&lt;'a, 'b&gt; State&lt;GameData&lt;'a, 'b&gt;&gt; for Pong {
+    fn handle_event(&amp;mut self, _: StateData&lt;GameData&gt;, event: Event) -&gt; Trans&lt;GameData&lt;'a, 'b&gt;&gt; {
+        if is_close_requested(&amp;event) || is_key(&amp;event, VirtualKeyCode::Escape) {
+            Trans::Quit
+        } else {
+            Trans::None
+        }
+    }
+
+    fn update(&amp;mut self, data: StateData&lt;GameData&gt;) -&gt; Trans&lt;GameData&lt;'a, 'b&gt;&gt; {
+        data.data.update(&amp;data.world);
+        Trans::None
+    }
+}
+</code></pre>
+<p>The <code>handle_event</code> method is executed for every event before updating, and it's
+used to react to events. It returns a <code>Trans</code>, which is an enum of state machine
+transitions. In this case, we're watching for the Escape keycode, and the
+<code>CloseRequested</code> event from the Window. If we receive it, we'll return
+<code>Trans::Quit</code> which will be used to clean up the <code>State</code> and close the application.
+All other keyboard input is ignored or now.</p>
+<p>The <code>update</code> method is executed after events have happened.  In this instance
+we're just using it to execute our dispatcher.  More on that later.</p>
+<p>Now that we know we can quit, let's add some code to actually get things
+started! We'll start with our <code>main</code> function, and we'll have it return a
+<code>Result</code> so that we can use <code>?</code>. This will allow us to automatically exit
+if any errors occur during setup.</p>
+<pre><code class="language-rust ignore">fn main() -&gt; amethyst::Result&lt;()&gt; {
+
+    // We'll put the rest of the code here.
+
+    Ok(())
+}
+</code></pre>
+<p>Inside <code>main()</code> we first define a path for our display_config.ron file and load it.</p>
+<pre><code class="language-rust ignore">let path = &quot;./resources/display_config.ron&quot;;
+
+let config = DisplayConfig::load(&amp;path);
+</code></pre>
+<p>This .ron file was automatically generated by <code>amethyst new</code>. If you didn't use
+<code>amethyst new</code>, now would be a good time to create this config file inside a
+folder named resources. If you already have this file, we have some changes to
+make, anyway:</p>
+<pre><code class="language-rust ignore">(
+  title: &quot;Pong!&quot;,
+  dimensions: Some((500, 500)),
+  max_dimensions: None,
+  min_dimensions: None,
+  fullscreen: false,
+  multisampling: 0,
+  visibility: true,
+  vsync: true,
+)
+</code></pre>
+<p>This will set the default window dimensions to 500 x 500, and make the title bar
+say &quot;Pong!&quot; instead of the sad, lowercase default of &quot;pong&quot;.</p>
+<p>Now, back inside our <code>main()</code> function in main.rs, let's copy and paste some
+rendering code so we can keep moving. We'll cover rendering in more depth later
+in this tutorial.</p>
+<pre><code class="language-rust ignore">let pipe = Pipeline::build().with_stage(
+    Stage::with_backbuffer()
+        .clear_target([0.0, 0.0, 0.0, 1.0], 1.0)
+        .with_pass(DrawFlat::&lt;PosTex&gt;::new()),
+);
+</code></pre>
+<p>The important thing to know right now is that this renders a black background.
+If you want a different color you can tweak the RGBA values inside the
+<code>.clear_target</code> method. Values range from 0.0 to 1.0, so to get that cool green
+color we started with back, for instance, you can try
+<code>[0.00196, 0.23726, 0.21765, 1.0]</code>.</p>
+<p>Now let's pack everything up and run it:</p>
+<pre><code class="language-rust ignore">let game_data = GameDataBuilder::default().with_bundle(RenderBundle::new(pipe, Some(config)))?;
+let mut game = Application::new(&quot;./&quot;, Pong, game_data)?;
+game.run();
+Ok(())
+</code></pre>
+<p>We've discovered Amethyst's root object: <a href="https://www.amethyst.rs/doc/master/doc/amethyst/struct.Application.html">Application</a>. It binds the OS
+event loop, state machines, timers and other core components in a central place.
+Here we're creating a new <code>RenderBundle</code>, adding the <code>Pipeline</code> we created,
+along with our config, and building. There is also a helper function
+<code>with_basic_renderer</code> on <code>GameDataBuilder</code> that you can use to create your
+<code>Pipeline</code> and <code>RenderBundle</code>, that performs most of the actions above. In the
+full <code>pong</code> example in the <code>Amethyst</code> repository that function is used instead.</p>
+<p>Then we call <code>.run()</code> on <code>game</code> which begins the gameloop. The game will
+continue to run until our <code>State</code> returns <code>Trans::Quit</code>, or when all states have
+been popped off the state machine's stack.</p>
+<p>Finally, let's create an <code>img</code> folder in the root of the project. This
+will contain the <a href="./images/pong_tutorial/pong_spritesheet.png">spritesheet texture</a> <code>pong_spritesheet.png</code> we will need
+to render the elements of the game.</p>
+<p>Success! Now we should be able to compile and run this code and get a window.
+It should look something like this:</p>
+<p><img src="./images/pong_tutorial/pong_01.png" alt="Step one" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="pong_tutorial.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="pong_tutorial/pong_tutorial_02.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="pong_tutorial.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="pong_tutorial/pong_tutorial_02.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

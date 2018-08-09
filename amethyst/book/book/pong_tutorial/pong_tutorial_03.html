@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Moving the paddles - Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html" class="active"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="pong_tutorial/pong_tutorial_03.html#moving-the-paddles" id="moving-the-paddles"><h1>Moving the paddles</h1></a>
+<p>In the previous chapter, we learned about the relationship between entities and
+components, and how they represent the &quot;things&quot; in our games. This chapter
+introduces Systems - the S in &quot;ECS&quot;. Systems are objects that represent
+operations over entities, or more specifically, combinations of components.
+Let's add a system that moves the paddles based on user input.</p>
+<p>A system is nothing more than a function that runs once each frame and
+potentially makes some changes to components. If you've used other game
+engines, this probably sounds familiar: Unity engine calls these objects
+<code>MonoBehaviour</code>s and Unreal engine calls them <code>Actor</code>s, but these all represent
+the same basic idea.</p>
+<p>Systems in specs/Amethyst are slightly different. Rather than describe the
+behavior of a single instance (eg, a single enemy in your game), they describe
+the behavior of all components of a specific type (all enemies). This makes
+your code more modular, easier to test, and makes it run faster.</p>
+<p>Let's get started.</p>
+<a class="header" href="pong_tutorial/pong_tutorial_03.html#capturing-user-input" id="capturing-user-input"><h2>Capturing user input</h2></a>
+<p>To capture user input, we'll need to introduce a few more files to our game.
+Let's start by creating a resource file under the <code>resources</code> directory of our
+project, called <code>bindings_config.ron</code>:</p>
+<pre><code class="language-ron ignore">(
+  axes: {
+    &quot;left_paddle&quot;: (pos: Key(W), neg: Key(S)),
+    &quot;right_paddle&quot;: (pos: Key(Up), neg: Key(Down)),
+  },
+  actions: {},
+)
+</code></pre>
+<p>In Amethyst, inputs can be either scalar inputs (a button that is either
+pressed or not), or axes (a range that relates two buttons as opposite
+ends of a range). In this file, we're creating two axes: W and S will move the
+left paddle up and down, and the Up and Down arrow keys will move the right
+paddle up and down.</p>
+<p>Next, we'll add an input bundle to the game's <code>Application</code> object, that
+contains an input handler system which captures inputs and maps them to the
+axes we defined. Let's make the following changes to <code>main.rs</code>.</p>
+<pre><code class="language-rust ignore">use amethyst::input::InputBundle;
+
+let binding_path = format!(
+    &quot;{}/resources/bindings_config.ron&quot;,
+    env!(&quot;CARGO_MANIFEST_DIR&quot;)
+);
+
+let input_bundle = InputBundle::&lt;String, String&gt;::new().with_bindings_from_file(binding_path);
+
+let game_data = GameDataBuilder::default()
+    .with_bundle(TransformBundle::new())?
+    .with_bundle(RenderBundle::new(pipe, Some(config)))?
+    .with_bundle(input_bundle)?;
+let mut game = Application::new(&quot;./&quot;, Pong, game_data)?;
+game.run();
+</code></pre>
+<p>At this point, we're ready to write a system that reads input from the
+<code>InputHandler</code>, and moves the paddles accordingly. First, we'll create a
+directory called <code>systems</code> under <code>src</code> to hold all our systems. We'll use a
+module to collect and export each of our systems to the rest of the
+application. Here's our <code>mod.rs</code> for <code>src/systems</code>:</p>
+<pre><code class="language-rust ignore">mod paddle;
+
+pub use self::paddle::PaddleSystem;
+</code></pre>
+<p>We're finally ready to implement the <code>PaddleSystem</code>:</p>
+<pre><code class="language-rust ignore">use amethyst::core::transform::components::Transform;
+use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
+use amethyst::input::InputHandler;
+use pong::{Paddle, Side};
+
+pub struct PaddleSystem;
+
+impl&lt;'s&gt; System&lt;'s&gt; for PaddleSystem {
+  type SystemData = (
+    WriteStorage&lt;'s, Transform&gt;,
+    ReadStorage&lt;'s, Paddle&gt;,
+    Read&lt;'s, InputHandler&lt;String, String&gt;&gt;,
+  );
+
+  fn run(&amp;mut self, (mut transforms, paddles, input): Self::SystemData) {
+    for (paddle, transform) in (&amp;paddles, &amp;mut transforms).join() {
+      let movement = match paddle.side {
+        Side::Left =&gt; input.axis_value(&quot;left_paddle&quot;),
+        Side::Right =&gt; input.axis_value(&quot;right_paddle&quot;),
+      };
+      if let Some(mv_amount) = movement {
+        if mv_amount != 0.0 {
+          let side_name = match paddle.side {
+            Side::Left =&gt; &quot;left&quot;,
+            Side::Right =&gt; &quot;right&quot;,
+          };
+          println!(&quot;Side {:?} moving {}&quot;, side_name, mv_amount);
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Note: We had to make our Paddle and Side public in <code>pong.rs</code></p>
+<p>Now lets add this system to our <code>ApplicationBuilder</code> in <code>main.rs</code>:</p>
+<pre><code class="language-rust ignore">mod systems;
+
+// in the run() function
+let mut game = Application::build(&quot;./&quot;, Pong)?
+    .with_bundle(TransformBundle::new())?
+    .with_bundle(RenderBundle::new(pipe, Some(config)))?
+    .with_bundle(input_bundle)?
+    .with(systems::PaddleSystem, &quot;paddle_system&quot;, &amp;[&quot;input_system&quot;])
+    .build()?;
+</code></pre>
+<p>Take a look at the <code>with</code> method call. Here, we're not adding a bundle, we're adding
+a system alone. We provide an instance of the system, a string representing its name
+and a list of dependencies. The dependencies are the names of the systems that
+must be ran before our newly added system. Here, we require the <code>input_system</code> to be
+ran as we will use the user's input to move the paddles, so we need to have this
+data be prepared.</p>
+<p>Back in <code>paddle.rs</code>, let's review what our system does, because there's quite a bit there.</p>
+<p>We create a unit struct, called <code>PaddleSystem</code>, and implement the <code>System</code>
+trait for it. The trait specifies the lifetime of the components on which it
+operates. Inside the implementation, we define the <code>SystemData</code> the system
+operates on, a tuple of <code>WriteStorage</code>, <code>ReadStorage</code>, and <code>Read</code>. More
+specifically, the generic types we've used here tell us that the <code>PaddleSystem</code>
+mutates <code>LocalTransform</code> components, <code>WriteStorage&lt;'s, LocalTransform&gt;</code>, it
+reads <code>Paddle</code> components, <code>ReadStorage&lt;'s, Paddle&gt;</code>, and also accesses the
+<code>InputHandler&lt;String, String&gt;</code> resource we created earlier, using the <code>Read</code>
+structure.</p>
+<p>Then, now that we have access to the storages of the components we want, we can
+iterate over them. We perform a join operation between the <code>Transform</code> and <code>Paddle</code>
+storages. This will iterate over all entities that have both a <code>Paddle</code> and <code>Transform</code>
+attached to them, and give us access to the actual components, immutably for the
+<code>Paddle</code> and mutably for the <code>Transform</code>.</p>
+<blockquote>
+<p>There are many other ways to use storages. For example, you can use them to get
+a reference to the component of a specific type held by an entity, or simply
+iterate over them without joining. However in practice, your most common use will
+be to join over multiple storages as it is rare to have a system affect
+only one specific component.</p>
+</blockquote>
+<blockquote>
+<p>Please also note that it is possible to join over storages using multiple threads
+by using <code>par_join</code> instead of <code>join</code>, but here the overhead introduced is not
+worth the gain offered by parallelism.</p>
+</blockquote>
+<a class="header" href="pong_tutorial/pong_tutorial_03.html#modifying-the-transform" id="modifying-the-transform"><h2>Modifying the transform</h2></a>
+<p>If we run the game now, we'll see the console print our keypresses. Let's
+make it update the position of the paddle. To do this, we'll modify the y
+component of the transform's translation.</p>
+<pre><code class="language-rust ignore">  fn run(&amp;mut self, (mut transforms, paddles, input): Self::SystemData) {
+    for (paddle, mut transform) in (&amp;paddles, &amp;mut transforms).join() {
+      let movement = match paddle.side {
+        Side::Left =&gt; input.axis_value(&quot;left_paddle&quot;),
+        Side::Right =&gt; input.axis_value(&quot;right_paddle&quot;),
+      };
+      if let Some(mv_amount) = movement {
+        let scaled_amount = 1.2 * mv_amount as f32;
+        transform.translation[1] += scaled_amount;
+      }
+    }
+  }
+</code></pre>
+<p>This is our first attempt at moving the paddles: we take the movement, and
+scale it by some factor to make the motion seem smooth. In a real game, we
+would use the time elapsed between frames to determine how far to move the
+paddle, so that the behavior of the game would not be tied to the game's
+framerate, but this will do for now. If you run the game now, you'll notice
+the paddles are able to &quot;fall&quot; off the edges of the game area.</p>
+<p>To fix this, we'll make sure the paddle's anchor point never gets out of the
+arena. But as the anchor point is in the middle of the sprite, we also need
+to add a margin for the paddle to not go halfway out of the screen.
+Therefore, we will border the y value of the transform from
+<code>ARENA_HEIGHT - PADDLE_HEIGHT * 0.5</code> (the top of the screen but a little bit
+lower) to <code>PADDLE_HEIGHT * 0.5</code> (the bottom of the screen but a little bit higher).</p>
+<p>Our run function should now look something like this:</p>
+<pre><code class="language-rust ignore">  fn run(&amp;mut self, (mut transforms, paddles, input): Self::SystemData) {
+    for (paddle, mut transform) in (&amp;paddles, &amp;mut transforms).join() {
+      let movement = match paddle.side {
+        Side::Left =&gt; input.axis_value(&quot;left_paddle&quot;),
+        Side::Right =&gt; input.axis_value(&quot;right_paddle&quot;),
+      };
+      if let Some(mv_amount) = movement {
+        let scaled_amount = 1.2 * mv_amount as f32;
+        transform.translation[1] = (transform.translation[1] + scaled_amount)
+          .min(ARENA_HEIGHT - PADDLE_HEIGHT * 0.5)
+          .max(PADDLE_HEIGHT * 0.5);
+      }
+    }
+  }
+</code></pre>
+<p>Note: For the above to work, we'll have to mark <code>PADDLE_HEIGHT</code> and <code>ARENA_HEIGHT</code>
+as being public in <code>pong.rs</code>, and then import it in <code>paddle.rs</code>.</p>
+<a class="header" href="pong_tutorial/pong_tutorial_03.html#summary" id="summary"><h2>Summary</h2></a>
+<p>In this chapter, we added an input handler to our game, so that we
+could capture keypresses. We then created a system that would interpret these
+keypresses, and move our game's paddles accordingly. In the next chapter, we'll
+explore another key concept in real-time games: time. We'll make our game aware
+of time, and add a ball for our paddles to bounce back and forth.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="pong_tutorial/pong_tutorial_02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="animation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="pong_tutorial/pong_tutorial_02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="animation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

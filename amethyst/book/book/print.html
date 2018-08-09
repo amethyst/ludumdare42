@@ -1,0 +1,1573 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div style="display:inline-block;width:100%">
+    <img src="./images/amethyst_thumb.png" alt="Logo" width="96px" style="float:left;margin-right:15px"/>
+    <a class="header" href="print.html#the-amethyst-engine" id="the-amethyst-engine"><h1>The Amethyst Engine</h1></a>
+</div>
+<a class="header" href="print.html#presentation" id="presentation"><h2>Presentation</h2></a>
+<p>Howdy! This book will teach you everything you need to know about building video
+games and interactive simulations with the Amethyst game engine. This engine is
+written entirely in <a href="https://www.rust-lang.org/">Rust</a>, a safe and fast systems programming language,
+and sports a clean and modern design. More correctly, though, Amethyst is
+actually a suite of separate libraries and tools that collectively make up a
+game engine.</p>
+<p>Amethyst is free and open source software, distributed under a dual license of <a href="https://github.com/amethyst/amethyst/blob/master/LICENSE-MIT">MIT</a>
+and <a href="https://github.com/amethyst/amethyst/blob/master/LICENSE-APACHE">Apache</a>. This means that the engine is given to you at no cost
+and its source code is completely yours to tinker with. The code is available on
+<a href="https://github.com/amethyst/amethyst/tree/master">GitHub</a>. Contributions and feature requests will always be welcomed!</p>
+<a class="header" href="print.html#getting-started" id="getting-started"><h2>Getting started</h2></a>
+<p>This book is split into three sections (more coming). This page is the first. The others are:</p>
+<ul>
+<li><a href="./getting_started.html">Getting Started</a> – Prepare your computer for Amethyst development.</li>
+<li><a href="./pong_tutorial.html">Pong Tutorial</a> – Build a basic pong game in Rust.</li>
+<li><a href="./glossary.html">Glossary</a> - Defines special terms used throughout the book.</li>
+</ul>
+<p>Read the crate-level <a href="https://www.amethyst.rs/doc/master/doc/amethyst/index.html">API documentation</a> for more details.</p>
+<blockquote>
+<p>Please note that the default github branch is <a href="https://github.com/amethyst/amethyst/">develop</a>, while the documentation in this document is based on the master/release branch.
+The documentation for the develop branch is located <a href="https://www.amethyst.rs/doc/develop/doc/amethyst/index.html">here</a>.</p>
+</blockquote>
+<a class="header" href="print.html#motivation" id="motivation"><h2>Motivation</h2></a>
+<p>Most of us have worked with quite a few game engines over the years, namely <a href="http://unity3d.com/">Unity</a>, <a href="https://www.unrealengine.com/">Unreal Engine</a>, <a href="http://jmonkeyengine.org/">JMonkeyEngine</a> and many more.
+While they all are pretty solid solutions if you want to
+build a quality game, each have their own pros and cons that you have to
+weigh before using them, especially in regards to performance and scalability.</p>
+<p>We think that basing the amethyst engine on good and modern principles will allow us to make an open source game engine that can actually be more performant than those engines.
+Those principles are:</p>
+<ol>
+<li>
+<p>Modularity.</p>
+<p>Modularity is at the core of the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">Unix philosophy</a>, which proved itself to be an excellent way of developing software over the years.
+You will always be free to use the built-in modules, or to write your own and integrate them easily into the engine.
+Since modules are small and well integrated, it is easier to reason about what they do and how they relate to other modules.</p>
+</li>
+<li>
+<p>Parallelism.</p>
+<p>Modern computers, even cheap ones, all have multithread/multicores CPU. With the years, there will be more and more opportunities for parallelism to improve performance.
+With a proper parallel engine, we are convinced that your game will be more and more performant over the years without even needing you to update it.</p>
+</li>
+<li>
+<p>Data-oriented/Data-driven.</p>
+<p>Building your game around the data makes it really easy to prototype and quickly build a game.
+Complex behaviours like swapping assets during gameplay become a breeze, making testing and balancing a lot faster.</p>
+</li>
+</ol>
+<a class="header" href="print.html#contributing" id="contributing"><h2>Contributing</h2></a>
+<p>We are always happy to welcome new contributors!</p>
+<p>If you want to contribute, or have questions, let us know either on <a href="https://github.com/amethyst/amethyst/">GitHub</a> or on <a href="https://gitter.im/amethyst/general/">Gitter</a></p>
+<a class="header" href="print.html#getting-started-1" id="getting-started-1"><h1>Getting started</h1></a>
+<a class="header" href="print.html#setting-up-rust" id="setting-up-rust"><h2>Setting up Rust</h2></a>
+<p>We recommend using <a href="https://rustup.rs">rustup</a> to easily install the latest stable version of rust.
+Instructions should be on screen once rustup is downloaded.</p>
+<a class="header" href="print.html#required-dependencies" id="required-dependencies"><h2>Required dependencies</h2></a>
+<p>If you are on Linux, you'll need to install <code>libasound2-dev</code> and <code>libx11-xcb-dev</code>.</p>
+<a class="header" href="print.html#setting-up-amethyst" id="setting-up-amethyst"><h2>Setting up Amethyst</h2></a>
+<p>You can either use the <a href="https://github.com/amethyst/tools">Amethyst CLI</a> or just cargo to set up your project.
+After executing</p>
+<pre><code>amethyst new game
+</code></pre>
+<p>you should get <code>Cargo.toml</code>, <code>src/main.rs</code> and <code>resources/display_config.ron</code>.
+In case you're doing this with <code>cargo</code>, here's what you need to do:</p>
+<ul>
+<li>Add <code>amethyst</code> as dependency in your <code>Cargo.toml</code>.</li>
+<li>Create a <code>resources</code> folder and put a <code>display_config.ron</code> in it.</li>
+<li>Start with one of the [examples][ex] from the Amethyst repository (e.g. <code>window</code>)
+for the source code. Watch out to use the right example for the version of Amethyst
+you specified in <code>Cargo.toml</code>.</li>
+</ul>
+<p>We don't have any tutorials yet, but there's a <a href="https://gitter.im/amethyst/general">Gitter room</a> where you can
+ask in case you want an explanation for something. If you'd like to help out,
+a tutorial would be much appreciated!</p>
+<a class="header" href="print.html#pong-tutorial" id="pong-tutorial"><h1>Pong Tutorial</h1></a>
+<p>To get a better feeling for how Amethyst works, we're going to implement a
+Pong clone. You can find a <a href="https://github.com/amethyst/amethyst/tree/develop/examples/pong">full Pong example</a> (our end goal) in Amethyst's
+examples folder. This tutorial breaks that project up into discrete steps so
+it's easier to understand what everything is doing. If you've cloned the
+Amethyst repo, you can run any of the examples like so:</p>
+<pre><code>cargo run --example pong_tutorial_01
+</code></pre>
+<p>The main difference between real game code and the example code is where the
+<code>resources</code> and <code>assets</code> folders are located.</p>
+<p>For instance, in the pong_tutorial_01 example we have:</p>
+<pre><code class="language-rust ignore">let path = format!(
+    &quot;{}/examples/pong_tutorial_01/resources/display_config.ron&quot;,
+    env!(&quot;CARGO_MANIFEST_DIR&quot;));
+</code></pre>
+<p>But for your own project you'll probably want something like this:</p>
+<pre><code class="language-rust ignore">let path = &quot;./resources/display_config.ron&quot;;
+</code></pre>
+<a class="header" href="print.html#chapters" id="chapters"><h2>Chapters</h2></a>
+<ul>
+<li><a href="./pong_tutorial/pong_tutorial_01.html">Opening (and closing!) a window</a></li>
+<li><a href="./pong_tutorial/pong_tutorial_02.html">Drawing the paddles</a></li>
+</ul>
+<a class="header" href="print.html#opening-and-closing-a-window" id="opening-and-closing-a-window"><h1>Opening (and closing!) a window</h1></a>
+<p>Let's start a new project:</p>
+<p><code>amethyst new pong</code></p>
+<p>If you run this project with <code>cargo run</code>, you'll end up with a window titled
+&quot;pong&quot; that renders a really delightful shade of green. Press <code>Esc</code> to quit. If
+you're having trouble getting the project to run, double check the
+<a href="./getting_started.html">Getting Started</a> guide.</p>
+<p>We've opened and closed a window, so we're basically done! But let's write this
+functionality ourselves so we're sure we know what's going on.</p>
+<p>In <code>src</code> there's a <code>main.rs</code> file. Delete everything, then add these imports:</p>
+<pre><code class="language-rust ignore">extern crate amethyst;
+
+use amethyst::prelude::*;
+use amethyst::input::{is_close_requested, is_key};
+use amethyst::renderer::{DisplayConfig, DrawFlat, Event, KeyboardInput,
+                         Pipeline, PosTex, RenderBundle, Stage,
+                         VirtualKeyCode, WindowEvent};
+</code></pre>
+<p>We'll be learning more about these as we go through this tutorial. The prelude
+includes the basic (and most important) types like <code>Application</code>, <code>World</code>, and
+<code>State</code>.</p>
+<p>Now we create our core game struct:</p>
+<pre><code class="language-rust ignore">pub struct Pong;
+</code></pre>
+<p>We'll be implementing the <a href="https://www.amethyst.rs/doc/master/doc/amethyst/trait.State.html"><code>State</code></a> trait on this struct, which is used by
+Amethyst's state machine to start, stop, and update the game. But for now we'll
+just implement two methods:</p>
+<pre><code class="language-rust ignore">impl&lt;'a, 'b&gt; State&lt;GameData&lt;'a, 'b&gt;&gt; for Pong {
+    fn handle_event(&amp;mut self, _: StateData&lt;GameData&gt;, event: Event) -&gt; Trans&lt;GameData&lt;'a, 'b&gt;&gt; {
+        if is_close_requested(&amp;event) || is_key(&amp;event, VirtualKeyCode::Escape) {
+            Trans::Quit
+        } else {
+            Trans::None
+        }
+    }
+
+    fn update(&amp;mut self, data: StateData&lt;GameData&gt;) -&gt; Trans&lt;GameData&lt;'a, 'b&gt;&gt; {
+        data.data.update(&amp;data.world);
+        Trans::None
+    }
+}
+</code></pre>
+<p>The <code>handle_event</code> method is executed for every event before updating, and it's
+used to react to events. It returns a <code>Trans</code>, which is an enum of state machine
+transitions. In this case, we're watching for the Escape keycode, and the
+<code>CloseRequested</code> event from the Window. If we receive it, we'll return
+<code>Trans::Quit</code> which will be used to clean up the <code>State</code> and close the application.
+All other keyboard input is ignored or now.</p>
+<p>The <code>update</code> method is executed after events have happened.  In this instance
+we're just using it to execute our dispatcher.  More on that later.</p>
+<p>Now that we know we can quit, let's add some code to actually get things
+started! We'll start with our <code>main</code> function, and we'll have it return a
+<code>Result</code> so that we can use <code>?</code>. This will allow us to automatically exit
+if any errors occur during setup.</p>
+<pre><code class="language-rust ignore">fn main() -&gt; amethyst::Result&lt;()&gt; {
+
+    // We'll put the rest of the code here.
+
+    Ok(())
+}
+</code></pre>
+<p>Inside <code>main()</code> we first define a path for our display_config.ron file and load it.</p>
+<pre><code class="language-rust ignore">let path = &quot;./resources/display_config.ron&quot;;
+
+let config = DisplayConfig::load(&amp;path);
+</code></pre>
+<p>This .ron file was automatically generated by <code>amethyst new</code>. If you didn't use
+<code>amethyst new</code>, now would be a good time to create this config file inside a
+folder named resources. If you already have this file, we have some changes to
+make, anyway:</p>
+<pre><code class="language-rust ignore">(
+  title: &quot;Pong!&quot;,
+  dimensions: Some((500, 500)),
+  max_dimensions: None,
+  min_dimensions: None,
+  fullscreen: false,
+  multisampling: 0,
+  visibility: true,
+  vsync: true,
+)
+</code></pre>
+<p>This will set the default window dimensions to 500 x 500, and make the title bar
+say &quot;Pong!&quot; instead of the sad, lowercase default of &quot;pong&quot;.</p>
+<p>Now, back inside our <code>main()</code> function in main.rs, let's copy and paste some
+rendering code so we can keep moving. We'll cover rendering in more depth later
+in this tutorial.</p>
+<pre><code class="language-rust ignore">let pipe = Pipeline::build().with_stage(
+    Stage::with_backbuffer()
+        .clear_target([0.0, 0.0, 0.0, 1.0], 1.0)
+        .with_pass(DrawFlat::&lt;PosTex&gt;::new()),
+);
+</code></pre>
+<p>The important thing to know right now is that this renders a black background.
+If you want a different color you can tweak the RGBA values inside the
+<code>.clear_target</code> method. Values range from 0.0 to 1.0, so to get that cool green
+color we started with back, for instance, you can try
+<code>[0.00196, 0.23726, 0.21765, 1.0]</code>.</p>
+<p>Now let's pack everything up and run it:</p>
+<pre><code class="language-rust ignore">let game_data = GameDataBuilder::default().with_bundle(RenderBundle::new(pipe, Some(config)))?;
+let mut game = Application::new(&quot;./&quot;, Pong, game_data)?;
+game.run();
+Ok(())
+</code></pre>
+<p>We've discovered Amethyst's root object: <a href="https://www.amethyst.rs/doc/master/doc/amethyst/struct.Application.html">Application</a>. It binds the OS
+event loop, state machines, timers and other core components in a central place.
+Here we're creating a new <code>RenderBundle</code>, adding the <code>Pipeline</code> we created,
+along with our config, and building. There is also a helper function
+<code>with_basic_renderer</code> on <code>GameDataBuilder</code> that you can use to create your
+<code>Pipeline</code> and <code>RenderBundle</code>, that performs most of the actions above. In the
+full <code>pong</code> example in the <code>Amethyst</code> repository that function is used instead.</p>
+<p>Then we call <code>.run()</code> on <code>game</code> which begins the gameloop. The game will
+continue to run until our <code>State</code> returns <code>Trans::Quit</code>, or when all states have
+been popped off the state machine's stack.</p>
+<p>Finally, let's create an <code>img</code> folder in the root of the project. This
+will contain the <a href="./images/pong_tutorial/pong_spritesheet.png">spritesheet texture</a> <code>pong_spritesheet.png</code> we will need
+to render the elements of the game.</p>
+<p>Success! Now we should be able to compile and run this code and get a window.
+It should look something like this:</p>
+<p><img src="./images/pong_tutorial/pong_01.png" alt="Step one" /></p>
+<a class="header" href="print.html#drawing-the-paddles" id="drawing-the-paddles"><h1>Drawing the paddles</h1></a>
+<p>Now let's do some drawing! But to draw something, we need something to draw. In
+Amethyst, those &quot;somethings&quot; are called Entities, which are described by
+Components.</p>
+<p>Amethyst uses Specs for its ECS (Entity-component system), which is a parallel
+Entity-component system written in Rust. You can learn more about Specs in the
+<a href="https://slide-rs.github.io/specs/">The Specs Book</a>. Here's a basic explanation of ECS from there:</p>
+<blockquote>
+<p>The term ECS is a shorthand for Entity-component system. These are the three
+core concepts. Each entity is associated with some components. Those entities
+and components are processed by systems. This way, you have your data
+(components) completely separated from the behaviour (systems). An entity just
+logically groups components; so a Velocity component can be applied to the
+Position component of the same entity.</p>
+</blockquote>
+<p>I recommend at least skimming the rest of The Specs Book to get a good intuition
+of how Amethyst works, especially if you're new to ECS.</p>
+<a class="header" href="print.html#a-quick-refactor" id="a-quick-refactor"><h2>A quick refactor</h2></a>
+<p>Let's create a new file called <code>pong.rs</code> to hold our core game logic. We can
+move the <code>Pong</code> struct over here, and the <code>impl State for Pong</code> block as well.
+Then, in <code>main.rs</code> declare a module:</p>
+<pre><code class="language-rust ignore">mod pong;
+</code></pre>
+<p>And in the <code>run()</code> function add:</p>
+<pre><code class="language-rust ignore">use pong::Pong;
+</code></pre>
+<p>Now you can just delete various <code>main.rs</code> use statements until the Rust compiler
+stops complaining about unused imports. In <code>pong.rs</code> we'll need these use
+statements to make it through this chapter:</p>
+<pre><code class="language-rust ignore">use amethyst::assets::{AssetStorage, Loader};
+use amethyst::core::cgmath::{Vector3, Matrix4};
+use amethyst::core::transform::{GlobalTransform, Transform};
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
+use amethyst::input::{is_close_requested, is_key};
+use amethyst::prelude::*;
+use amethyst::renderer::{
+    Camera, Event, PngFormat, Projection, Sprite, Texture, TextureHandle,
+    VirtualKeyCode, WithSpriteRender,
+};
+</code></pre>
+<a class="header" href="print.html#get-around-the-world" id="get-around-the-world"><h2>Get around the World</h2></a>
+<p>First, in <code>pong.rs</code>, let's add a new method to our State implementation: <code>on_start</code>.
+This method is called, as you probably guessed, on the start of the State.
+We will leave it empty for now, but it will become useful later down the line.</p>
+<pre><code class="language-rust ignore">fn on_start(&amp;mut self, data: StateData&lt;GameData&gt;) {
+
+}
+</code></pre>
+<p>The <code>StateData&lt;GameData&gt;</code> is a structure given to all State methods. The important
+part of its content here is its <code>world</code> field.</p>
+<p>The <code>World</code> structure gets passed around everywhere. It carries with it all the
+elements of the runtime of our game: entities, components and systems.
+Remember when we added bundles in our <code>main.rs</code>, they were in fact adding
+all the systems they were holding inside the <code>World</code> before we actually
+ran the game.</p>
+<a class="header" href="print.html#look-at-your-game-through-the-camera" id="look-at-your-game-through-the-camera"><h2>Look at your game through the Camera</h2></a>
+<p>The first thing we will need in our game is a Camera. This is the component
+that will determine what is rendered on screen. It behaves just like a
+real life camera: it records a specific part of the world and can be
+moved around at will.</p>
+<p>First, let's define some constants:</p>
+<pre><code class="language-rust ignore">const ARENA_HEIGHT: f32 = 100.0;
+const ARENA_WIDTH: f32 = 100.0;
+</code></pre>
+<p>These constants will determine the size of our arena.
+So, as we're making a pong game, we want to create a camera that will cover
+the entire arena. Let's do it!</p>
+<pre><code class="language-rust ignore">fn initialise_camera(world: &amp;mut World) {
+    world.create_entity()
+        .with(Camera::from(Projection::orthographic(
+            0.0,
+            ARENA_WIDTH,
+            ARENA_HEIGHT,
+            0.0,
+        )))
+        .with(GlobalTransform(
+            Matrix4::from_translation(Vector3::new(0.0, 0.0, 1.0)).into()
+        ))
+        .build();
+}
+</code></pre>
+<p>We create an entity that will carry our camera,
+that we the create from an orthographic projection of the size of our
+arena (as we want it to cover it all). Ignore the <code>GlobalTransform</code> for now,
+we'll deal with it in more details later on.
+Note that we flipped the direction of the verical dimension by specifying
+<code>ARENA_HEIGHT</code> as the bottom. This is because by default bottom means
+the upper part of the screen, so here it will feel more natural to work with.</p>
+<blockquote>
+<p>Orthographic projections are a type of 3D visualization on 2D screens
+that keeps the size ratio of the 2D images displayed intact, very useful in
+games without actual 3D like our pong example. Perspective projections
+are another way of displaying graphics, more useful in 3D scenes.</p>
+</blockquote>
+<a class="header" href="print.html#our-first-component" id="our-first-component"><h2>Our first Component</h2></a>
+<p>In <code>pong.rs</code> let's create our first <code>Component</code>, a definition of a paddle.</p>
+<pre><code class="language-rust ignore">#[derive(PartialEq, Eq)]
+enum Side {
+    Left,
+    Right,
+}
+
+struct Paddle {
+    pub side: Side,
+    pub width: f32,
+    pub height: f32,
+}
+
+impl Paddle {
+    fn new(side: Side) -&gt; Paddle {
+        Paddle {
+            side: side,
+            width: 1.0,
+            height: 1.0,
+        }
+    }
+}
+</code></pre>
+<p>&quot;But that just looks like a regular struct!&quot; you might say. And you're right,
+here's the special sauce:</p>
+<pre><code class="language-rust ignore">impl Component for Paddle {
+    type Storage = DenseVecStorage&lt;Self&gt;;
+}
+</code></pre>
+<p>By implementing <code>Component</code> for our <code>Paddle</code> struct, and defining the way we'd
+like that <code>Component</code> data stored, we can now add the <code>Paddle</code> component to
+entities in our game. For more on storage types, check out the
+<a href="https://slide-rs.github.io/specs/05_storages.html#densevecstorage">Specs documentation</a>.</p>
+<a class="header" href="print.html#initialise-some-entities" id="initialise-some-entities"><h2>Initialise some entities</h2></a>
+<p>Now that we have a Paddle component, let's define some paddle entities that
+include that component and add them to our <code>World</code>.</p>
+<p>First let's look at our math imports:</p>
+<pre><code class="language-rust ignore">use amethyst::core::cgmath::{Vector3, Matrix4};
+use amethyst::core::transform::{GlobalTransform, Transform};
+</code></pre>
+<p>Amethyst uses the <a href="https://docs.rs/cgmath/0.15.0/cgmath/">cgmath crate</a> under the hood and exposes it for our use.
+Today we just grabbed the <code>Vector3</code> type, which is a very good math thing to have.
+(we also grabbed <code>Matrix4</code> for the <code>GlobalTransform</code> earlier, but we won't use it here)</p>
+<p><code>Transform</code> and <code>GlobalTransform</code> are Amethyst ECS components which carry
+position and orientation information. <code>Transform</code> is relative
+to a parent if one exists, while <code>GlobalTransform</code> is, well, global.</p>
+<p>Let's also define some constants for convenience:</p>
+<pre><code class="language-rust ignore">const PADDLE_HEIGHT: f32 = 16.0;
+const PADDLE_WIDTH: f32 = 4.0;
+</code></pre>
+<p>Okay, let's make some entities! We'll define an <code>initialise_paddles</code> function
+which will create left and right paddle entities and attach <code>Transform</code>
+components to them to position them in our world. As we defined earlier,
+our canvas is from <code>0.0</code> to <code>ARENA_WIDTH</code> in the horizontal dimension and
+from <code>0.0</code> to <code>ARENA_HEIGHT</code> in the vertical dimension.
+Keep in mind that the anchor point of our entities will be in the middle of the
+image we will want to render on top of them. This is a good rule to follow in
+general as it makes operations like rotation easier.</p>
+<pre><code class="language-rust ignore">/// Initialises one paddle on the left, and one paddle on the right.
+fn initialise_paddles(world: &amp;mut World) {
+    let mut left_transform = Transform::default();
+    let mut right_transform = Transform::default();
+
+    // Correctly position the paddles.
+    let y = ARENA_HEIGHT / 2.0;
+    left_transform.translation = Vector3::new(PADDLE_WIDTH * 0.5, y, 0.0);
+    right_transform.translation = Vector3::new(ARENA_WIDTH - PADDLE_WIDTH * 0.5, y, 0.0);
+
+    // Create a left plank entity.
+    world
+        .create_entity()
+        .with(Paddle::new(Side::Left))
+        .with(GlobalTransform::default())
+        .with(left_transform)
+        .build();
+
+    // Create right plank entity.
+    world
+        .create_entity()
+        .with(Paddle::new(Side::Right))
+        .with(GlobalTransform::default())
+        .with(right_transform)
+        .build();
+}
+</code></pre>
+<p>This is all the information Amethyst needs to track and move the paddles in our
+virtual world, but we'll need to do some more work to actually <em>draw</em> them.</p>
+<a class="header" href="print.html#drawing" id="drawing"><h2>Drawing</h2></a>
+<p>The first thing we will have to do is load the sprite sheet we will use for all our
+graphics in the game. Here, it is located in <code>assets/img/pong_spritesheet.png</code>.
+We will perform the loading in the <code>on_start</code> method.</p>
+<pre><code class="language-rust ignore">let world = data.world;
+
+// Load the spritesheet necessary to render the graphics.
+let spritesheet = {
+    let loader = world.read_resource::&lt;Loader&gt;();
+    let texture_storage = world.read_resource::&lt;AssetStorage&lt;Texture&gt;&gt;();
+    loader.load(
+        &quot;img/pong_spritesheet.png&quot;,
+        PngFormat,
+        Default::default(),
+        (),
+        &amp;texture_storage,
+    )
+};
+</code></pre>
+<p>The <code>Loader</code> is an asset loader which is defined as a <code>resource</code> (not a <code>Entity</code>
+, <code>Component</code>, or <code>System</code>, but still a part of our ECS <code>world</code>). It was created
+when we built our Application in <code>main.rs</code>, and it can read assets like .obj
+files, but also it can <code>load</code> a .png as a <code>Texture</code> as in our use case.</p>
+<blockquote>
+<p>Resources in Specs are a type of data which can be shared between systems,
+while being independent from entities, in contrast to components, which are
+attached to specific entities. We'll explore this more later on.</p>
+</blockquote>
+<p>The <code>AssetStorage&lt;Texture&gt;</code> is also a <code>resource</code>, this is where the loader will
+put the <code>Texture</code> it will load from our sprite sheet. In order to manage them
+while remaining fast, Amethyst does not give us direct access to the assets we load.
+If it did otherwise, we would have to wait for the texture to be fully loaded to do all the
+other things we have to prepare, which would be a waste of time!
+Instead, the <code>load</code> function will return a <code>Handle&lt;Texture&gt;</code> (also known as <code>TextureHandle</code>).
+This handle &quot;points&quot; to the place where the asset will be loaded. In Rust terms, it is
+equivalent to a reference-counted option. It is extremely useful, especially as cloning
+the handle does not clone the asset in memory, so many things can use the same asset at once.</p>
+<p>Now that we have a handle to our sprite sheet's texture, we can communicate it to our
+<code>initialise_paddle</code> function by changing its signature to:</p>
+<pre><code class="language-rust ignore">fn initialise_paddles(world: &amp;mut World, spritesheet: TextureHandle)
+</code></pre>
+<p>We now need to define what part of the spritesheet we want to render.
+To do that, we need to create a <code>Sprite</code>, which is a fancy name to call a rectangle on
+the sprite sheet, before the creation of the entities. This is dead simple:</p>
+<pre><code class="language-rust ignore">// Build the sprite for the paddles.
+let sprite = Sprite {
+    left: 0.0,
+    right: PADDLE_WIDTH,
+    top: 0.0,
+    bottom: PADDLE_HEIGHT,
+};
+</code></pre>
+<p>Here, we take the rectangle from <code>(0.0 ; 0.0)</code> to <code>(PADDLE_WIDTH ; PADDLE_HEIGHT)</code>
+on the sprite sheet to be displayed.</p>
+<p>Then, using the <code>WithSpriteRender</code> trait, we can easily modify our
+entity creation code to have the entities display the sprite.</p>
+<pre><code class="language-rust ignore">const SPRITESHEET_SIZE: (f32, f32) = (8.0, 16.0);
+
+// Create a left plank entity.
+world
+    .create_entity()
+    .with_sprite(&amp;sprite, spritesheet.clone(), SPRITESHEET_SIZE)
+    .expect(&quot;Failed to add sprite render on left paddle&quot;)
+    .with(Paddle::new(Side::Left))
+    .with(GlobalTransform::default())
+    .with(left_transform)
+    .build();
+
+// Create right plank entity.
+world
+    .create_entity()
+    .with_sprite(&amp;sprite, spritesheet, SPRITESHEET_SIZE)
+    .expect(&quot;Failed to add sprite render on right paddle&quot;)
+    .with(Paddle::new(Side::Right))
+    .with(GlobalTransform::default())
+    .with(right_transform)
+    .build();
+</code></pre>
+<p>Please note that we need to manually specify the size of our sprite sheet.
+This is because if we happened to add our sprite to the entity while the
+sprite sheet is not loaded yet, there would be no way for the renderer to
+get the size of the texture it needs to do its magic.</p>
+<blockquote>
+<p>Behind the scene, the <code>with_sprite</code> method adds <code>Mesh</code> and <code>Material</code>
+components to your entity. It is a utility function to spare you from
+the rendering details, but Amethyst can expose all the precision of
+the rendering process if you need it. Many utility functions like this
+exist in Amethyst to make prototyping easier.</p>
+</blockquote>
+<blockquote>
+<p>Here, we are using the <code>with_sprite</code> utility twice for the same sprite.
+Keep in mind however that <a href="#">another syntax exists</a> when we need multiple
+entities to display the exact same sprite, that leads to improved performance.
+Here, however, it is negligible.</p>
+</blockquote>
+<p>Now let's add our initialise functions to the <code>on_start</code> function in <code>impl State for Pong</code>. It now looks like this:</p>
+<pre><code class="language-rust ignore">fn on_start(&amp;mut self, data: StateData&lt;GameData&gt;) {
+    let world = data.world;
+
+    // Load the spritesheet necessary to render the graphics.
+    let spritesheet = {
+        let loader = world.read_resource::&lt;Loader&gt;();
+        let texture_storage = world.read_resource::&lt;AssetStorage&lt;Texture&gt;&gt;();
+        loader.load(
+            &quot;img/pong_spritesheet.png&quot;,
+            PngFormat,
+            Default::default(),
+            (),
+            &amp;texture_storage,
+        )
+    };
+
+    initialise_paddles(world, spritesheet);
+    initialise_camera(world);
+}
+</code></pre>
+<p>Okay! We've defined our <code>Paddle</code> component, and created two entities which have
+a <code>Paddle</code> component, a <code>GlobalTransform</code> component and a sprite. When our game
+starts, we'll add the left and right paddles to the world, along with a camera.</p>
+<p>Before we continue, one last note.
+Components do not have to be registered manually to be used, however you need to have
+something that uses them to have them be registered automatically.
+As nothing uses our <code>Paddle</code> component yet, we will register it manually before we intialise
+our paddles in the <code>on_start</code> method by calling:</p>
+<pre><code class="language-rust ignore">world.register::&lt;Paddle&gt;();
+</code></pre>
+<p>And we're done.
+Let's run our game and have fun for days!</p>
+<pre><code>thread 'main' panicked at 'Tried to fetch a resource, but the resource does not exist.
+Try adding the resource by inserting it manually or using the `setup` method.
+</code></pre>
+<p>Ah, oops. We forgot something.</p>
+<p>Amethyst has a lot of internal systems it uses to keep things running we need to bring
+into the context of the <code>World</code>. For simplicity, these have been wrapped up into &quot;Bundles&quot;
+which include related systems and resources. We can add these to our Application using the
+<code>with_bundle</code> method, and in fact we already have one of these in <code>main.rs</code>: the <code>RenderBundle</code>.</p>
+<p>As it turns out, the system we're missing is <code>TransformSystem</code>, and we can add it with the
+<code>TransformBundle</code>.</p>
+<pre><code class="language-rust ignore">let mut game = Application::build(&quot;./&quot;, Pong)?
+    .with_bundle(TransformBundle::new())? // Add this bundle
+    .with_bundle(RenderBundle::new(pipe, Some(config)))?
+    .build()?;
+</code></pre>
+<p>Also we'll need to import that structure:</p>
+<pre><code class="language-rust ignore">use amethyst::core::transform::TransformBundle;
+</code></pre>
+<p>Now when we run the game we should get something that looks like this:</p>
+<p><img src="./images/pong_tutorial/pong_02.png" alt="Step two" /></p>
+<p>In the next chapter we'll explore the &quot;S&quot; in ECS and actually get these paddles
+moving!</p>
+<a class="header" href="print.html#moving-the-paddles" id="moving-the-paddles"><h1>Moving the paddles</h1></a>
+<p>In the previous chapter, we learned about the relationship between entities and
+components, and how they represent the &quot;things&quot; in our games. This chapter
+introduces Systems - the S in &quot;ECS&quot;. Systems are objects that represent
+operations over entities, or more specifically, combinations of components.
+Let's add a system that moves the paddles based on user input.</p>
+<p>A system is nothing more than a function that runs once each frame and
+potentially makes some changes to components. If you've used other game
+engines, this probably sounds familiar: Unity engine calls these objects
+<code>MonoBehaviour</code>s and Unreal engine calls them <code>Actor</code>s, but these all represent
+the same basic idea.</p>
+<p>Systems in specs/Amethyst are slightly different. Rather than describe the
+behavior of a single instance (eg, a single enemy in your game), they describe
+the behavior of all components of a specific type (all enemies). This makes
+your code more modular, easier to test, and makes it run faster.</p>
+<p>Let's get started.</p>
+<a class="header" href="print.html#capturing-user-input" id="capturing-user-input"><h2>Capturing user input</h2></a>
+<p>To capture user input, we'll need to introduce a few more files to our game.
+Let's start by creating a resource file under the <code>resources</code> directory of our
+project, called <code>bindings_config.ron</code>:</p>
+<pre><code class="language-ron ignore">(
+  axes: {
+    &quot;left_paddle&quot;: (pos: Key(W), neg: Key(S)),
+    &quot;right_paddle&quot;: (pos: Key(Up), neg: Key(Down)),
+  },
+  actions: {},
+)
+</code></pre>
+<p>In Amethyst, inputs can be either scalar inputs (a button that is either
+pressed or not), or axes (a range that relates two buttons as opposite
+ends of a range). In this file, we're creating two axes: W and S will move the
+left paddle up and down, and the Up and Down arrow keys will move the right
+paddle up and down.</p>
+<p>Next, we'll add an input bundle to the game's <code>Application</code> object, that
+contains an input handler system which captures inputs and maps them to the
+axes we defined. Let's make the following changes to <code>main.rs</code>.</p>
+<pre><code class="language-rust ignore">use amethyst::input::InputBundle;
+
+let binding_path = format!(
+    &quot;{}/resources/bindings_config.ron&quot;,
+    env!(&quot;CARGO_MANIFEST_DIR&quot;)
+);
+
+let input_bundle = InputBundle::&lt;String, String&gt;::new().with_bindings_from_file(binding_path);
+
+let game_data = GameDataBuilder::default()
+    .with_bundle(TransformBundle::new())?
+    .with_bundle(RenderBundle::new(pipe, Some(config)))?
+    .with_bundle(input_bundle)?;
+let mut game = Application::new(&quot;./&quot;, Pong, game_data)?;
+game.run();
+</code></pre>
+<p>At this point, we're ready to write a system that reads input from the
+<code>InputHandler</code>, and moves the paddles accordingly. First, we'll create a
+directory called <code>systems</code> under <code>src</code> to hold all our systems. We'll use a
+module to collect and export each of our systems to the rest of the
+application. Here's our <code>mod.rs</code> for <code>src/systems</code>:</p>
+<pre><code class="language-rust ignore">mod paddle;
+
+pub use self::paddle::PaddleSystem;
+</code></pre>
+<p>We're finally ready to implement the <code>PaddleSystem</code>:</p>
+<pre><code class="language-rust ignore">use amethyst::core::transform::components::Transform;
+use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
+use amethyst::input::InputHandler;
+use pong::{Paddle, Side};
+
+pub struct PaddleSystem;
+
+impl&lt;'s&gt; System&lt;'s&gt; for PaddleSystem {
+  type SystemData = (
+    WriteStorage&lt;'s, Transform&gt;,
+    ReadStorage&lt;'s, Paddle&gt;,
+    Read&lt;'s, InputHandler&lt;String, String&gt;&gt;,
+  );
+
+  fn run(&amp;mut self, (mut transforms, paddles, input): Self::SystemData) {
+    for (paddle, transform) in (&amp;paddles, &amp;mut transforms).join() {
+      let movement = match paddle.side {
+        Side::Left =&gt; input.axis_value(&quot;left_paddle&quot;),
+        Side::Right =&gt; input.axis_value(&quot;right_paddle&quot;),
+      };
+      if let Some(mv_amount) = movement {
+        if mv_amount != 0.0 {
+          let side_name = match paddle.side {
+            Side::Left =&gt; &quot;left&quot;,
+            Side::Right =&gt; &quot;right&quot;,
+          };
+          println!(&quot;Side {:?} moving {}&quot;, side_name, mv_amount);
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Note: We had to make our Paddle and Side public in <code>pong.rs</code></p>
+<p>Now lets add this system to our <code>ApplicationBuilder</code> in <code>main.rs</code>:</p>
+<pre><code class="language-rust ignore">mod systems;
+
+// in the run() function
+let mut game = Application::build(&quot;./&quot;, Pong)?
+    .with_bundle(TransformBundle::new())?
+    .with_bundle(RenderBundle::new(pipe, Some(config)))?
+    .with_bundle(input_bundle)?
+    .with(systems::PaddleSystem, &quot;paddle_system&quot;, &amp;[&quot;input_system&quot;])
+    .build()?;
+</code></pre>
+<p>Take a look at the <code>with</code> method call. Here, we're not adding a bundle, we're adding
+a system alone. We provide an instance of the system, a string representing its name
+and a list of dependencies. The dependencies are the names of the systems that
+must be ran before our newly added system. Here, we require the <code>input_system</code> to be
+ran as we will use the user's input to move the paddles, so we need to have this
+data be prepared.</p>
+<p>Back in <code>paddle.rs</code>, let's review what our system does, because there's quite a bit there.</p>
+<p>We create a unit struct, called <code>PaddleSystem</code>, and implement the <code>System</code>
+trait for it. The trait specifies the lifetime of the components on which it
+operates. Inside the implementation, we define the <code>SystemData</code> the system
+operates on, a tuple of <code>WriteStorage</code>, <code>ReadStorage</code>, and <code>Read</code>. More
+specifically, the generic types we've used here tell us that the <code>PaddleSystem</code>
+mutates <code>LocalTransform</code> components, <code>WriteStorage&lt;'s, LocalTransform&gt;</code>, it
+reads <code>Paddle</code> components, <code>ReadStorage&lt;'s, Paddle&gt;</code>, and also accesses the
+<code>InputHandler&lt;String, String&gt;</code> resource we created earlier, using the <code>Read</code>
+structure.</p>
+<p>Then, now that we have access to the storages of the components we want, we can
+iterate over them. We perform a join operation between the <code>Transform</code> and <code>Paddle</code>
+storages. This will iterate over all entities that have both a <code>Paddle</code> and <code>Transform</code>
+attached to them, and give us access to the actual components, immutably for the
+<code>Paddle</code> and mutably for the <code>Transform</code>.</p>
+<blockquote>
+<p>There are many other ways to use storages. For example, you can use them to get
+a reference to the component of a specific type held by an entity, or simply
+iterate over them without joining. However in practice, your most common use will
+be to join over multiple storages as it is rare to have a system affect
+only one specific component.</p>
+</blockquote>
+<blockquote>
+<p>Please also note that it is possible to join over storages using multiple threads
+by using <code>par_join</code> instead of <code>join</code>, but here the overhead introduced is not
+worth the gain offered by parallelism.</p>
+</blockquote>
+<a class="header" href="print.html#modifying-the-transform" id="modifying-the-transform"><h2>Modifying the transform</h2></a>
+<p>If we run the game now, we'll see the console print our keypresses. Let's
+make it update the position of the paddle. To do this, we'll modify the y
+component of the transform's translation.</p>
+<pre><code class="language-rust ignore">  fn run(&amp;mut self, (mut transforms, paddles, input): Self::SystemData) {
+    for (paddle, mut transform) in (&amp;paddles, &amp;mut transforms).join() {
+      let movement = match paddle.side {
+        Side::Left =&gt; input.axis_value(&quot;left_paddle&quot;),
+        Side::Right =&gt; input.axis_value(&quot;right_paddle&quot;),
+      };
+      if let Some(mv_amount) = movement {
+        let scaled_amount = 1.2 * mv_amount as f32;
+        transform.translation[1] += scaled_amount;
+      }
+    }
+  }
+</code></pre>
+<p>This is our first attempt at moving the paddles: we take the movement, and
+scale it by some factor to make the motion seem smooth. In a real game, we
+would use the time elapsed between frames to determine how far to move the
+paddle, so that the behavior of the game would not be tied to the game's
+framerate, but this will do for now. If you run the game now, you'll notice
+the paddles are able to &quot;fall&quot; off the edges of the game area.</p>
+<p>To fix this, we'll make sure the paddle's anchor point never gets out of the
+arena. But as the anchor point is in the middle of the sprite, we also need
+to add a margin for the paddle to not go halfway out of the screen.
+Therefore, we will border the y value of the transform from
+<code>ARENA_HEIGHT - PADDLE_HEIGHT * 0.5</code> (the top of the screen but a little bit
+lower) to <code>PADDLE_HEIGHT * 0.5</code> (the bottom of the screen but a little bit higher).</p>
+<p>Our run function should now look something like this:</p>
+<pre><code class="language-rust ignore">  fn run(&amp;mut self, (mut transforms, paddles, input): Self::SystemData) {
+    for (paddle, mut transform) in (&amp;paddles, &amp;mut transforms).join() {
+      let movement = match paddle.side {
+        Side::Left =&gt; input.axis_value(&quot;left_paddle&quot;),
+        Side::Right =&gt; input.axis_value(&quot;right_paddle&quot;),
+      };
+      if let Some(mv_amount) = movement {
+        let scaled_amount = 1.2 * mv_amount as f32;
+        transform.translation[1] = (transform.translation[1] + scaled_amount)
+          .min(ARENA_HEIGHT - PADDLE_HEIGHT * 0.5)
+          .max(PADDLE_HEIGHT * 0.5);
+      }
+    }
+  }
+</code></pre>
+<p>Note: For the above to work, we'll have to mark <code>PADDLE_HEIGHT</code> and <code>ARENA_HEIGHT</code>
+as being public in <code>pong.rs</code>, and then import it in <code>paddle.rs</code>.</p>
+<a class="header" href="print.html#summary" id="summary"><h2>Summary</h2></a>
+<p>In this chapter, we added an input handler to our game, so that we
+could capture keypresses. We then created a system that would interpret these
+keypresses, and move our game's paddles accordingly. In the next chapter, we'll
+explore another key concept in real-time games: time. We'll make our game aware
+of time, and add a ball for our paddles to bounce back and forth.</p>
+<a class="header" href="print.html#animation" id="animation"><h1>Animation</h1></a>
+<p>Animation in computer graphics can be viewed as controlled mutation of attributes of objects
+over time, using a predefined function. Examples of this are:</p>
+<ul>
+<li>Changing coordinates of vertices — movement, scaling up or down</li>
+<li>Changing the hue of a texture — for a &quot;power up&quot; effect</li>
+</ul>
+<p>To determine the values each attribute should have at a particular point in time, we define
+a set of known values at certain points in the animation — called key frames —
+and a function to interpolate the value for the attribute.</p>
+<p>This section will guide you in learning how to make use of the animation functionality in Amethyst.</p>
+<a class="header" href="print.html#interpolation" id="interpolation"><h1>Interpolation</h1></a>
+<p>Interpolation is the calculation of an attribute value that lies in between two key frames.</p>
+<p>For example, if an object should move in a circle, then we can define an animation that mutates
+its X and Y coordinate attributes.</p>
+<p>The animation definition can represent this using 5 key frames:</p>
+<table><thead><tr><th> Key Frame # </th><th> X coordinate </th><th> Y coordinate </th></tr></thead><tbody>
+<tr><td> 0           </td><td>          0.0 </td><td>          1.0 </td></tr>
+<tr><td> 1           </td><td>          1.0 </td><td>          0.0 </td></tr>
+<tr><td> 2           </td><td>          0.0 </td><td>         -1.0 </td></tr>
+<tr><td> 3           </td><td>         -1.0 </td><td>          0.0 </td></tr>
+<tr><td> 4           </td><td>          0.0 </td><td>          1.0 </td></tr>
+</tbody></table>
+<a class="header" href="print.html#non-interpolation" id="non-interpolation"><h2>Non-interpolation</h2></a>
+<p>For a perfect circle, the values in between the key frames can be calculated by the <code>sin(..)</code>
+function for the X coordinate, and the <code>cos(..)</code> function for the Y coordinate. So, if we
+were trying to calculate what the coordinates should be when <code>t = 0.5</code>, we could go <code>sin( 0.5 * π )</code>.</p>
+<p>However, what if we <strong>do not</strong> have such perfect coordinate control, and we only have
+the values at the specified key frames?</p>
+<a class="header" href="print.html#interpolation-1" id="interpolation-1"><h2>Interpolation</h2></a>
+<p>To move in a circle, the X coordinate first increases with a larger step, and the step size
+decreases as it approaches the circle boundary on the X axis, where it then flips, and
+increases in the negative direction. For the Y coordinate, the magnitude of the step
+size increases downwards, then decreases once it has gotten past the halfway point.</p>
+<p>The changing step size means, given the first two key frames, 0 and 1, the values do
+not change in constant step increments — <em>linear</em>ly (<a href="https://en.wikipedia.org/wiki/Linear_interpolation">LERP</a>) —,
+but <em>spherical linear</em>ly (<a href="https://en.wikipedia.org/wiki/Slerp">SLERP</a>).</p>
+<p>The spherical linear function is a way of saying, given these two key frame values,
+and some proportion of time between the two key frames, what should the actual value
+be given that the step increments change as they would on a sphere?</p>
+<a class="header" href="print.html#interpolation-functions" id="interpolation-functions"><h2>Interpolation Functions</h2></a>
+<p>In computer graphics, there are a number of methods commonly used to calculate the interpolated
+values. The following functions are available in Amethyst, implemented by the
+<a href="https://crates.io/crates/minterpolate"><code>minterpolate</code></a> library, namely:</p>
+<ul>
+<li>Linear</li>
+<li>SphericalLinear</li>
+<li>Step</li>
+<li>CatmullRomSpline</li>
+<li>CubicSpline</li>
+</ul>
+<p>Amethyst also allows you to specify your own custom interpolation function.</p>
+<a class="header" href="print.html#channel" id="channel"><h1>Channel</h1></a>
+<p>An independent grouping or type of functions that operate on attributes of a component.</p>
+<p>Some attributes may be mutated by different functions. These functions can be independent of each other, or they may also be dependent each other. An example of these are translation, scaling, and rotation.</p>
+<p>Given the following functions are part of the same animation:</p>
+<ul>
+<li>Translate the object to the right</li>
+<li>Translate the object upwards</li>
+<li>Scale the object up</li>
+</ul>
+<p>We want to be able to individually apply related functions, i.e. &quot;apply all translations&quot;, &quot;apply all scalings&quot;, and &quot;apply all rotations&quot;. Each of these groupings is called a <strong>channel</strong>.</p>
+<a class="header" href="print.html#sampler" id="sampler"><h1>Sampler</h1></a>
+<p>In Amethyst, a <code>Sampler</code> is the lowest level working block of an animation. It defines the interpolation function, and what attribute or set of attributes the function mutates.</p>
+<p>The <code>input</code> holds the timing of the key frames. The <code>output</code> holds the values used in the interpolation function for each of the key frames.</p>
+<p>You can imagine the interpolation function as <code>fn(Time) -&gt; ChannelValue</code></p>
+<a class="header" href="print.html#definition" id="definition"><h1>Definition</h1></a>
+<p>Animations can be defined for objects made of a single entity, or complex objects made up of multiple entities.</p>
+<p>Right now we do not have a tutorial for defining an animation from scratch, but take a look at the following resources to get an idea of how to write one:</p>
+<ul>
+<li><a href="https://github.com/amethyst/amethyst/tree/develop/examples/animation">animation example</a></li>
+<li><a href="https://github.com/amethyst/amethyst/tree/develop/examples/gltf">gltf example</a></li>
+<li><a href="https://docs.rs/amethyst_animation">API docs</a></li>
+</ul>
+<a class="header" href="print.html#custom-gamedata" id="custom-gamedata"><h1>Custom <code>GameData</code></h1></a>
+<p>So far we've been using the <code>Amethyst</code> supplied <code>GameData</code> struct to handle
+our <code>System</code>s. This works well for smaller games and demos, but once we
+start building a larger game, we will quickly realise we need to
+manipulate the <code>System</code> dispatch based on game <code>State</code>, or we need to pass
+data between <code>State</code>s that aren't <code>Send + Sync</code> which can't be added to <code>World</code>.</p>
+<p>The solution to our troubles here is to create a custom <code>GameData</code> structure
+to house what we need that can not be added to <code>World</code>.</p>
+<p>In this tutorial we will look at how one could structure a <code>Paused</code> <code>State</code>,
+which disables the game logic, only leaving a few core systems running that
+are essential (like rendering, input and UI).</p>
+<p>Let's start by creating the <code>GameData</code> structure:</p>
+<pre><code class="language-rust ignore">pub struct CustomGameData&lt;'a, 'b&gt; {
+    core_dispatcher: Dispatcher&lt;'a, 'b&gt;,
+    running_dispatcher: Dispatcher&lt;'a, 'b&gt;,
+}
+</code></pre>
+<p>We also add a utility function for performing dispatch:</p>
+<pre><code class="language-rust ignore">impl&lt;'a, 'b&gt; CustomGameData&lt;'a, 'b&gt; {
+    /// Update game data
+    pub fn update(&amp;mut self, world: &amp;World, running: bool) {
+        if running {
+            self.running_dispatcher.dispatch(&amp;world.res);
+        }
+        self.core_dispatcher.dispatch(&amp;world.res);
+    }
+}
+</code></pre>
+<p>To be able to use this structure with <code>Amethyst</code>s <code>Application</code> we need to create
+a builder that implements <code>DataInit</code>. This is the only requirement placed on the
+<code>GameData</code> structure.</p>
+<pre><code class="language-rust ignore">pub struct CustomGameDataBuilder&lt;'a, 'b&gt; {
+    pub core: DispatcherBuilder&lt;'a, 'b&gt;,
+    pub running: DispatcherBuilder&lt;'a, 'b&gt;,
+}
+
+impl&lt;'a, 'b&gt; Default for CustomGameDataBuilder&lt;'a, 'b&gt; {
+    fn default() -&gt; Self {
+        CustomGameDataBuilder::new()
+    }
+}
+
+impl&lt;'a, 'b&gt; CustomGameDataBuilder&lt;'a, 'b&gt; {
+    pub fn new() -&gt; Self {
+        CustomGameDataBuilder {
+            core: DispatcherBuilder::new(),
+            running: DispatcherBuilder::new(),
+        }
+    }
+
+    pub fn with_base_bundle&lt;B&gt;(mut self, bundle: B) -&gt; Result&lt;Self&gt;
+    where
+        B: SystemBundle&lt;'a, 'b&gt;,
+    {
+        bundle
+            .build(&amp;mut self.core)
+            .map_err(|err| Error::Core(err))?;
+        Ok(self)
+    }
+
+    pub fn with_running&lt;S&gt;(mut self, system: S, name: &amp;str, dependencies: &amp;[&amp;str]) -&gt; Self
+    where
+        for&lt;'c&gt; S: System&lt;'c&gt; + Send + 'a,
+    {
+        self.running.add(system, name, dependencies);
+        self
+    }
+}
+
+impl&lt;'a, 'b&gt; DataInit&lt;CustomGameData&lt;'a, 'b&gt;&gt; for CustomGameDataBuilder&lt;'a, 'b&gt; {
+    fn build(self, world: &amp;mut World) -&gt; CustomGameData&lt;'a, 'b&gt; {
+        let pool = world.read_resource::&lt;ThreadPool&gt;().clone();
+
+        let mut core_dispatcher = self.core.with_pool(pool.clone()).build();
+        let mut running_dispatcher = self.running.with_pool(pool.clone()).build();
+        core_dispatcher.setup(&amp;mut world.res);
+        running_dispatcher.setup(&amp;mut world.res);
+
+        CustomGameData { core_dispatcher, running_dispatcher }
+    }
+}
+</code></pre>
+<p>We can now use <code>CustomGameData</code> in place of the provided <code>GameData</code> when building
+our <code>Application</code>, but first we should create some <code>State</code>s.</p>
+<pre><code class="language-rust ignore">struct Main;
+struct Paused;
+
+impl&lt;'a, 'b&gt; State&lt;CustomGameData&lt;'a, 'b&gt;&gt; for Paused {
+    fn on_start(&amp;mut self, data: StateData&lt;CustomGameData&gt;) {
+        create_paused_ui(data.world);
+    }
+
+    fn handle_event(
+        &amp;mut self,
+        data: StateData&lt;CustomGameData&gt;,
+        event: Event,
+    ) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        if is_close_requested(&amp;event) || is_key(&amp;event, VirtualKeyCode::Escape) {
+            Trans::Quit
+        } else if is_key(&amp;event, VirtualKeyCode::Space) {
+            delete_paused_ui(data.world);
+            Trans::Pop
+        } else {
+            Trans::None
+        }
+    }
+
+    fn update(&amp;mut self, data: StateData&lt;CustomGameData&gt;) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        data.data.update(&amp;data.world, false); // false to say we should not dispatch running
+        Trans::None
+    }
+}
+
+impl&lt;'a, 'b&gt; State&lt;CustomGameData&lt;'a, 'b&gt;&gt; for Main {
+    fn on_start(&amp;mut self, data: StateData&lt;CustomGameData&gt;) {
+        initialise(data.world);
+    }
+
+    fn handle_event(
+        &amp;mut self,
+        _: StateData&lt;CustomGameData&gt;,
+        event: Event,
+    ) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        if is_close_requested(&amp;event) || is_key(&amp;event, VirtualKeyCode::Escape) {
+            Trans::Quit
+        } else if is_key(&amp;event, VirtualKeyCode::Space) {
+            Trans::Push(Box::new(Paused))
+        } else {
+            Trans::None
+        }
+    }
+
+    fn update(&amp;mut self, data: StateData&lt;CustomGameData&gt;) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        data.data.update(&amp;data.world, true); // true to say we should dispatch running
+        Trans::None
+    }
+}
+</code></pre>
+<p>The only thing that remains now is to use our <code>CustomGameDataBuilder</code> when building the
+<code>Application</code>.</p>
+<pre><code class="language-rust ignore">    let game_data = CustomGameDataBuilder::default()
+        .with_running::&lt;ExampleSystem&gt;(ExampleSystem, &quot;example_system&quot;, &amp;[])
+        .with_base_bundle(TransformBundle::new())?
+        .with_base_bundle(UiBundle::&lt;String, String&gt;::new())?
+        .with_base_bundle(RenderBundle::new(pipeline_builder, Some(display_config)))?
+        .with_base_bundle(InputBundle::&lt;String, String&gt;::new())?;
+
+    let mut game = Application::new(resources_directory, Main, game_data)?;
+    game.run();
+</code></pre>
+<p>Those are the basics of creating a custom <code>GameData</code> structure. Now get out there and
+build your game!</p>
+<a class="header" href="print.html#glossary" id="glossary"><h1>Glossary</h1></a>
+<a class="header" href="print.html#data-driven-design" id="data-driven-design"><h2>Data-driven design</h2></a>
+<p>Describes a program that has its logic defined largely in data rather than in
+compiled code. Ideally, this would permit the user to edit their code and
+resources using offline tools and have the program hot-reload the changes at
+run-time for instant feedback without the need for recompilation. The bare
+minimum qualification for a data-driven program is the ability to read external
+content (text files, scripts, byte streams) and mutate its behavior accordingly.</p>
+<a class="header" href="print.html#data-oriented-programming" id="data-oriented-programming"><h2>Data-oriented programming</h2></a>
+<p>Not to be confused with data-driven design, data-oriented programming is a
+programming paradigm, like object-oriented programming (OOP) or procedural
+programming. Where OOP focuses on modeling a problem in terms of interacting
+objects, and procedural programming tries to model a problem in terms of
+sequential or recursive steps or procedures, data-oriented programming shifts
+the focus towards the data being operated on: the data type, its memory layout,
+how it will be processed. Software written in a data-oriented manner tends
+toward high-throughput pipelining, modularity, separation of concerns, and
+massive parallelism. If architected correctly, data-oriented software can be
+very cache-friendly and easy to scale on systems with multiple cores.</p>
+<blockquote>
+<p>Note: Data-oriented programming does not necessarily imply that a program is
+data-driven. Data-driven behavior can be implemented with any programming
+approach you like.</p>
+</blockquote>
+<a class="header" href="print.html#entity-component-system-ecs-model" id="entity-component-system-ecs-model"><h2>Entity-component-system (ECS) model</h2></a>
+<p>Describes a game programming design pattern invented as a reaction to the
+deep-rooted problems with using <em>inheritance</em> (is-a relationship) to represent
+game objects, including the <a href="https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem">deadly diamond of death</a> and <a href="https://en.wikipedia.org/wiki/God_object">god objects</a>.
+The inheritance-based approach was especially common in the game industry during
+the 1990's and early 2000's.</p>
+<p>This alternative model makes use of <em>composition</em> (has-a relationship) instead
+of inheritance to represent objects in the game world, flattening the hierarchy
+and eliminating the problems above, while increasing flexibility. The holistic
+ECS approach is broken into three key pieces:</p>
+<ol>
+<li><em>Entity</em>: Represents a single object in the game world. Has no functionality
+on its own. The world owns a collection of entities (either in a flat list or
+a hierarchy). Each entity has a unique identifier or name, for the sake of
+ease of use.</li>
+<li><em>Component</em>: A plain-old-data structure that describes a certain trait an
+entity can have. Can be &quot;attached&quot; to entities to grant them certain
+abilities, e.g. a <code>Light</code> component contains parameters to make an entity
+glow, or a <code>Collidable</code> component can grant an entity collision detection
+properties. These components <em>do not</em> have any logic. They contain only data.</li>
+<li><em>System</em>: This is where the magic happens! Systems are centralized game engine
+subsystems that perform a specific function, such as rendering, physics, audio,
+etc. Every frame, they process each entity in the game world looking for
+components that are relevant to them, reading their contents, and performing
+actions. For example, a <code>Rendering</code> system could search for all entities that have
+<code>Light</code>, <code>Mesh</code>, or <code>Emitter</code> components and draw them to the screen.</li>
+</ol>
+<p>This approach could potentially be stretched to fit the model-view-controller
+(MVC) paradigm popular in GUI and Web development circles: entities and
+components together represent the model, and systems represent either views
+(<code>Rendering</code>, <code>Audio</code>) or controllers (<code>Input</code>, <code>AI</code>, <code>Physics</code>), depending on
+their purpose.</p>
+<p>Another great advantage of the ECS model is the ability to rapidly prototype
+a game simply by describing objects' characteristics in terms of creating
+entities and attaching components to them, with very little game code involved.
+And all of this data can be easily serialized or de-serialized into a
+human-friendly plain text format like <a href="http://www.yaml.org/">YAML</a> (what we use) or <a href="http://www.json.org/">JSON</a>.</p>
+<p>For more detailed explanations of entity-component-system designs, please
+<a href="https://www.reddit.com/r/rust/comments/43p2fq/this_week_in_amethyst_3/czkc4hj">see this great post on Reddit</a> and <a href="http://gamedev.stackexchange.com/questions/31473/what-is-the-role-of-systems-in-a-component-based-entity-architecture/31491#31491">this Stack Overflow answer</a>.</p>
+<a class="header" href="print.html#appendix-a-config-files" id="appendix-a-config-files"><h1>Appendix A: Config Files</h1></a>
+<p>In the <a href="https://github.com/amethyst/amethyst/tree/develop/examples/pong">full Pong example</a>, the paddle sizes, ball sizes, colors, and arena size are all hard-coded
+into the implementation. This means that if you want to change any of these, you need to recompile the
+project. Wouldn't it be nice to not have to recompile the project each time you wanted to change one or all
+of these things?</p>
+<p>Luckily, Amethyst uses <a href="https://docs.rs/ron/0.1.7/ron/">RON</a> configuration files and has infrastructure in the form of the
+<a href="https://docs.rs/amethyst_config/0.5.0/amethyst_config/trait.Config.html">Config</a> trait to help us implement our own config files.</p>
+<a class="header" href="print.html#structure-of-the-config-file" id="structure-of-the-config-file"><h2>Structure of the Config File</h2></a>
+<p>The existing example uses the following constants:</p>
+<pre><code class="language-rust ignore">const ARENA_HEIGHT: f32 = 100.0;
+const ARENA_WIDTH: f32 = 100.0;
+const PADDLE_HEIGHT: f32 = 15.0;
+const PADDLE_WIDTH: f32 = 2.5;
+const PADDLE_VELOCITY: f32 = 75.0;
+const PADDLE_COLOUR: [f32; 4] = [0.0, 0.0, 1.0, 1.0];
+
+const BALL_VELOCITY_X: f32 = 75.0;
+const BALL_VELOCITY_Y: f32 = 50.0;
+const BALL_RADIUS: f32 = 2.5;
+const BALL_COLOUR: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
+</code></pre>
+<p>to specify the look of the game. We want to replace this with something more flexible in the form of a config
+file. To start, let's create a new file, <code>config.rs</code>, to hold our configuration structures. Add the following
+<code>use</code> statements to the top of this file:</p>
+<pre><code class="language-rust ignore">use std::path::Path;
+
+use amethyst::config::Config;
+</code></pre>
+<p>For this project, we'll be placing a <code>config.ron</code> file in the same location as the <code>display_config.ron</code> and
+<code>input.ron</code> files (likely the <code>resources/</code> folder).</p>
+<a class="header" href="print.html#chapters-1" id="chapters-1"><h2>Chapters</h2></a>
+<ul>
+<li><a href="./appendices/a_config_files/arena_config.html">Adding an ArenaConfig</a></li>
+<li><a href="./appendices/a_config_files/ball_config.html">Adding a Ball Config</a></li>
+<li><a href="./appendices/a_config_files/paddle_configs.html">Adding Paddle Configs</a></li>
+</ul>
+<a class="header" href="print.html#adding-an-arena-config" id="adding-an-arena-config"><h1>Adding an Arena Config</h1></a>
+<p>To begin with, let's make the <code>Arena</code> dimensions configurable. Add this structure to a new file <code>config.rs</code>.</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Deserialize, Serialize)]
+struct ArenaConfig {
+    pub height: f32,
+    pub width: f32,
+}
+
+impl Default for ArenaConfig {
+    fn default() -&gt; Self {
+        ArenaConfig {
+            height: 100.0,
+            width: 100.0,
+        }
+    }
+}
+</code></pre>
+<p>The default values match the values used in the full example, so if we don't use a config file things will
+look just like the Pong example. Another option would be to use <a href="https://serde.rs/attr-default.html"><code>[#serde(default)]</code></a>, which allows
+you to set the default value of a field if that field is not present in the config file. This is different
+than the <a href="https://doc.rust-lang.org/std/default/trait.Default.html"><code>Default</code></a> trait in that you can set default values for some fields while requiring others
+be present. For now though, let's just use the <code>Default</code> trait.</p>
+<a class="header" href="print.html#adding-the-config-to-the-world" id="adding-the-config-to-the-world"><h2>Adding the Config to the World</h2></a>
+<p>Now, in <code>main.rs</code>, add the following lines:</p>
+<pre><code class="language-rust ignore">use config::ArenaConfig;
+</code></pre>
+<p>We'll need to load the config at startup, so let's add this to the <code>run</code> function in <code>main.rs</code></p>
+<pre><code class="language-rust ignore">let arena_config = ArenaConfig::load(&amp;config);
+</code></pre>
+<p>Now that we have loaded our config, we want to add it to the world so other modules can access
+it. We do this by adding the config as a resource during <code>Application</code> creation:</p>
+<pre><code class="language-rust ignore">    .with_resource(arena_config)
+    .with_bundle(PongBundle::default())?
+</code></pre>
+<p>Now for the difficult part: replacing every use of <code>ARENA_WIDTH</code> and <code>ARENA_HEIGHT</code> with our config object.
+First, let's change our initialisation steps in <code>pong.rs</code>.</p>
+<p>Add the following line to the top of <code>pong.rs</code>:</p>
+<pre><code class="language-rust ignore">use config::ArenaConfig;
+</code></pre>
+<p>Now, in the <code>initialise_paddles()</code> function, add the following lines after the initialisation of the
+<code>left_transform</code> and <code>right_transform</code>.</p>
+<pre><code class="language-rust ignore">let (arena_height, arena_width) = {
+    let config = &amp;world.read_resource::&lt;ArenaConfig&gt;();
+    (config.height, config.width)
+};
+</code></pre>
+<p>Now replace all references to <code>ARENA_HEIGHT</code> with <code>arena_height</code> and all references to <code>ARENA_WIDTH</code> with
+<code>arena_width</code>. Do this for each initialisation function in <code>pong.rs</code>.</p>
+<a class="header" href="print.html#accessing-config-files-from-systems" id="accessing-config-files-from-systems"><h2>Accessing Config Files from Systems</h2></a>
+<p>It is actually simpler to access a Config file from a system than via the <code>World</code> directly. To access
+it in the <code>System</code>'s <code>run()</code> function, add it to the <code>SystemData</code> type. This is what the <code>BounceSystem</code> looks
+like when it wants to access the <code>ArenaConfig</code>.</p>
+<pre><code class="language-rust ignore">use config::ArenaConfig;
+...
+type SystemData = (
+    WriteStorage&lt;'s, Ball&gt;,
+    ReadStorage&lt;'s, Paddle&gt;,
+    ReadStorage&lt;'s, Transform&gt;,
+    Fetch&lt;'s, AssetStorage&lt;Source&gt;&gt;,
+    Fetch&lt;'s, Sounds&gt;,
+    Fetch&lt;'s, Option&lt;Output&gt;&gt;,
+    Fetch&lt;'s, ArenaConfig&gt;,
+);
+...
+fn run(&amp;mut self, 
+       (mut balls, paddles, transforms, storage, sounds, audio_output, arena_config): SystemData) {
+</code></pre>
+<p>Now, in the <code>run()</code> function, replace the reference to <code>ARENA_HEIGHT</code> with <code>arena_config.height</code>.</p>
+<p>Add <code>Fetch&lt;'s, ArenaConfig&gt;</code> to the <code>WinnerSystem</code> and <code>PaddleSystem</code> as well, replacing the reference to
+<code>ARENA_WIDTH</code> with <code>arena_config.width</code>.</p>
+<a class="header" href="print.html#making-configron" id="making-configron"><h2>Making <code>config.ron</code></h2></a>
+<p>Now for the final part: actually creating our <code>config.ron</code> file. This will be very simple right now, and
+expand as we add more configurable items. For now, just copy and paste the following into a new file. Feel
+free to modify the height and width if you want.</p>
+<pre><code class="language-ignore">arena: (
+    height: 100.0,
+    width: 100.0,
+)
+</code></pre>
+<p><a href="./appendices/a_config_files/ball_config.html">Click here to continue to the next chapter</a></p>
+<a class="header" href="print.html#adding-a-ball-config" id="adding-a-ball-config"><h1>Adding a Ball Config</h1></a>
+<p>For simplicity, we will wrap all of our Config objects into a single <code>PongConfig</code> object backed by a single
+<code>config.ron</code> file, but know that you can just as easily keep them in separate files and read from each file
+separately.</p>
+<p>To prepare for our <code>BallConfig</code>, add the following line to the top of <code>config.rs</code>:</p>
+<pre><code class="language-rust ignore">use amethyst::core::cgmath::Vector2;
+</code></pre>
+<p>The <code>BallConfig</code> will replace the <code>BALL_VELOCITY_X</code>, <code>BALL_VELOCITY_Y</code>, <code>BALL_RADIUS</code>, and <code>BALL_COLOR</code>
+variables. We'll use a <a href="https://docs.rs/cgmath/0.16.0/cgmath/struct.Vector2.html"><code>Vector2</code></a> to store the velocity for simplicity and to demonstrate how to add
+a non-trivial data type to a RON file. The <code>BALL_COLOR</code> was originally an array, but [Serde][serde] and RON
+handle arrays as tuples, so it will read in a tuple and convert the colour values to an array if needed by a
+particular function (e.g., in <code>pong.rs</code>).</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Deserialize, Serialize)]
+pub struct BallConfig {
+    pub velocity: Vector2&lt;f32&gt;,
+    pub radius: f32,
+    pub colour: (f32, f32, f32, f32),
+}
+</code></pre>
+<p>We'll also add the <code>Default</code> trait to this config that will match what the full example uses.</p>
+<pre><code class="language-rust ignore">impl Default for BallConfig {
+    fn default() -&gt; Self {
+        BallConfig {
+            velocity: Vector2::new(75.0, 50.0),
+            radius: 2.5,
+            colour: (1.0, 0.0, 0.0, 1.0),
+        }
+    }
+}
+</code></pre>
+<p>Still in <code>config.rs</code>, add the following structure definition at the very bottom. This structure will be
+backed by the whole <code>config.ron</code> file.</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Default, Deserialize, Serialize)]
+pub struct PongConfig {
+    pub arena: ArenaConfig,
+    pub ball: BallConfig,
+}
+</code></pre>
+<a class="header" href="print.html#replacing-ball-constants" id="replacing-ball-constants"><h2>Replacing Ball Constants</h2></a>
+<p>Now we need to replace our usage of the <code>BALL_*</code> constants with our new <code>BallConfig</code>.</p>
+<p>We use these values in <code>pong.rs</code> in the <code>initialise_ball()</code> function, so the substition is even simpler than
+the <code>ArenaConfig</code>.</p>
+<p>In <code>pong.rs</code>, underneath our loading of the <code>ArenaConfig</code>, add the following lines</p>
+<pre><code class="language-rust ignore">let (velocity_x, velocity_y, radius, colour) = {
+    let config = world.read_resource::&lt;BallConfig&gt;();
+    let c: [f32; 4] = [
+        config.colour.0,
+        config.colour.1,
+        config.colour.2,
+        config.colour.3,
+    ];
+    (config.velocity.x, config.velocity.y, config.radius, c)
+};
+</code></pre>
+<p>Our functions expect a <code>[f32; 4]</code> array, so we had to convert the tuple to an array. This is relatively
+simple to do, but for more complex arrays it might be worth it to add a function to the <code>impl BallConfig</code> to
+avoid duplicating this effort.</p>
+<p>Now, within the <code>initialise_ball</code> function, replace <code>BALL_VELOCITY_X</code> with <code>velocity_x</code>, <code>BALL_VELOCITY_Y</code>
+with <code>velocity_y</code>, <code>BALL_RADIUS</code> with <code>radius</code>, and <code>BALL_COLOR</code> with <code>color</code>.</p>
+<a class="header" href="print.html#modifying-the-initialisation" id="modifying-the-initialisation"><h2>Modifying the initialisation</h2></a>
+<p>Now we will modify our application initialisation. We don't want everyone to always access all the config files, so we need to
+add each resource separately so systems can use only what they want.</p>
+<p>First, we need to change what <code>main.rs</code> is using. Change</p>
+<pre><code class="language-rust ignore">use config::ArenaConfig;
+</code></pre>
+<p>to</p>
+<pre><code class="language-rust ignore">use config::PongConfig;
+</code></pre>
+<p>Now, modify the <code>run()</code> function, from</p>
+<pre><code class="language-rust ignore">let arena_config = ArenaConfig::load(&amp;config);
+[..]
+    .with_resource(arena_config)
+    .with_bundle(PongBundle::default())?
+</code></pre>
+<p>to</p>
+<pre><code class="language-rust ignore">let pong_config = PongConfig::load(&amp;config);
+[..]
+    .with_resource(pong_config.arena)
+    .with_resource(pong_config.ball)
+    .with_bundle(PongBundle::default())?
+</code></pre>
+<a class="header" href="print.html#adding-the-ballconfig-to-configron" id="adding-the-ballconfig-to-configron"><h2>Adding the BallConfig to <code>config.ron</code></h2></a>
+<p>Now we need to modify our configuration file to allow multiple structures to be included. This is actually
+very easy with RON; we just add an additional level of nesting.</p>
+<pre><code class="language-ignore">(
+    arena: (
+        height: 100.0,
+        width: 100.0,
+    ),
+    ball: (
+        velocity: Vector2(
+            x: 75.0,
+            y: 50.0,
+        ),
+        radius: 2.5,
+        color: (1.0, 0.647, 0.0, 1.0),
+    ),
+)
+</code></pre>
+<p>This configuration sets the ball to be orange, while retaining the same size and velocity as the original
+example.</p>
+<p><a href="./appendices/a_config_files/paddle_configs.html">Click here to continue to the last chapter, configuring paddles</a></p>
+<a class="header" href="print.html#adding-paddle-configs" id="adding-paddle-configs"><h1>Adding Paddle Configs</h1></a>
+<p>We're finally going to add a configuration struct for our Paddles. Because our Pong clone supports two
+players, we should let them configure each separately. Add the following to the <code>config.rs</code> file:</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Deserialize, Serialize)]
+pub struct PaddleConfig {
+    pub height: f32,
+    pub width: f32,
+    pub velocity: f32,
+    pub colour: (f32, f32, f32, f32),
+}
+
+impl Default for PaddleConfig {
+    fn default() -&gt; Self {
+        PaddleConfig {
+            height: 15.0,
+            width: 2.5,
+            velocity: 75.0,
+            color: (0.0, 0.0, 1.0, 1.0),
+        }
+    }
+}
+</code></pre>
+<p>Just like the <code>BallConfig</code>, we need to read in the colour as a tuple instead of an array.</p>
+<p>Now, to allow us to have two separate <code>PaddleConfig</code>s, we will wrap them in a bigger structure as follows:</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Default, Deserialize, Serialize)]
+pub struct PaddlesConfig {
+    pub left: PaddleConfig,
+    pub right: PaddleConfig,
+}
+</code></pre>
+<p>Now we need to add the <code>PaddlesConfig</code> to our <code>PongConfig</code> as shown below</p>
+<pre><code class="language-rust ignore">pub struct PongConfig {
+    pub arena: ArenaConfig,
+    pub ball: BallConfig,
+    pub paddles: PaddlesConfig,
+}
+</code></pre>
+<p>and modify the <code>main.rs</code>'s <code>run()</code> function to add our <code>PaddleConfig</code>s.</p>
+<pre><code class="language-rust ignore">    .with_resource(pong_config.arena)
+    .with_resource(pong_config.ball)
+    .with_resource(pong_config.paddles)
+    .with_bundle(PongBundle::default())?
+</code></pre>
+<p>We add the <code>PaddlesConfig</code> to the <code>World</code>, rather than as separate <code>left</code> and <code>right</code> configurations because
+<code>System</code>s can only access resources with ID 0. Any resource added using <a href="https://docs.rs/specs/0.10.0/specs/struct.World.html#method.add_resource"><code>World::add_resource</code></a>
+is added using a default ID of 0. You must use <a href="https://docs.rs/specs/0.10.0/specs/struct.World.html#method.add_resource_with_id"><code>World::add_resource_with_id</code></a> to add multiple
+resources of the same type, but then the <code>System</code>s cannot properly differentiate between them.</p>
+<a class="header" href="print.html#replacing-constants-with-configs" id="replacing-constants-with-configs"><h2>Replacing Constants with Configs</h2></a>
+<p>Replacing all instances of <code>PADDLE_*</code> will be similar to the <code>BallConfig</code>, as we only use those values for
+creating the paddle entities. However, we will need to separate the <code>PaddlesConfig</code> into <code>left</code> and <code>right</code>.
+To avoid issues with the borrow checker, we read the <code>PaddlesConfig</code> once and copy all of the values,
+unwrapping them in one big assignment statement.
+In <code>initialise_paddles()</code> in <code>pong.rs</code>, add this code below reading the <code>ArenaConfig</code>.</p>
+<pre><code class="language-rust ignore">let (
+    left_height,
+    left_width,
+    left_velocity,
+    left_colour,
+    right_height,
+    right_width,
+    right_velocity,
+    right_colour,
+) = {
+    let config = &amp;world.read_resource::&lt;PaddlesConfig&gt;();
+    let cl: [f32; 4] = [
+        config.left.colour.0,
+        config.left.colour.1,
+        config.left.colour.2,
+        config.left.colour.3,
+    ];
+    let cr: [f32; 4] = [
+        config.right.colour.0,
+        config.right.colour.1,
+        config.right.colour.2,
+        config.right.colour.3,
+    ];
+    (
+        config.left.height,
+        config.left.width,
+        config.left.velocity,
+        cl,
+        config.right.height,
+        config.right.width,
+        config.right.velocity,
+        cr,
+    )
+};
+</code></pre>
+<p>Now, within this function, replace</p>
+<pre><code class="language-rust ignore">let y = (arena_height - PADDLE_HEIGHT) / 2.0;
+</code></pre>
+<p>with</p>
+<pre><code class="language-rust ignore">let left_y = (arena_height - left_height) / 2.0;
+let right_y = (arena_height - right_height) / 2.0;
+</code></pre>
+<p>You will also need to repeat the calls to <code>create_mesh</code> and
+<code>create_colour_material()</code> so that you have a left and right mesh and left
+and right colour.</p>
+<p>Now, use the left- and right-specific values in  the <code>world.create_entity()</code>
+calls.</p>
+<a class="header" href="print.html#modifying-configron" id="modifying-configron"><h2>Modifying <code>config.ron</code></h2></a>
+<p>Now for the final modification of our <code>config.ron</code> file. For fun, let's make the right paddle yellow and
+keep the left paddle blue so the final <code>config.ron</code> file will be as follows:</p>
+<pre><code class="language-ignore">(
+    arena: (
+        height: 100.0,
+        width: 100.0,
+    ),
+    ball: (
+        velocity: Vector2(
+            x: 75.0,
+            y: 50.0,
+        ),
+        radius: 2.5,
+        color: (1.0, 0.647, 0.0, 1.0),
+    ),
+    paddles: (
+        left: (
+            height: 15.0,
+            width: 2.5,
+            velocity: 75.0,
+            color: (0.0, 0.0, 1.0, 1.0),
+        ),
+        right: (
+            height: 15.0,
+            width: 2.5,
+            velocity: 75.0,
+            color: (0.0, 1.0, 1.0, 1.0),
+        ),
+    )
+)
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                window.print();
+            })
+        </script>
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

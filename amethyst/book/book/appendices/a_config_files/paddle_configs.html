@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Adding Paddle Configs - Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html" class="active"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="appendices/a_config_files/paddle_configs.html#adding-paddle-configs" id="adding-paddle-configs"><h1>Adding Paddle Configs</h1></a>
+<p>We're finally going to add a configuration struct for our Paddles. Because our Pong clone supports two
+players, we should let them configure each separately. Add the following to the <code>config.rs</code> file:</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Deserialize, Serialize)]
+pub struct PaddleConfig {
+    pub height: f32,
+    pub width: f32,
+    pub velocity: f32,
+    pub colour: (f32, f32, f32, f32),
+}
+
+impl Default for PaddleConfig {
+    fn default() -&gt; Self {
+        PaddleConfig {
+            height: 15.0,
+            width: 2.5,
+            velocity: 75.0,
+            color: (0.0, 0.0, 1.0, 1.0),
+        }
+    }
+}
+</code></pre>
+<p>Just like the <code>BallConfig</code>, we need to read in the colour as a tuple instead of an array.</p>
+<p>Now, to allow us to have two separate <code>PaddleConfig</code>s, we will wrap them in a bigger structure as follows:</p>
+<pre><code class="language-rust ignore">#[derive(Debug, Default, Deserialize, Serialize)]
+pub struct PaddlesConfig {
+    pub left: PaddleConfig,
+    pub right: PaddleConfig,
+}
+</code></pre>
+<p>Now we need to add the <code>PaddlesConfig</code> to our <code>PongConfig</code> as shown below</p>
+<pre><code class="language-rust ignore">pub struct PongConfig {
+    pub arena: ArenaConfig,
+    pub ball: BallConfig,
+    pub paddles: PaddlesConfig,
+}
+</code></pre>
+<p>and modify the <code>main.rs</code>'s <code>run()</code> function to add our <code>PaddleConfig</code>s.</p>
+<pre><code class="language-rust ignore">    .with_resource(pong_config.arena)
+    .with_resource(pong_config.ball)
+    .with_resource(pong_config.paddles)
+    .with_bundle(PongBundle::default())?
+</code></pre>
+<p>We add the <code>PaddlesConfig</code> to the <code>World</code>, rather than as separate <code>left</code> and <code>right</code> configurations because
+<code>System</code>s can only access resources with ID 0. Any resource added using <a href="https://docs.rs/specs/0.10.0/specs/struct.World.html#method.add_resource"><code>World::add_resource</code></a>
+is added using a default ID of 0. You must use <a href="https://docs.rs/specs/0.10.0/specs/struct.World.html#method.add_resource_with_id"><code>World::add_resource_with_id</code></a> to add multiple
+resources of the same type, but then the <code>System</code>s cannot properly differentiate between them.</p>
+<a class="header" href="appendices/a_config_files/paddle_configs.html#replacing-constants-with-configs" id="replacing-constants-with-configs"><h2>Replacing Constants with Configs</h2></a>
+<p>Replacing all instances of <code>PADDLE_*</code> will be similar to the <code>BallConfig</code>, as we only use those values for
+creating the paddle entities. However, we will need to separate the <code>PaddlesConfig</code> into <code>left</code> and <code>right</code>.
+To avoid issues with the borrow checker, we read the <code>PaddlesConfig</code> once and copy all of the values,
+unwrapping them in one big assignment statement.
+In <code>initialise_paddles()</code> in <code>pong.rs</code>, add this code below reading the <code>ArenaConfig</code>.</p>
+<pre><code class="language-rust ignore">let (
+    left_height,
+    left_width,
+    left_velocity,
+    left_colour,
+    right_height,
+    right_width,
+    right_velocity,
+    right_colour,
+) = {
+    let config = &amp;world.read_resource::&lt;PaddlesConfig&gt;();
+    let cl: [f32; 4] = [
+        config.left.colour.0,
+        config.left.colour.1,
+        config.left.colour.2,
+        config.left.colour.3,
+    ];
+    let cr: [f32; 4] = [
+        config.right.colour.0,
+        config.right.colour.1,
+        config.right.colour.2,
+        config.right.colour.3,
+    ];
+    (
+        config.left.height,
+        config.left.width,
+        config.left.velocity,
+        cl,
+        config.right.height,
+        config.right.width,
+        config.right.velocity,
+        cr,
+    )
+};
+</code></pre>
+<p>Now, within this function, replace</p>
+<pre><code class="language-rust ignore">let y = (arena_height - PADDLE_HEIGHT) / 2.0;
+</code></pre>
+<p>with</p>
+<pre><code class="language-rust ignore">let left_y = (arena_height - left_height) / 2.0;
+let right_y = (arena_height - right_height) / 2.0;
+</code></pre>
+<p>You will also need to repeat the calls to <code>create_mesh</code> and
+<code>create_colour_material()</code> so that you have a left and right mesh and left
+and right colour.</p>
+<p>Now, use the left- and right-specific values in  the <code>world.create_entity()</code>
+calls.</p>
+<a class="header" href="appendices/a_config_files/paddle_configs.html#modifying-configron" id="modifying-configron"><h2>Modifying <code>config.ron</code></h2></a>
+<p>Now for the final modification of our <code>config.ron</code> file. For fun, let's make the right paddle yellow and
+keep the left paddle blue so the final <code>config.ron</code> file will be as follows:</p>
+<pre><code class="language-ignore">(
+    arena: (
+        height: 100.0,
+        width: 100.0,
+    ),
+    ball: (
+        velocity: Vector2(
+            x: 75.0,
+            y: 50.0,
+        ),
+        radius: 2.5,
+        color: (1.0, 0.647, 0.0, 1.0),
+    ),
+    paddles: (
+        left: (
+            height: 15.0,
+            width: 2.5,
+            velocity: 75.0,
+            color: (0.0, 0.0, 1.0, 1.0),
+        ),
+        right: (
+            height: 15.0,
+            width: 2.5,
+            velocity: 75.0,
+            color: (0.0, 1.0, 1.0, 1.0),
+        ),
+    )
+)
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="appendices/a_config_files/ball_config.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="appendices/a_config_files/ball_config.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

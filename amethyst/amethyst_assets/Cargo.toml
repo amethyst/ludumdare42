@@ -1,0 +1,42 @@
+[package]
+name = "amethyst_assets"
+version = "0.3.0"
+authors = ["torkleyy <torkleyy@gmail.com>"]
+readme = "README.md"
+description = """
+Asynchronous asset management for games.
+"""
+exclude = ["examples/*"]
+license = "MIT/Apache-2.0"
+keywords = ["game", "asset", "resource", "management", "amethyst"]
+categories = ["filesystem"]
+
+documentation = "https://www.amethyst.rs/doc/master/doc/amethyst/"
+homepage = "https://www.amethyst.rs/"
+repository = "https://github.com/amethyst/amethyst"
+
+[badges]
+appveyor = { repository = "amethyst/amethyst", branch = "develop" }
+travis-ci = { repository = "amethyst/amethyst" }
+
+[dependencies]
+amethyst_core = { path = "../amethyst_core", version = "0.2" }
+crossbeam = "0.3.0"
+derivative = "1.0"
+error-chain = "0.11"
+fnv = "1"
+hibitset = { version = "0.5.0", features = ["parallel"] }
+log = "0.4"
+parking_lot = "0.5"
+rayon = "1.0.1"
+serde = { version = "1", features = ["serde_derive"] }
+shred = { version = "0.7" }
+shred-derive = { version = "0.5" }
+ron = "0.2"
+thread_profiler = { version = "0.1", optional = true }
+
+[dev-dependencies]
+
+[features]
+profiler = [ "thread_profiler/thread_profiler" ]
+nightly = [ "amethyst_core/nightly" ]

@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Custom GameData - Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html" class="active"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="game_data.html#custom-gamedata" id="custom-gamedata"><h1>Custom <code>GameData</code></h1></a>
+<p>So far we've been using the <code>Amethyst</code> supplied <code>GameData</code> struct to handle
+our <code>System</code>s. This works well for smaller games and demos, but once we
+start building a larger game, we will quickly realise we need to
+manipulate the <code>System</code> dispatch based on game <code>State</code>, or we need to pass
+data between <code>State</code>s that aren't <code>Send + Sync</code> which can't be added to <code>World</code>.</p>
+<p>The solution to our troubles here is to create a custom <code>GameData</code> structure
+to house what we need that can not be added to <code>World</code>.</p>
+<p>In this tutorial we will look at how one could structure a <code>Paused</code> <code>State</code>,
+which disables the game logic, only leaving a few core systems running that
+are essential (like rendering, input and UI).</p>
+<p>Let's start by creating the <code>GameData</code> structure:</p>
+<pre><code class="language-rust ignore">pub struct CustomGameData&lt;'a, 'b&gt; {
+    core_dispatcher: Dispatcher&lt;'a, 'b&gt;,
+    running_dispatcher: Dispatcher&lt;'a, 'b&gt;,
+}
+</code></pre>
+<p>We also add a utility function for performing dispatch:</p>
+<pre><code class="language-rust ignore">impl&lt;'a, 'b&gt; CustomGameData&lt;'a, 'b&gt; {
+    /// Update game data
+    pub fn update(&amp;mut self, world: &amp;World, running: bool) {
+        if running {
+            self.running_dispatcher.dispatch(&amp;world.res);
+        }
+        self.core_dispatcher.dispatch(&amp;world.res);
+    }
+}
+</code></pre>
+<p>To be able to use this structure with <code>Amethyst</code>s <code>Application</code> we need to create
+a builder that implements <code>DataInit</code>. This is the only requirement placed on the
+<code>GameData</code> structure.</p>
+<pre><code class="language-rust ignore">pub struct CustomGameDataBuilder&lt;'a, 'b&gt; {
+    pub core: DispatcherBuilder&lt;'a, 'b&gt;,
+    pub running: DispatcherBuilder&lt;'a, 'b&gt;,
+}
+
+impl&lt;'a, 'b&gt; Default for CustomGameDataBuilder&lt;'a, 'b&gt; {
+    fn default() -&gt; Self {
+        CustomGameDataBuilder::new()
+    }
+}
+
+impl&lt;'a, 'b&gt; CustomGameDataBuilder&lt;'a, 'b&gt; {
+    pub fn new() -&gt; Self {
+        CustomGameDataBuilder {
+            core: DispatcherBuilder::new(),
+            running: DispatcherBuilder::new(),
+        }
+    }
+
+    pub fn with_base_bundle&lt;B&gt;(mut self, bundle: B) -&gt; Result&lt;Self&gt;
+    where
+        B: SystemBundle&lt;'a, 'b&gt;,
+    {
+        bundle
+            .build(&amp;mut self.core)
+            .map_err(|err| Error::Core(err))?;
+        Ok(self)
+    }
+
+    pub fn with_running&lt;S&gt;(mut self, system: S, name: &amp;str, dependencies: &amp;[&amp;str]) -&gt; Self
+    where
+        for&lt;'c&gt; S: System&lt;'c&gt; + Send + 'a,
+    {
+        self.running.add(system, name, dependencies);
+        self
+    }
+}
+
+impl&lt;'a, 'b&gt; DataInit&lt;CustomGameData&lt;'a, 'b&gt;&gt; for CustomGameDataBuilder&lt;'a, 'b&gt; {
+    fn build(self, world: &amp;mut World) -&gt; CustomGameData&lt;'a, 'b&gt; {
+        let pool = world.read_resource::&lt;ThreadPool&gt;().clone();
+
+        let mut core_dispatcher = self.core.with_pool(pool.clone()).build();
+        let mut running_dispatcher = self.running.with_pool(pool.clone()).build();
+        core_dispatcher.setup(&amp;mut world.res);
+        running_dispatcher.setup(&amp;mut world.res);
+
+        CustomGameData { core_dispatcher, running_dispatcher }
+    }
+}
+</code></pre>
+<p>We can now use <code>CustomGameData</code> in place of the provided <code>GameData</code> when building
+our <code>Application</code>, but first we should create some <code>State</code>s.</p>
+<pre><code class="language-rust ignore">struct Main;
+struct Paused;
+
+impl&lt;'a, 'b&gt; State&lt;CustomGameData&lt;'a, 'b&gt;&gt; for Paused {
+    fn on_start(&amp;mut self, data: StateData&lt;CustomGameData&gt;) {
+        create_paused_ui(data.world);
+    }
+
+    fn handle_event(
+        &amp;mut self,
+        data: StateData&lt;CustomGameData&gt;,
+        event: Event,
+    ) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        if is_close_requested(&amp;event) || is_key(&amp;event, VirtualKeyCode::Escape) {
+            Trans::Quit
+        } else if is_key(&amp;event, VirtualKeyCode::Space) {
+            delete_paused_ui(data.world);
+            Trans::Pop
+        } else {
+            Trans::None
+        }
+    }
+
+    fn update(&amp;mut self, data: StateData&lt;CustomGameData&gt;) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        data.data.update(&amp;data.world, false); // false to say we should not dispatch running
+        Trans::None
+    }
+}
+
+impl&lt;'a, 'b&gt; State&lt;CustomGameData&lt;'a, 'b&gt;&gt; for Main {
+    fn on_start(&amp;mut self, data: StateData&lt;CustomGameData&gt;) {
+        initialise(data.world);
+    }
+
+    fn handle_event(
+        &amp;mut self,
+        _: StateData&lt;CustomGameData&gt;,
+        event: Event,
+    ) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        if is_close_requested(&amp;event) || is_key(&amp;event, VirtualKeyCode::Escape) {
+            Trans::Quit
+        } else if is_key(&amp;event, VirtualKeyCode::Space) {
+            Trans::Push(Box::new(Paused))
+        } else {
+            Trans::None
+        }
+    }
+
+    fn update(&amp;mut self, data: StateData&lt;CustomGameData&gt;) -&gt; Trans&lt;CustomGameData&lt;'a, 'b&gt;&gt; {
+        data.data.update(&amp;data.world, true); // true to say we should dispatch running
+        Trans::None
+    }
+}
+</code></pre>
+<p>The only thing that remains now is to use our <code>CustomGameDataBuilder</code> when building the
+<code>Application</code>.</p>
+<pre><code class="language-rust ignore">    let game_data = CustomGameDataBuilder::default()
+        .with_running::&lt;ExampleSystem&gt;(ExampleSystem, &quot;example_system&quot;, &amp;[])
+        .with_base_bundle(TransformBundle::new())?
+        .with_base_bundle(UiBundle::&lt;String, String&gt;::new())?
+        .with_base_bundle(RenderBundle::new(pipeline_builder, Some(display_config)))?
+        .with_base_bundle(InputBundle::&lt;String, String&gt;::new())?;
+
+    let mut game = Application::new(resources_directory, Main, game_data)?;
+    game.run();
+</code></pre>
+<p>Those are the basics of creating a custom <code>GameData</code> structure. Now get out there and
+build your game!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="animation/definition.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="glossary.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="animation/definition.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="glossary.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

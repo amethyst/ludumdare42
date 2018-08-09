@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction - Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div style="display:inline-block;width:100%">
+    <img src="./images/amethyst_thumb.png" alt="Logo" width="96px" style="float:left;margin-right:15px"/>
+    <a class="header" href="intro.html#the-amethyst-engine" id="the-amethyst-engine"><h1>The Amethyst Engine</h1></a>
+</div>
+<a class="header" href="intro.html#presentation" id="presentation"><h2>Presentation</h2></a>
+<p>Howdy! This book will teach you everything you need to know about building video
+games and interactive simulations with the Amethyst game engine. This engine is
+written entirely in <a href="https://www.rust-lang.org/">Rust</a>, a safe and fast systems programming language,
+and sports a clean and modern design. More correctly, though, Amethyst is
+actually a suite of separate libraries and tools that collectively make up a
+game engine.</p>
+<p>Amethyst is free and open source software, distributed under a dual license of <a href="https://github.com/amethyst/amethyst/blob/master/LICENSE-MIT">MIT</a>
+and <a href="https://github.com/amethyst/amethyst/blob/master/LICENSE-APACHE">Apache</a>. This means that the engine is given to you at no cost
+and its source code is completely yours to tinker with. The code is available on
+<a href="https://github.com/amethyst/amethyst/tree/master">GitHub</a>. Contributions and feature requests will always be welcomed!</p>
+<a class="header" href="intro.html#getting-started" id="getting-started"><h2>Getting started</h2></a>
+<p>This book is split into three sections (more coming). This page is the first. The others are:</p>
+<ul>
+<li><a href="./getting_started.html">Getting Started</a> – Prepare your computer for Amethyst development.</li>
+<li><a href="./pong_tutorial.html">Pong Tutorial</a> – Build a basic pong game in Rust.</li>
+<li><a href="./glossary.html">Glossary</a> - Defines special terms used throughout the book.</li>
+</ul>
+<p>Read the crate-level <a href="https://www.amethyst.rs/doc/master/doc/amethyst/index.html">API documentation</a> for more details.</p>
+<blockquote>
+<p>Please note that the default github branch is <a href="https://github.com/amethyst/amethyst/">develop</a>, while the documentation in this document is based on the master/release branch.
+The documentation for the develop branch is located <a href="https://www.amethyst.rs/doc/develop/doc/amethyst/index.html">here</a>.</p>
+</blockquote>
+<a class="header" href="intro.html#motivation" id="motivation"><h2>Motivation</h2></a>
+<p>Most of us have worked with quite a few game engines over the years, namely <a href="http://unity3d.com/">Unity</a>, <a href="https://www.unrealengine.com/">Unreal Engine</a>, <a href="http://jmonkeyengine.org/">JMonkeyEngine</a> and many more.
+While they all are pretty solid solutions if you want to
+build a quality game, each have their own pros and cons that you have to
+weigh before using them, especially in regards to performance and scalability.</p>
+<p>We think that basing the amethyst engine on good and modern principles will allow us to make an open source game engine that can actually be more performant than those engines.
+Those principles are:</p>
+<ol>
+<li>
+<p>Modularity.</p>
+<p>Modularity is at the core of the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">Unix philosophy</a>, which proved itself to be an excellent way of developing software over the years.
+You will always be free to use the built-in modules, or to write your own and integrate them easily into the engine.
+Since modules are small and well integrated, it is easier to reason about what they do and how they relate to other modules.</p>
+</li>
+<li>
+<p>Parallelism.</p>
+<p>Modern computers, even cheap ones, all have multithread/multicores CPU. With the years, there will be more and more opportunities for parallelism to improve performance.
+With a proper parallel engine, we are convinced that your game will be more and more performant over the years without even needing you to update it.</p>
+</li>
+<li>
+<p>Data-oriented/Data-driven.</p>
+<p>Building your game around the data makes it really easy to prototype and quickly build a game.
+Complex behaviours like swapping assets during gameplay become a breeze, making testing and balancing a lot faster.</p>
+</li>
+</ol>
+<a class="header" href="intro.html#contributing" id="contributing"><h2>Contributing</h2></a>
+<p>We are always happy to welcome new contributors!</p>
+<p>If you want to contribute, or have questions, let us know either on <a href="https://github.com/amethyst/amethyst/">GitHub</a> or on <a href="https://gitter.im/amethyst/general/">Gitter</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="getting_started.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a href="getting_started.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

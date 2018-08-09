@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Glossary - Amethyst Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><a href="pong_tutorial.html"><strong aria-hidden="true">3.</strong> Pong Tutorial</a></li><li><ol class="section"><li><a href="pong_tutorial/pong_tutorial_01.html"><strong aria-hidden="true">3.1.</strong> Opening (and closing!) a window</a></li><li><a href="pong_tutorial/pong_tutorial_02.html"><strong aria-hidden="true">3.2.</strong> Drawing the paddles</a></li><li><a href="pong_tutorial/pong_tutorial_03.html"><strong aria-hidden="true">3.3.</strong> Moving the paddles</a></li></ol></li><li><a href="animation.html"><strong aria-hidden="true">4.</strong> Animation</a></li><li><ol class="section"><li><a href="animation/interpolation.html"><strong aria-hidden="true">4.1.</strong> Interpolation</a></li><li><a href="animation/channel.html"><strong aria-hidden="true">4.2.</strong> Channel</a></li><li><a href="animation/sampler.html"><strong aria-hidden="true">4.3.</strong> Sampler</a></li><li><a href="animation/definition.html"><strong aria-hidden="true">4.4.</strong> Definition</a></li></ol></li><li><a href="game_data.html"><strong aria-hidden="true">5.</strong> Custom GameData</a></li><li><a href="glossary.html" class="active"><strong aria-hidden="true">6.</strong> Glossary</a></li><li><a href="appendices/a_config_files.html"><strong aria-hidden="true">7.</strong> Appendix A: Config Files</a></li><li><ol class="section"><li><a href="appendices/a_config_files/arena_config.html"><strong aria-hidden="true">7.1.</strong> Adding an Arena Config</a></li><li><a href="appendices/a_config_files/ball_config.html"><strong aria-hidden="true">7.2.</strong> Adding a Ball Config</a></li><li><a href="appendices/a_config_files/paddle_configs.html"><strong aria-hidden="true">7.3.</strong> Adding Paddle Configs</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Amethyst Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="glossary.html#glossary" id="glossary"><h1>Glossary</h1></a>
+<a class="header" href="glossary.html#data-driven-design" id="data-driven-design"><h2>Data-driven design</h2></a>
+<p>Describes a program that has its logic defined largely in data rather than in
+compiled code. Ideally, this would permit the user to edit their code and
+resources using offline tools and have the program hot-reload the changes at
+run-time for instant feedback without the need for recompilation. The bare
+minimum qualification for a data-driven program is the ability to read external
+content (text files, scripts, byte streams) and mutate its behavior accordingly.</p>
+<a class="header" href="glossary.html#data-oriented-programming" id="data-oriented-programming"><h2>Data-oriented programming</h2></a>
+<p>Not to be confused with data-driven design, data-oriented programming is a
+programming paradigm, like object-oriented programming (OOP) or procedural
+programming. Where OOP focuses on modeling a problem in terms of interacting
+objects, and procedural programming tries to model a problem in terms of
+sequential or recursive steps or procedures, data-oriented programming shifts
+the focus towards the data being operated on: the data type, its memory layout,
+how it will be processed. Software written in a data-oriented manner tends
+toward high-throughput pipelining, modularity, separation of concerns, and
+massive parallelism. If architected correctly, data-oriented software can be
+very cache-friendly and easy to scale on systems with multiple cores.</p>
+<blockquote>
+<p>Note: Data-oriented programming does not necessarily imply that a program is
+data-driven. Data-driven behavior can be implemented with any programming
+approach you like.</p>
+</blockquote>
+<a class="header" href="glossary.html#entity-component-system-ecs-model" id="entity-component-system-ecs-model"><h2>Entity-component-system (ECS) model</h2></a>
+<p>Describes a game programming design pattern invented as a reaction to the
+deep-rooted problems with using <em>inheritance</em> (is-a relationship) to represent
+game objects, including the <a href="https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem">deadly diamond of death</a> and <a href="https://en.wikipedia.org/wiki/God_object">god objects</a>.
+The inheritance-based approach was especially common in the game industry during
+the 1990's and early 2000's.</p>
+<p>This alternative model makes use of <em>composition</em> (has-a relationship) instead
+of inheritance to represent objects in the game world, flattening the hierarchy
+and eliminating the problems above, while increasing flexibility. The holistic
+ECS approach is broken into three key pieces:</p>
+<ol>
+<li><em>Entity</em>: Represents a single object in the game world. Has no functionality
+on its own. The world owns a collection of entities (either in a flat list or
+a hierarchy). Each entity has a unique identifier or name, for the sake of
+ease of use.</li>
+<li><em>Component</em>: A plain-old-data structure that describes a certain trait an
+entity can have. Can be &quot;attached&quot; to entities to grant them certain
+abilities, e.g. a <code>Light</code> component contains parameters to make an entity
+glow, or a <code>Collidable</code> component can grant an entity collision detection
+properties. These components <em>do not</em> have any logic. They contain only data.</li>
+<li><em>System</em>: This is where the magic happens! Systems are centralized game engine
+subsystems that perform a specific function, such as rendering, physics, audio,
+etc. Every frame, they process each entity in the game world looking for
+components that are relevant to them, reading their contents, and performing
+actions. For example, a <code>Rendering</code> system could search for all entities that have
+<code>Light</code>, <code>Mesh</code>, or <code>Emitter</code> components and draw them to the screen.</li>
+</ol>
+<p>This approach could potentially be stretched to fit the model-view-controller
+(MVC) paradigm popular in GUI and Web development circles: entities and
+components together represent the model, and systems represent either views
+(<code>Rendering</code>, <code>Audio</code>) or controllers (<code>Input</code>, <code>AI</code>, <code>Physics</code>), depending on
+their purpose.</p>
+<p>Another great advantage of the ECS model is the ability to rapidly prototype
+a game simply by describing objects' characteristics in terms of creating
+entities and attaching components to them, with very little game code involved.
+And all of this data can be easily serialized or de-serialized into a
+human-friendly plain text format like <a href="http://www.yaml.org/">YAML</a> (what we use) or <a href="http://www.json.org/">JSON</a>.</p>
+<p>For more detailed explanations of entity-component-system designs, please
+<a href="https://www.reddit.com/r/rust/comments/43p2fq/this_week_in_amethyst_3/czkc4hj">see this great post on Reddit</a> and <a href="http://gamedev.stackexchange.com/questions/31473/what-is-the-role-of-systems-in-a-component-based-entity-architecture/31491#31491">this Stack Overflow answer</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="game_data.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="appendices/a_config_files.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="game_data.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="appendices/a_config_files.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>
