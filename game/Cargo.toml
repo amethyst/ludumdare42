@@ -5,6 +5,4 @@ authors = ["The Amethyst team for Ludum Dare 42"]
 
 [dependencies]
 amethyst = { path = "../amethyst" }
-
-# Get your shit together jojo
-#amethyst-extra = { git = "https://github.com/jojolepro/amethyst-extra.git", rev = "00492145737fcd2b2e6a7ca543fd6e79ac84fe8e" }
+amethyst-extra = { git = "https://github.com/jojolepro/amethyst-extra.git" }
