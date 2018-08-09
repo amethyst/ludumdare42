@@ -35,7 +35,7 @@ fn main() -> Result<()> {
     amethyst::start_logger(Default::default());
     
     let asset_loader = AssetLoader::new(
-        &format!("{}/assets", working_dir()).to_string(),
+        &format!("{}/assets", get_working_dir()).to_string(),
         "base",
     );
     let display_config_path = asset_loader.resolve_path("config/display.ron").unwrap();
