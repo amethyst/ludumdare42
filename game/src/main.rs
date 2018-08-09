@@ -44,7 +44,7 @@ fn main() -> Result<()> {
     let pipe = Pipeline::build().with_stage(
         Stage::with_backbuffer()
             .clear_target([1.0, 0.0, 0.0, 1.0], 1.0)
-            .with_pass(DrawFlat::<PosTex>::new().with_transparency(ColorMask::all(), ALPHA, None)),
+            .with_pass(DrawSprite::new().with_transparency(ColorMask::all(), ALPHA, None))
     );
 
     let game_data_builder = GameDataBuilder::default()
