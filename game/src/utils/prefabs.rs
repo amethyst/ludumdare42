@@ -1,4 +1,5 @@
 use amethyst::assets::{AssetStorage, Loader, ProgressCounter, PrefabData, PrefabError};
+use amethyst::core::Transform;
 use amethyst::renderer::*;
 use amethyst::ecs::*;
 
@@ -68,5 +69,119 @@ impl<'a> PrefabData<'a> for SpriteRenderPrefab {
             flip_horizontal: self.flip_horizontal,
             flip_vertical: self.flip_vertical,
         }).map(|_| ())
+    }
+}
+
+/// Sprite scene prefab
+///
+/// Usage:
+///
+/// ```rust,ignore
+/// let prefab_handle = data.world.exec(|loader: PrefabLoader<SpriteScenePrefab>| {
+///     loader.load("prefab.ron", RonFormat, (), ())
+/// });
+/// data.world.create_entity().with(prefab_handle).build();
+/// ```
+///
+/// ```ron,ignore
+/// #![enable(implicit_some)]
+/// Prefab (
+///     entities: [
+///         (
+///             data: (
+///                 sprite_sheets: [
+///                     (
+///                         id: 0,
+///                         texture: (0, File("texture.png", Png, ())),
+///                         sprites: [
+///                             (
+///                                 left: 0,
+///                                 right: 1,
+///                                 bottom: 0,
+///                                 top: 1,
+///                             ),
+///                         ],
+///                     ),
+///                 ],
+///             ),
+///         ),
+///         (
+///             data: (
+///                 sprite: (
+///                     sheet: 0,
+///                     sprite_number: 0,
+///                     flip_horizontal: false,
+///                     flip_vertical: false,
+///                 ),
+///                 transform: (
+///                     translation: (
+///                         x: 4,
+///                         y, 1,
+///                         z: 0,
+///                     ),
+///                 ),
+///             ),
+///         ),
+///     ]
+/// )
+/// ```
+#[derive(Serialize, Deserialize)]
+#[serde(default)]
+pub struct SpriteScenePrefab {
+    sprite_sheets: Vec<SpriteSheetPrefab>,
+    sprite: Option<SpriteRenderPrefab>,
+    transform: Option<Transform>,
+}
+
+impl Default for SpriteScenePrefab {
+    fn default() -> Self {
+        SpriteScenePrefab {
+            sprite_sheets: Vec::new(),
+            sprite: None,
+            transform: None,
+        }
+    }
+}
+
+impl<'a> PrefabData<'a> for SpriteScenePrefab {
+    type SystemData = (
+        <SpriteSheetPrefab as PrefabData<'a>>::SystemData,
+        <SpriteRenderPrefab as PrefabData<'a>>::SystemData,
+        <Transform as PrefabData<'a>>::SystemData,
+    );
+    type Result = ();
+
+    fn load_prefab(
+        &self,
+        entity: Entity,
+        system_data: &mut Self::SystemData,
+        entities: &[Entity],
+    ) -> Result<(), PrefabError> {
+        for sprite_sheet in &self.sprite_sheets {
+            sprite_sheet.load_prefab(entity, &mut system_data.0, entities)?;
+        }
+        self.sprite.load_prefab(entity, &mut system_data.1, entities)?;
+        self.transform.load_prefab(entity, &mut system_data.2, entities)?;
+        Ok(())
+    }
+
+    fn trigger_sub_loading(
+        &mut self,
+        progress: &mut ProgressCounter,
+        system_data: &mut Self::SystemData,
+    ) -> Result<bool, PrefabError> {
+        let mut ret = false;
+        for sprite_sheet in &mut self.sprite_sheets {
+            if sprite_sheet.trigger_sub_loading(progress, &mut system_data.0)? {
+                ret = true;
+            }
+        }
+        if self.sprite.trigger_sub_loading(progress, &mut system_data.1)? {
+            ret = true;
+        }
+        if self.transform.trigger_sub_loading(progress, &mut system_data.2)? {
+            ret = true;
+        }
+        Ok(ret)
     }
 }
