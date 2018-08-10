@@ -22,11 +22,11 @@ pub struct ChangeControlListener;
 
 impl<'a> System<'a> for ChangeControlListener {
     type SystemData = (
-        Read<'a, ChangeControl>,
+        Write<'a, ChangeControl>,
         Write<'a, InputHandler<String, String>>,
     );
 
-    fn run(&mut self, (change, mut handler): Self::SystemData) {
+    fn run(&mut self, (mut change, mut handler): Self::SystemData) {
         if let ChangeControl::None = *change {
             return;
         }
@@ -83,6 +83,7 @@ impl<'a> System<'a> for ChangeControlListener {
                     .bindings
                     .insert_action_binding(name.clone(), Button::Key(new_key));
             }
+            *change = ChangeControl::None;
         }
     }
 }
