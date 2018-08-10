@@ -1,3 +1,5 @@
 game/target
 amethyst/target
 **/*.rs.bk
+**/export.zip
+**/.idea/
