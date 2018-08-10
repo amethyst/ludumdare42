@@ -77,6 +77,7 @@ fn main() -> Result<()> {
             "visibility",
             &["transform_system"],
         )
+        .with(ChangeControlListener, "change_control", &[])
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
