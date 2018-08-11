@@ -69,9 +69,10 @@ impl<'a> System<'a> for ScoreMenuAnimation {
                 }
                 if let Some(text) = text_store.get_mut(entities.score) {
                     text.color[3] = 1.0;
+                    text.text = entities.target_score.to_string();
                 }
-                if let Some(text) = text_store.get_mut(entities.grade) {
-                    text.color[3] = 1.0;
+                if let Some(icon) = transf_store.get_mut(entities.grade) {
+                    icon.anchor = Anchor::Middle;
                 }
                 if let Some(text) = text_store.get_mut(entities.comment) {
                     text.color[3] = 1.0;
@@ -144,8 +145,8 @@ impl<'a> System<'a> for ScoreMenuAnimation {
                                     audio_output.as_ref().map(|o| o.deref()),
                                 );
                             }
-                            if let Some(text) = text_store.get_mut(entities.grade) {
-                                text.color[3] = 1.0;
+                            if let Some(icon) = transf_store.get_mut(entities.grade) {
+                                icon.anchor = Anchor::Middle;
                             }
                             if let Some(text) = text_store.get_mut(entities.comment) {
                                 text.color[3] = 1.0;
@@ -166,7 +167,7 @@ impl<'a> System<'a> for ScoreMenuAnimation {
     }
 
     fn setup(&mut self, mut res: &mut Resources) {
-        use amethyst::audio::{OggFormat};
+        use amethyst::audio::OggFormat;
 
         Self::SystemData::setup(&mut res);
         let loader = res.fetch::<AssetLoader>();

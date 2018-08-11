@@ -1,11 +1,11 @@
 use amethyst::input::{get_key, is_close_requested, is_key_down};
 use amethyst::prelude::Builder;
-use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
-use amethyst::ui::{Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiText, UiCreator, UiTransform};
+use amethyst::renderer::{ElementState, Event, PngFormat, Texture, VirtualKeyCode};
+use amethyst::ui::{Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiImage, UiText, UiTransform};
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
-use data::{GameplayResult, GameplayStatus, ResultEntities};
+use data::{GameplayResult, GameplayStatus, HitResult, ResultEntities};
 
 /// Where the player is running out of space
 #[derive(Default)]
@@ -15,6 +15,46 @@ impl ScoreState {
     /// Creates a new ScoreState.
     pub fn new() -> Self {
         ScoreState
+    }
+}
+
+fn compute_score(result: &GameplayResult) -> u32 {
+    let mut score = 0;
+    for (_, h) in &result.results {
+        score += match h {
+            HitResult::Hit => 1000,
+            HitResult::MissKey => 100,
+            HitResult::MissEarly | HitResult::MissLate => 10,
+        };
+    }
+    return score;
+}
+
+enum Grade {
+    A,
+    B,
+    C,
+    S,
+    F,
+}
+
+fn compute_grade(result: &GameplayResult) -> Grade {
+    let mut successes = 0;
+    for (_, h) in &result.results {
+        successes += match h {
+            HitResult::Hit => 1,
+            _ => 0,
+        };
+    }
+    let ratio = successes as f32 / result.results.len() as f32;
+    if ratio < 0.50 {
+        Grade::C
+    } else if ratio < 0.80 {
+        Grade::B
+    } else if ratio < 0.97 {
+        Grade::A
+    } else {
+        Grade::S
     }
 }
 
@@ -34,21 +74,104 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                 &mut world.write_resource(),
                 &mut world.read_resource(),
             )
-            .expect("Failed to load font.");
+            .expect("Failed to load font");
 
-        /*world.exec(|mut creator: UiCreator| {
-            creator.create("assets/base/prefabs/example.ron", ());
-        });*/
+        let result = world.read_resource::<GameplayResult>().clone();
 
-        /*let result = world.read_resource::<GameplayResult>().clone();
-        let title_text = if result.status == GameplayStatus::Completed {
-            "Congratulations!".to_owned()
+        let (title_text, grade) = if result.status == GameplayStatus::Completed {
+            ("Congratulations!".to_owned(), compute_grade(&result))
         } else {
-            "Oh no!".to_owned()
-        };*/
+            ("Oh no!".to_owned(), Grade::F)
+        };
 
-        let title_text = "MISSION FAILED".to_owned();
-        
+        let (grade, comment) = match grade {
+            Grade::C => (
+                {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            "ui/C_rank.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load rank C")
+                        .clone()
+                },
+                "That's a start".to_owned(),
+            ),
+            Grade::B => (
+                {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            "ui/B_rank.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load rank B")
+                        .clone()
+                },
+                "Okay!".to_owned(),
+            ),
+            Grade::A => (
+                {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            "ui/A_rank.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load rank A")
+                        .clone()
+                },
+                "Not bad!".to_owned(),
+            ),
+            Grade::S => (
+                {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            "ui/S_rank.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load rank S")
+                        .clone()
+                },
+                "Awesome!".to_owned(),
+            ),
+            Grade::F => (
+                {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            "ui/F_rank.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load rank F")
+                        .clone()
+                },
+                "".to_owned(),
+            ),
+        };
+
         let title = world
             .create_entity()
             .with(UiText::new(
@@ -57,16 +180,18 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                 [1.0, 1.0, 1.0, 0.0],
                 50.0,
             ))
-            .with(UiTransform::new(
-                "title".to_owned(),
-                Anchor::Middle,
-                20.0,
-                -100.0,
-                -3.0,
-                500.0,
-                50.0,
-                2,
-            ).as_transparent())
+            .with(
+                UiTransform::new(
+                    "title".to_owned(),
+                    Anchor::Middle,
+                    20.0,
+                    -100.0,
+                    -3.0,
+                    500.0,
+                    50.0,
+                    2,
+                ).as_transparent(),
+            )
             .build();
 
         let score_text = world
@@ -77,16 +202,18 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                 [1.0, 1.0, 1.0, 0.0],
                 25.0,
             ))
-            .with(UiTransform::new(
-                "score_text".to_owned(),
-                Anchor::Middle,
-                20.0,
-                -20.0,
-                -3.0,
-                500.0,
-                25.0,
-                2,
-            ).as_transparent())
+            .with(
+                UiTransform::new(
+                    "score_text".to_owned(),
+                    Anchor::Middle,
+                    20.0,
+                    -20.0,
+                    -3.0,
+                    500.0,
+                    25.0,
+                    2,
+                ).as_transparent(),
+            )
             .build();
 
         let score = world
@@ -97,63 +224,107 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                 [1.0, 1.0, 1.0, 0.0],
                 25.0,
             ))
-            .with(UiTransform::new(
-                "score".to_owned(),
-                Anchor::Middle,
-                100.0,
-                -20.0,
-                -3.0,
-                500.0,
-                25.0,
-                2,
-            ).as_transparent())
+            .with(
+                UiTransform::new(
+                    "score".to_owned(),
+                    Anchor::Middle,
+                    100.0,
+                    -20.0,
+                    -3.0,
+                    500.0,
+                    25.0,
+                    2,
+                ).as_transparent(),
+            )
             .build();
 
         let comment = world
             .create_entity()
             .with(UiText::new(
                 font.clone(),
-                "Okay!".to_owned(),
+                comment,
                 [1.0, 1.0, 1.0, 0.0],
                 25.0,
             ))
-            .with(UiTransform::new(
-                "comment".to_owned(),
-                Anchor::Middle,
-                20.0,
-                20.0,
-                -3.0,
-                500.0,
-                25.0,
-                2,
-            ).as_transparent())
+            .with(
+                UiTransform::new(
+                    "comment".to_owned(),
+                    Anchor::Middle,
+                    20.0,
+                    20.0,
+                    -3.0,
+                    500.0,
+                    25.0,
+                    2,
+                ).as_transparent(),
+            )
             .build();
 
         let grade = world
             .create_entity()
-            .with(UiText::new(
-                font.clone(),
-                "X".to_owned(),
-                [1.0, 1.0, 1.0, 0.0],
-                300.0,
-            ))
-            .with(UiTransform::new(
-                "grade".to_owned(),
-                Anchor::Middle,
-                275.0,
-                50.0,
-                -3.0,
-                500.0,
-                300.0,
-                2,
-            ).as_transparent())
+            .with(UiImage { texture: grade })
+            .with(
+                UiTransform::new(
+                    "grade".to_owned(),
+                    Anchor::MiddleRight,
+                    110.0,
+                    40.0,
+                    -3.0,
+                    175.0,
+                    175.0,
+                    2,
+                ).as_transparent(),
+            )
             .build();
 
-        let retry_button = UiButtonBuilder::new("score_retry_button", "Retry")
+        let retry = {
+            world
+                .write_resource::<AssetLoader>()
+                .load(
+                    "ui/retry.png",
+                    PngFormat,
+                    Default::default(),
+                    &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                    &mut world.write_resource(),
+                    &mut world.read_resource(),
+                )
+                .expect("Failed to load retry")
+                .clone()
+        };
+        let retry_hover = {
+            world
+                .write_resource::<AssetLoader>()
+                .load(
+                    "ui/retry_hover.png",
+                    PngFormat,
+                    Default::default(),
+                    &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                    &mut world.write_resource(),
+                    &mut world.read_resource(),
+                )
+                .expect("Failed to load retry hover")
+                .clone()
+        };
+        let retry_press = {
+            world
+                .write_resource::<AssetLoader>()
+                .load(
+                    "ui/retry_press.png",
+                    PngFormat,
+                    Default::default(),
+                    &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                    &mut world.write_resource(),
+                    &mut world.read_resource(),
+                )
+                .expect("Failed to load retry press")
+                .clone()
+        };
+
+        let retry_button = UiButtonBuilder::new("score_retry_button", "")
             .with_position(-170.0, 110.0)
-            .with_text_color([0.0, 0.0, 0.0, 1.0])
-            .with_hover_text_color([1.0; 4])
-            .with_press_text_color([0.5; 4])
+            .with_image(retry)
+            .with_hover_image(retry_hover)
+            .with_press_image(retry_press)
             .with_font_size(25.0)
             .with_tab_order(0)
             .with_anchor(Anchor::BottomMiddle)
@@ -161,11 +332,54 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             .with_size(100.0, 32.0)
             .build_from_world(world);
 
-        let menu_button = UiButtonBuilder::new("score_menu_button", "Menu")
+        let menu = {
+            world
+                .write_resource::<AssetLoader>()
+                .load(
+                    "ui/menu.png",
+                    PngFormat,
+                    Default::default(),
+                    &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                    &mut world.write_resource(),
+                    &mut world.read_resource(),
+                )
+                .expect("Failed to load menu")
+                .clone()
+        };
+        let menu_hover = {
+            world
+                .write_resource::<AssetLoader>()
+                .load(
+                    "ui/menu_hover.png",
+                    PngFormat,
+                    Default::default(),
+                    &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                    &mut world.write_resource(),
+                    &mut world.read_resource(),
+                )
+                .expect("Failed to load menu hover")
+                .clone()
+        };
+        let menu_press = {
+            world
+                .write_resource::<AssetLoader>()
+                .load(
+                    "ui/menu_press.png",
+                    PngFormat,
+                    Default::default(),
+                    &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                    &mut world.write_resource(),
+                    &mut world.read_resource(),
+                )
+                .expect("Failed to load menu press")
+                .clone()
+        };
+
+        let menu_button = UiButtonBuilder::new("score_menu_button", "")
             .with_position(-50.0, 110.0)
-            .with_text_color([0.0, 0.0, 0.0, 1.0])
-            .with_hover_text_color([1.0; 4])
-            .with_press_text_color([0.5; 4])
+            .with_image(menu)
+            .with_hover_image(menu_hover)
+            .with_press_image(menu_press)
             .with_font_size(25.0)
             .with_tab_order(1)
             .with_anchor(Anchor::BottomMiddle)
@@ -182,7 +396,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             menu_button,
             retry_button,
 
-            target_score: 1234567,
+            target_score: 12345//compute_score(&result),
         });
     }
 
