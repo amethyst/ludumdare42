@@ -1,3 +1,4 @@
+use amethyst::core::Transform;
 use amethyst::ecs::prelude::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
@@ -7,6 +8,7 @@ use CameraFollowPlayerSystem;
 use GameplayInputSystem;
 use GameplayResult;
 use GameplayStatus;
+use Player;
 use ScoreState;
 
 /// Where the player is running out of space
@@ -18,6 +20,9 @@ pub struct GamePlayState {
     /// Whether or not the game is paused.
     #[new(value = "false")]
     paused: bool,
+    /// All entities in game.
+    #[new(default)]
+    entities: Vec<Entity>,
 }
 
 impl GamePlayState {
@@ -40,15 +45,37 @@ impl GamePlayState {
     fn terminate_dispatcher(&mut self) {
         self.dispatcher = None;
     }
+
+    fn initialize_entities(&mut self, world: &mut World) {
+        let player = world
+            .create_entity()
+            .with(Player::default())
+            .with(Transform::default())
+            .build();
+
+        self.entities.push(player);
+    }
+
+    fn terminate_entities(&mut self, world: &mut World) {
+        self.entities.drain(..).for_each(|entity| {
+            world
+                .delete_entity(entity)
+                .expect("Failed to delete game entity.")
+        });
+    }
 }
 
 impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting GamePlayState");
         self.initialize_dispatcher(&mut data.world);
+        self.initialize_entities(&mut data.world);
+
+        // TODO: create beat points from BeatMap
     }
 
-    fn on_stop(&mut self, data: StateData<GameData>) {
+    fn on_stop(&mut self, mut data: StateData<GameData>) {
+        self.terminate_entities(&mut data.world);
         self.terminate_dispatcher();
     }
 
