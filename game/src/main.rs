@@ -46,8 +46,9 @@ fn main() -> Result<()> {
 
     let pipe = Pipeline::build().with_stage(
         Stage::with_backbuffer()
-            .clear_target([1.0, 0.0, 0.0, 1.0], 1.0)
-            .with_pass(DrawSprite::new().with_transparency(ColorMask::all(), ALPHA, None)),
+            .clear_target([0.05, 0.1, 0.2, 1.0], 1.0)
+            .with_pass(DrawSprite::new().with_transparency(ColorMask::all(), ALPHA, None))
+            .with_pass(DrawUi::new()),
     );
 
     let game_data_builder = GameDataBuilder::default()
@@ -78,8 +79,9 @@ fn main() -> Result<()> {
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
-    Application::build(resources_directory, MapSelectionState)?
+    Application::build(resources_directory, MapSelectionState::new())?
         .with_resource(asset_loader)
+        .with_resource(AssetLoaderInternal::<FontAsset>::new())
         .build(game_data_builder)?
         .run();
     Ok(())
