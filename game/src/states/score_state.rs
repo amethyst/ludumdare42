@@ -1,20 +1,33 @@
+use amethyst::ecs::*;
 use amethyst::input::{get_key, is_close_requested, is_key_down};
 use amethyst::prelude::Builder;
 use amethyst::renderer::{ElementState, Event, PngFormat, Texture, VirtualKeyCode};
-use amethyst::ui::{Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiImage, UiText, UiTransform};
+use amethyst::shrev::EventChannel;
+use amethyst::ui::{
+    Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiEvent, UiEventType, UiImage, UiText,
+    UiTransform,
+};
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
-use data::{GameplayResult, GameplayStatus, HitResult, ResultEntities};
+use data::{GameplayCommand, GameplayResult, GameplayStatus, HitResult, ResultEntities};
 
 /// Where the player is running out of space
 #[derive(Default)]
-pub struct ScoreState;
+pub struct ScoreState {
+    ui_events: Option<ReaderId<UiEvent>>,
+    menu_button: Option<Entity>,
+    retry_button: Option<Entity>,
+}
 
 impl ScoreState {
     /// Creates a new ScoreState.
     pub fn new() -> Self {
-        ScoreState
+        ScoreState {
+            ui_events: None,
+            menu_button: None,
+            retry_button: None,
+        }
     }
 }
 
@@ -76,13 +89,15 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             )
             .expect("Failed to load font");
 
-        let result = world.read_resource::<GameplayResult>().clone();
+        //let result = world.read_resource::<GameplayResult>().clone();
 
-        let (title_text, grade) = if result.status == GameplayStatus::Completed {
+        /*let (title_text, grade) = if result.status == GameplayStatus::Completed {
             ("Congratulations!".to_owned(), compute_grade(&result))
         } else {
             ("Oh no!".to_owned(), Grade::F)
-        };
+        };*/
+
+        let (title_text, grade) = ("Congratulations!".to_owned(), Grade::S);
 
         let (grade, comment) = match grade {
             Grade::C => (
@@ -398,6 +413,15 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
 
             target_score: 12345//compute_score(&result),
         });
+
+        self.menu_button = Some(menu_button);
+        self.retry_button = Some(retry_button);
+
+        self.ui_events = Some(
+            world
+                .write_resource::<EventChannel<UiEvent>>()
+                .register_reader(),
+        );
     }
 
     fn handle_event(
@@ -415,8 +439,37 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
         }
     }
 
-    fn update(&mut self, data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
+    fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
         data.data.update(data.world);
-        Trans::None
+
+        let mut new_command: Option<GameplayCommand> = None;
+
+        for ev in data
+            .world
+            .read_resource::<EventChannel<UiEvent>>()
+            .read(&mut self.ui_events.as_mut().unwrap())
+        {
+            match ev.event_type {
+                UiEventType::Click => {
+                    if ev.target == self.retry_button.unwrap() {
+                        new_command = Some(GameplayCommand::Retry);
+                    } else {
+                        new_command = Some(GameplayCommand::BackToMenu);
+                    }
+                    break;
+                }
+                _ => {}
+            }
+        }
+
+        if let Some(command) = new_command {
+            cleanup(&mut data.world);
+            *data.world.write_resource::<GameplayCommand>() = command;
+            Trans::Pop
+        } else {
+            Trans::None
+        }
     }
 }
+
+fn cleanup(world: &mut World) {}
