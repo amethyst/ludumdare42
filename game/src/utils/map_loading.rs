@@ -16,7 +16,7 @@ pub fn list_directory(dir: &String) -> Vec<String> {
             String::from(
                 e.expect("Failed to read file path.")
                     .path()
-                    //.file_stem()
+                    .file_stem().unwrap()
                     .to_str()
                     .unwrap(),
             )
