@@ -1,0 +1,11 @@
+{
+    "name": "Test Map 01",
+    "music_path": "maps/test/audio.mp3",
+    "audio_offset": 0.0,
+    "beat_points": [
+        {"direction": Direction::Left, "time": 1.0},
+        {"direction": Direction::Right, "time": 2.0},
+        {"direction": Direction::Right, "time": 3.0},
+        {"direction": Direction::Up, "time": 4.0},
+    ]
+}

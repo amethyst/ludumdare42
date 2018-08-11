@@ -10,3 +10,4 @@ amethyst-rhusics = "0.2"
 log = "0.4.3"
 rand = "0.5.5"
 serde = { version = "1", features = ["serde_derive"] }
+ron = "0.3"
