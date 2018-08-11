@@ -19,6 +19,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting GamePlayState");
         // TODO: load maps / songs
+
     }
 
     fn handle_event(

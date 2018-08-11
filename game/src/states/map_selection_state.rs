@@ -121,6 +121,9 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
 
     fn update(&mut self, data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
         data.data.update(data.world);
+
+        
+
         Trans::None
     }
 }
