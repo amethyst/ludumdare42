@@ -9,7 +9,7 @@ impl Default for GameplayResult {
     fn default() -> Self {
         GameplayResult {
             results: vec![],
-            status: GameplayResult::Running,
+            status: GameplayStatus::Running,
         }
     }
 }

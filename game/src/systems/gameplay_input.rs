@@ -26,6 +26,7 @@ impl<'a> System<'a> for GameplayInputSystem {
         Write<'a, GameplayResult>,
     );
 
+    // TODO: Update player HP
     fn run(
         &mut self,
         (mut players, input, time, mut beatmap, mut gameplay_result): Self::SystemData,
