@@ -1,3 +1,5 @@
+#![feature(nll)]
+
 extern crate amethyst;
 extern crate amethyst_extra;
 #[macro_use]
@@ -78,14 +80,16 @@ fn main() -> Result<()> {
             &["transform_system"],
         ).with(ChangeControlListener, "change_control", &[])
         .with(MapSelectionUiEventHandlerSystem::new(), "map_selection_ui_event_handler_system", &["ui_button_system"])
+        .with(ScoreMenuAnimation::new(), "score_menu_animation", &[])
         //.with(CameraFollowPlayerSystem, "camera_follow_player", &[])
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
-    Application::build(resources_directory, MapSelectionState::new())?
+    Application::build(resources_directory, ScoreState::new())?
         .with_resource(asset_loader)
         .with_resource(AssetLoaderInternal::<FontAsset>::new())
         .with_resource(AssetLoaderInternal::<amethyst::audio::Source>::new())
+        .with_resource::<Option<ResultEntities>>(None)
         .build(game_data_builder)?
         .run();
     Ok(())

@@ -1,5 +1,6 @@
 use data::*;
 
+#[derive(Clone)]
 pub struct GameplayResult {
     pub results: Vec<(f64, HitResult)>,
     pub status: GameplayStatus,
