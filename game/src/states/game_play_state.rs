@@ -1,4 +1,4 @@
-use amethyst::input::{get_key, is_close_requested, is_key_down};
+use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 use amethyst::{GameData, State, StateData, Trans};
 
@@ -16,17 +16,12 @@ impl GamePlayState {
 }
 
 impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
-    fn on_start(&mut self, mut data: StateData<GameData>) {
+    fn on_start(&mut self, data: StateData<GameData>) {
         debug!("Starting GamePlayState");
         // TODO: load maps / songs
-
     }
 
-    fn handle_event(
-        &mut self,
-        mut data: StateData<GameData>,
-        event: Event,
-    ) -> Trans<GameData<'a, 'b>> {
+    fn handle_event(&mut self, data: StateData<GameData>, event: Event) -> Trans<GameData<'a, 'b>> {
         if is_close_requested(&event) {
             return Trans::Quit;
         }

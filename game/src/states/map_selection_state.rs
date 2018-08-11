@@ -1,27 +1,38 @@
 use amethyst::ecs::prelude::*;
-use amethyst::input::{get_key, is_close_requested, is_key_down};
+use amethyst::input::{is_close_requested, is_key_down};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
+use amethyst::shrev::{EventChannel, ReaderId};
 use amethyst::ui::{Anchor, FontAsset, FontHandle, TtfFormat, UiButtonBuilder};
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
-use utils::list_beatmaps;
+use super::map_selection::*;
+use utils::{list_beatmaps, load_beatmap};
 use GamePlayState;
+use MapSelectionEvent;
 
 /// Where the player chooses which song to play
-#[derive(Default)]
+#[derive(Default, new)]
 pub struct MapSelectionState {
+    #[new(default)]
+    map_selection_event_reader: Option<ReaderId<MapSelectionEvent>>,
+    #[new(default)]
     buttons: Vec<Entity>,
+    #[new(default)]
     font: Option<FontHandle>,
 }
 
 impl MapSelectionState {
-    /// Creates a new MapSelectionState.
-    pub fn new() -> Self {
-        MapSelectionState {
-            buttons: Vec::new(),
-            font: None,
-        }
+    fn initialize_map_selection_event_channel(&mut self, world: &mut World) {
+        let mut map_selection_event_channel = EventChannel::<MapSelectionEvent>::with_capacity(20);
+        let reader_id = map_selection_event_channel.register_reader();
+        self.map_selection_event_reader.get_or_insert(reader_id);
+
+        world.add_resource(map_selection_event_channel);
+    }
+
+    fn terminate_map_selection_event_channel(&mut self) {
+        self.map_selection_event_reader.take();
     }
 
     /// Reloads the beatmaps and recreates the menu.
@@ -49,7 +60,7 @@ impl MapSelectionState {
             .iter()
             .enumerate()
             .map(|(i, beatmap)| {
-                UiButtonBuilder::new(beatmap, beatmap)
+                let entity = UiButtonBuilder::new(beatmap, beatmap)
                     .with_position(0.0, 40.0 + 100.0 * (i as f32 + 1.0))
                     .with_text_color([0.7; 4])
                     .with_hover_text_color([1.0; 4])
@@ -58,7 +69,14 @@ impl MapSelectionState {
                     .with_tab_order(i as i32)
                     .with_anchor(Anchor::TopMiddle)
                     .with_font(font.clone())
-                    .build_from_world(world)
+                    .build_from_world(world);
+
+                let mut beatmap_button_storage = world.write_storage::<BeatmapButton>();
+                beatmap_button_storage
+                    .insert(entity, BeatmapButton::new(beatmap.clone()))
+                    .expect("Failed to insert beatmap_button component.");
+
+                entity
             })
             .collect::<Vec<Entity>>();
     }
@@ -75,6 +93,7 @@ impl MapSelectionState {
 impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting MapSelectionState");
+        self.initialize_map_selection_event_channel(&mut data.world);
         self.reload_menu(&mut data.world);
     }
 
@@ -89,41 +108,45 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
 
     fn on_stop(&mut self, mut data: StateData<GameData>) {
         self.clear_menu(&mut data.world);
+        self.terminate_map_selection_event_channel();
     }
 
-    fn handle_event(
-        &mut self,
-        mut data: StateData<GameData>,
-        event: Event,
-    ) -> Trans<GameData<'a, 'b>> {
+    fn handle_event(&mut self, data: StateData<GameData>, event: Event) -> Trans<GameData<'a, 'b>> {
         if is_close_requested(&event) || is_key_down(&event, VirtualKeyCode::Escape) {
             return Trans::Quit;
         }
-        match get_key(&event) {
-            Some((VirtualKeyCode::Up, ElementState::Pressed)) => {
-                // TODO: move to previous map / wrap around
-                Trans::None
-            }
-
-            Some((VirtualKeyCode::Down, ElementState::Pressed)) => {
-                // TODO: move to next map / wrap around
-                Trans::None
-            }
-
-            Some((VirtualKeyCode::Return, ElementState::Pressed)) => {
-                // TODO: insert map selection into `World`
-                Trans::Push(Box::new(GamePlayState::new()))
-            }
-
-            _ => Trans::None,
-        }
-    }
-
-    fn update(&mut self, data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
-        data.data.update(data.world);
-
-
 
         Trans::None
+    }
+
+    fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
+        data.data.update(data.world);
+
+        // sorry for bad memory management, but this is a game jam
+        let beatmap_name = {
+            let map_selection_event_channel = data
+                .world
+                .read_resource::<EventChannel<MapSelectionEvent>>();
+
+            let mut reader_id = self
+                .map_selection_event_reader
+                .as_mut()
+                .expect("Expected map_selection_event_reader to be set");
+
+            let mut storage_iterator = map_selection_event_channel.read(&mut reader_id);
+            storage_iterator.next().map(|event| match *event {
+                MapSelectionEvent::Select(ref beatmap_name) => beatmap_name.clone(),
+            })
+        };
+
+        if let Some(beatmap_name) = beatmap_name {
+            debug!("Beatmap selected: {}", &beatmap_name);
+            let beatmap = load_beatmap(beatmap_name, &mut data.world);
+            data.world.add_resource(beatmap.unwrap());
+
+            Trans::Push(Box::new(GamePlayState::new()))
+        } else {
+            Trans::None
+        }
     }
 }

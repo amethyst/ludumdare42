@@ -1,6 +1,8 @@
 extern crate amethyst;
 extern crate amethyst_extra;
 #[macro_use]
+extern crate derive_new;
+#[macro_use]
 extern crate log;
 extern crate rand;
 extern crate ron;
@@ -75,6 +77,7 @@ fn main() -> Result<()> {
             "visibility",
             &["transform_system"],
         ).with(ChangeControlListener, "change_control", &[])
+        .with(MapSelectionUiEventHandlerSystem::new(), "map_selection_ui_event_handler_system", &["ui_button_system"])
         //.with(CameraFollowPlayerSystem, "camera_follow_player", &[])
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
@@ -82,6 +85,7 @@ fn main() -> Result<()> {
     Application::build(resources_directory, MapSelectionState::new())?
         .with_resource(asset_loader)
         .with_resource(AssetLoaderInternal::<FontAsset>::new())
+        .with_resource(AssetLoaderInternal::<amethyst::audio::Source>::new())
         .build(game_data_builder)?
         .run();
     Ok(())

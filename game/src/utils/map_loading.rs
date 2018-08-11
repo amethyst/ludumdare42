@@ -1,9 +1,10 @@
 use std::fs;
-use amethyst_extra::AssetLoader;
 use std::fs::File;
-use amethyst::ecs::World;
-use amethyst::audio::Mp3Format;
 use std::io::Read;
+
+use amethyst::audio::Mp3Format;
+use amethyst::ecs::World;
+use amethyst_extra::AssetLoader;
 use ron::de::from_str;
 
 use data::*;

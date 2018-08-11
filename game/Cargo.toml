@@ -7,6 +7,7 @@ authors = ["The Amethyst team for Ludum Dare 42"]
 amethyst = { path = "../amethyst", features = ["nightly"] }
 amethyst-extra = { path = "../amethyst-extra" }
 amethyst-rhusics = "0.2"
+derive-new = "0.5"
 log = "0.4.3"
 rand = "0.5.5"
 serde = { version = "1", features = ["serde_derive"] }
