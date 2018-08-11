@@ -1,4 +1,3 @@
-
 pub enum HitResult {
     Hit,
     MissEarly,

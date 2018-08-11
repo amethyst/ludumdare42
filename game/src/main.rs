@@ -3,9 +3,9 @@ extern crate amethyst_extra;
 #[macro_use]
 extern crate log;
 extern crate rand;
+extern crate ron;
 #[macro_use]
 extern crate serde;
-extern crate ron;
 
 use amethyst::animation::*;
 use amethyst::assets::*;

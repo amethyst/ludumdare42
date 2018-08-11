@@ -39,7 +39,8 @@ impl MapSelectionState {
                     &mut world.write_resource::<AssetLoaderInternal<FontAsset>>(),
                     &mut world.write_resource(),
                     &mut world.read_resource(),
-                ).expect("Failed to load font.");
+                )
+                .expect("Failed to load font.");
             self.font = Some(font.clone());
         }
 
@@ -58,7 +59,8 @@ impl MapSelectionState {
                     .with_anchor(Anchor::TopMiddle)
                     .with_font(font.clone())
                     .build_from_world(world)
-            }).collect::<Vec<Entity>>();
+            })
+            .collect::<Vec<Entity>>();
     }
 
     fn clear_menu(&mut self, world: &mut World) {

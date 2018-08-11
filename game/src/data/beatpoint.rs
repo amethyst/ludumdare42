@@ -1,4 +1,3 @@
-
 use data::Direction;
 
 #[derive(Deserialize)]

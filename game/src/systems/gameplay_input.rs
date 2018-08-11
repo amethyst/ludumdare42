@@ -1,8 +1,9 @@
-use amethyst::ecs::{System,ReadStorage,WriteStorage,Join,Read,Write, Resources, WriteExpect,SystemData};
-use amethyst::renderer::{Event,VirtualKeyCode,ElementState};
+use amethyst::ecs::{Join, Read, ReadStorage, Resources, System, SystemData, Write, WriteExpect,
+                    WriteStorage};
+use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 use amethyst::input::get_key;
 use amethyst::core::Time;
-use amethyst::shrev::{EventChannel,ReaderId};
+use amethyst::shrev::{EventChannel, ReaderId};
 
 use data::*;
 
@@ -12,40 +13,49 @@ pub struct GameplayInputSystem {
 
 impl GameplayInputSystem {
     pub fn new() -> Self {
-        GameplayInputSystem {
-            input_reader: None,
-        }
+        GameplayInputSystem { input_reader: None }
     }
 }
 
 impl<'a> System<'a> for GameplayInputSystem {
-    type SystemData = (WriteStorage<'a,Player>,Read<'a,EventChannel<Event>>,Read<'a,Time>,WriteExpect<'a, BeatMap>,Write<'a, GameplayResult>);
+    type SystemData = (
+        WriteStorage<'a, Player>,
+        Read<'a, EventChannel<Event>>,
+        Read<'a, Time>,
+        WriteExpect<'a, BeatMap>,
+        Write<'a, GameplayResult>,
+    );
 
-    fn run(&mut self, (mut players,input,time,mut beatmap,mut gameplay_result): Self::SystemData){
+    fn run(
+        &mut self,
+        (mut players, input, time, mut beatmap, mut gameplay_result): Self::SystemData,
+    ) {
         let offset = 0.2;
         let rel_time = time.absolute_time_seconds() - beatmap.runtime_start;
 
         let mut early_remove = 0;
         // if too late
-        for (i,beatpoint) in beatmap.beat_points.iter().enumerate() {
+        for (i, beatpoint) in beatmap.beat_points.iter().enumerate() {
             // too late :(
             if rel_time > beatpoint.time + offset {
                 early_remove = early_remove + 1;
             }
         }
-        for i in 0..early_remove{
+        for i in 0..early_remove {
             let missed = beatmap.beat_points.pop_front().unwrap();
-            gameplay_result.results.push((missed.time,HitResult::MissLate));
+            gameplay_result
+                .results
+                .push((missed.time, HitResult::MissLate));
         }
-
 
         // check input
         for ev in input.read(&mut self.input_reader.as_mut().unwrap()) {
-            if let Some((key,ElementState::Pressed)) = get_key(&ev) {
+            if let Some((key, ElementState::Pressed)) = get_key(&ev) {
                 // Only consider arrow keys
-                if key == VirtualKeyCode::Left || key == VirtualKeyCode::Right || key == VirtualKeyCode::Up || key == VirtualKeyCode::Down {
+                if key == VirtualKeyCode::Left || key == VirtualKeyCode::Right
+                    || key == VirtualKeyCode::Up || key == VirtualKeyCode::Down
+                {
                     if let Some(beatpoint) = beatmap.beat_points.pop_front() {
-
                         // too early
                         if rel_time < beatpoint.time - offset {
                             // ignore
@@ -67,9 +77,13 @@ impl<'a> System<'a> for GameplayInputSystem {
 
                             // TODO: trigger animations (can be done by checking player dist to first beatpoint)
                             if correct_key {
-                                gameplay_result.results.push((beatpoint.time, HitResult::Hit));
+                                gameplay_result
+                                    .results
+                                    .push((beatpoint.time, HitResult::Hit));
                             } else {
-                                gameplay_result.results.push((beatpoint.time, HitResult::MissKey));
+                                gameplay_result
+                                    .results
+                                    .push((beatpoint.time, HitResult::MissKey));
                             }
                         }
                     }

@@ -1,4 +1,3 @@
-
 #[derive(Deserialize, PartialEq)]
 pub enum Direction {
     Left,
