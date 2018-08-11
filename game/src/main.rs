@@ -77,7 +77,7 @@ fn main() -> Result<()> {
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
-    Application::build(resources_directory, MapSelectionState)?
+    Application::build(resources_directory, MapSelectionState::new())?
         .with_resource(asset_loader)
         .build(game_data_builder)?
         .run();
