@@ -15,6 +15,9 @@ pub struct GamePlayState {
     /// State specific dispatcher
     #[new(default)]
     dispatcher: Option<Dispatcher<'static, 'static>>,
+    /// Whether or not the game is paused.
+    #[new(value = "false")]
+    paused: bool,
 }
 
 impl GamePlayState {
@@ -56,13 +59,28 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
 
         match get_key(&event) {
             Some((VirtualKeyCode::Escape, ElementState::Pressed)) => Trans::Pop,
+            Some((VirtualKeyCode::Space, ElementState::Pressed)) => {
+                self.paused = !self.paused;
+                if self.paused {
+                    info!("Game is paused.");
+                } else {
+                    info!("Game is running.");
+                }
+
+                Trans::None
+            }
             _ => Trans::None,
         }
     }
 
     fn update(&mut self, data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
         data.data.update(data.world);
-        self.dispatcher.as_mut().unwrap().dispatch(&data.world.res);
+
+        // TODO: Probably render something on screen to say "the game is paused"
+        // Should we also add an entity with a `Paused` component that indicates the paused state?
+        if !self.paused {
+            self.dispatcher.as_mut().unwrap().dispatch(&data.world.res);
+        }
 
         let gameplay_result = &data.world.read_resource::<GameplayResult>();
         match gameplay_result.status {
