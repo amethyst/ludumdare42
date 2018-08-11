@@ -47,7 +47,8 @@ pub fn load_beatmap(name: String, world: &mut World) -> Option<BeatMap> {
                         name: data.name,
                         music: audio_handle,
                         audio_offset: data.audio_offset,
-                        beat_points: data.beat_points,
+                        beat_points: data.beat_points.into(),
+                        runtime_start: 0.0,
                     });
                 }else{
                     error!("Failed to load audio handle for {}", data.name);
