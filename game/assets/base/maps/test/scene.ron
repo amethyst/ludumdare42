@@ -8,17 +8,72 @@ Prefab (
                     // Ground
                     (
                         id: 0,
-                        texture: (0, File("./assets/base/maps/test/test_ground.png", Png, ())),
+                        texture: (0, File("./assets/base/sprites/ground.png", Png, ())),
                         sprites: [
                             (
-                                width: 1099,
-                                height: 131,
+                                width: 200,
+                                height: 84,
                                 offsets: (0.0, 0.0),
                                 tex_coords: (
                                     left: 0.0,
-                                    right: 1.0,
-                                    bottom: 0.0,
-                                    top: 1.0,
+                                    right: 0.332781457,
+                                    bottom: 0.759933775,
+                                    top: 0.899006623,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.334437086,
+                                    right: 0.665562914,
+                                    bottom: 0.759933775,
+                                    top: 0.899006623,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.667218543,
+                                    right: 0.998344371,
+                                    bottom: 0.759933775,
+                                    top: 0.899006623,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.332781457,
+                                    bottom: 0.432119205,
+                                    top: 0.571192053,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.334437086,
+                                    right: 0.665562914,
+                                    bottom: 0.432119205,
+                                    top: 0.571192053,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.667218543,
+                                    right: 0.998344371,
+                                    bottom: 0.432119205,
+                                    top: 0.571192053,
                                 ),
                             ),
                         ],
@@ -99,23 +154,120 @@ Prefab (
         (
             data: (
                 sprite_sheets: [],
-                sprite: (
-                    sheet: 0,
-                    sprite_number: 0,
-                    flip_horizontal: false,
-                    flip_vertical: false,
-                ),
+                sprite: ( sheet: 0, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
                 transform: (
-                    translation: (
-                        x: 0.0,
-                        y: 0.0,
-                        z: 0,
-                    ),
-                    scale: (
-                        x: 0.001,
-                        y: 0.001,
-                        z: 1.0,
-                    ),
+                    translation: (x: 0.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.2, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 2, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.4, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.6, y: 0.2, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 2, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.8, y: 0.2, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.2, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.4, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.6, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.8, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 2.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 2, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 2.2, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
                 ),
             ),
         ),
