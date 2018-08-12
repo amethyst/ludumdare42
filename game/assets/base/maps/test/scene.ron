@@ -8,13 +8,16 @@ Prefab (
                         id: 0,
                         texture: (0, File("test_ground.png", Png, ())),
                         sprites: [
-                            width: 1099,
-                            height: 131,
                             (
-                                left: 0.0,
-                                right: 1.0,
-                                bottom: 0.0,
-                                top: 1.0,
+                                width: 1099,
+                                height: 131,
+                                offsets: (0.0,0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
                             ),
                         ],
                     ),
@@ -32,7 +35,7 @@ Prefab (
                 transform: (
                     translation: (
                         x: 4,
-                        y, 1,
+                        y: 1,
                         z: 0,
                     ),
                 ),
