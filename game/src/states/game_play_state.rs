@@ -115,19 +115,18 @@ impl GamePlayState {
         let beatmap_entity = world.create_entity().with(prefab_handle).build();
         self.entities.push(beatmap_entity);
 
-        let music = world.exec(|(resolver, loader, sources): (
-            ReadExpect<AssetLoader>,
-            ReadExpect<Loader>,
-            Read<AssetStorage<AudioSource>>
-        )| {
-            let path = resolver.resolve_path(&format!("maps/{}/audio.mp3", beatmap_name))
+        let music = world.exec(
+            |(resolver, loader, sources): (
+                ReadExpect<AssetLoader>,
+                ReadExpect<Loader>,
+                Read<AssetStorage<AudioSource>>,
+            )| {
+                let path = resolver.resolve_path(&format!("maps/{}/audio.mp3", beatmap_name))
                 // TODO use some fallback
                 .unwrap_or_else(|| "assets/base/maps/tesst/audio.mp3".to_owned());
-            loader.load(
-                path, Mp3Format, (), &mut progress_counter,
-                &sources,
-            )
-        });
+                loader.load(path, Mp3Format, (), &mut progress_counter, &sources)
+            },
+        );
         self.music = Some(music);
 
         self.progress_counter = Some(progress_counter);
@@ -238,7 +237,8 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
             data.world.write_resource::<BeatMap>().beat_points = beatpoints.into();
 
             // Play music
-            data.world.add_resource(Music::new(self.music.as_ref().unwrap().clone()));
+            data.world
+                .add_resource(Music::new(self.music.as_ref().unwrap().clone()));
         }
 
         let gameplay_result = &data.world.read_resource::<GameplayResult>();
