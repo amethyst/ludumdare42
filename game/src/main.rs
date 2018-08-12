@@ -69,7 +69,7 @@ fn main() -> Result<()> {
             "sampler_interpolation_system",
         ))?.with_bundle(AudioBundle::new(|_: &mut Time| None))?
         .with(
-            PrefabLoaderSystem::<BasicScenePrefab<Vec<PosTex>>>::default(),
+            PrefabLoaderSystem::<SpriteScenePrefab>::default(),
             "",
             &[],
         ).with(TimedDestroySystem, "timed_destroy", &[])
