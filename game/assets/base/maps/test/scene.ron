@@ -371,5 +371,59 @@ Prefab (
                 removal: ( id: 1),
             ),
         ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 4,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Right,
+                    time: 3.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.6,
+                        y: 0.25,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 2,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Down,
+                    time: 5.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 1.0,
+                        y: 0.25,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+            ),
+        ),
     ]
 )
