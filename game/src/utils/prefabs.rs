@@ -10,6 +10,55 @@ pub struct SpriteSheetPrefab {
     pub sprites: Vec<Sprite>,
 }
 
+impl SpriteSheetPrefab {
+    fn do_load_prefab<'a>(
+        &self,
+        _entity: Entity,
+        _mtl_tex_set: &mut MaterialTextureSet,
+        _tex_system_data: &mut <TexturePrefab<TextureFormat> as PrefabData<'a>>::SystemData,
+        _sprite_sheet_set: &mut SpriteSheetSet,
+        _loader: &Loader,
+        _sprite_sheet_store: &AssetStorage<SpriteSheet>,
+        _entities: &[Entity],
+    ) -> Result<(), PrefabError> {
+        Ok(())
+    }
+
+    fn do_sub_loading<'a>(
+        &mut self,
+        progress: &mut ProgressCounter,
+        mtl_tex_set: &mut MaterialTextureSet,
+        mut tex_system_data: &mut <TexturePrefab<TextureFormat> as PrefabData<'a>>::SystemData,
+        sprite_sheet_set: &mut SpriteSheetSet,
+        loader: &Loader,
+        sprite_sheet_store: &AssetStorage<SpriteSheet>,
+    ) -> Result<bool, PrefabError> {
+        let mut ret = false;
+        match mtl_tex_set.handle(self.texture.0) {
+            Some(handle) => (),
+            None => {
+                ret = self
+                    .texture
+                    .1
+                    .trigger_sub_loading(progress, &mut tex_system_data)?;
+                if let TexturePrefab::Handle(ref handle) = self.texture.1 {
+                    mtl_tex_set.insert(self.texture.0, handle.clone());
+                }
+            }
+        };
+        if let None = sprite_sheet_set.handle(self.id) {
+            let spritesheet = SpriteSheet {
+                texture_id: self.texture.0,
+                sprites: self.sprites.clone(),
+            };
+            let handle = loader.load_from_data(spritesheet, progress, &sprite_sheet_store);
+            sprite_sheet_set.insert(self.id, handle);
+            ret = true;
+        }
+        Ok(ret)
+    }
+}
+
 impl<'a> PrefabData<'a> for SpriteSheetPrefab {
     type SystemData = (
         Write<'a, MaterialTextureSet>,
@@ -23,42 +72,45 @@ impl<'a> PrefabData<'a> for SpriteSheetPrefab {
     fn load_prefab(
         &self,
         entity: Entity,
-        system_data: &mut Self::SystemData,
+        (
+            mtl_tex_set,
+            tex_system_data,
+            sprite_sheet_set,
+            loader,
+            sprite_sheet_store,
+        ): &mut Self::SystemData,
         entities: &[Entity],
-    ) -> Result<(), PrefabError> {
-        Ok(())
+) -> Result<(), PrefabError>{
+        self.do_load_prefab(
+            entity,
+            mtl_tex_set,
+            tex_system_data,
+            sprite_sheet_set,
+            loader,
+            sprite_sheet_store,
+            entities,
+        )
     }
 
     fn trigger_sub_loading(
         &mut self,
         progress: &mut ProgressCounter,
-        system_data: &mut Self::SystemData,
-    ) -> Result<bool, PrefabError> {
-        let mut ret = false;
-        match system_data.0.handle(self.texture.0) {
-            Some(handle) => (),
-            None => {
-                ret = self
-                    .texture
-                    .1
-                    .trigger_sub_loading(progress, &mut system_data.1)?;
-                if let TexturePrefab::Handle(ref handle) = self.texture.1 {
-                    system_data.0.insert(self.texture.0, handle.clone());
-                }
-            }
-        };
-        if let None = system_data.2.handle(self.id) {
-            let spritesheet = SpriteSheet {
-                texture_id: self.texture.0,
-                sprites: self.sprites.clone(),
-            };
-            let handle = system_data
-                .3
-                .load_from_data(spritesheet, progress, &system_data.4);
-            system_data.2.insert(self.id, handle);
-            ret = true;
-        }
-        Ok(ret)
+        (
+            mtl_tex_set,
+            tex_system_data,
+            sprite_sheet_set,
+            loader,
+            sprite_sheet_store,
+        ): &mut Self::SystemData,
+) -> Result<bool, PrefabError>{
+        self.do_sub_loading(
+            progress,
+            mtl_tex_set,
+            tex_system_data,
+            sprite_sheet_set,
+            loader,
+            sprite_sheet_store,
+        )
     }
 }
 
@@ -70,28 +122,47 @@ pub struct SpriteRenderPrefab {
     pub flip_vertical: bool,
 }
 
-impl<'a> PrefabData<'a> for SpriteRenderPrefab {
-    /// The SpriteSheetSet should be Read, but it overlaps with the SpriteSheetPrefab
-    type SystemData = (Write<'a, SpriteSheetSet>, WriteStorage<'a, SpriteRender>);
-    type Result = ();
-    fn load_prefab(
+impl SpriteRenderPrefab {
+    fn do_load_prefab<'a>(
         &self,
         entity: Entity,
-        system_data: &mut Self::SystemData,
+        sprite_sheet_set: &SpriteSheetSet,
+        sprite_renders: &mut WriteStorage<'a, SpriteRender>,
         entities: &[Entity],
     ) -> Result<(), PrefabError> {
-        system_data
-            .1
+        sprite_renders
             .insert(
                 entity,
                 SpriteRender {
-                    sprite_sheet: system_data.0.handle(self.sheet).unwrap().clone(),
+                    sprite_sheet: sprite_sheet_set.handle(self.sheet).unwrap().clone(),
                     sprite_number: self.sprite_number,
                     flip_horizontal: self.flip_horizontal,
                     flip_vertical: self.flip_vertical,
                 },
             )
             .map(|_| ())
+    }
+
+    fn do_sub_loading<'a>(
+        &mut self,
+        _progress: &mut ProgressCounter,
+        _sprite_sheet_set: &SpriteSheetSet,
+        _sprite_renders: &mut WriteStorage<'a, SpriteRender>,
+    ) -> Result<bool, PrefabError> {
+        Ok(false)
+    }
+}
+
+impl<'a> PrefabData<'a> for SpriteRenderPrefab {
+    type SystemData = (Read<'a, SpriteSheetSet>, WriteStorage<'a, SpriteRender>);
+    type Result = ();
+    fn load_prefab(
+        &self,
+        entity: Entity,
+        (sprite_sheet_set, sprite_renders): &mut Self::SystemData,
+        entities: &[Entity],
+    ) -> Result<(), PrefabError> {
+        self.do_load_prefab(entity, &sprite_sheet_set, sprite_renders, entities)
     }
 }
 
@@ -185,34 +256,36 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
         entity: Entity,
         (
             (
-                mut mtl_tex_set,
-                mut tex_system_data,
-                mut sprite_sheet_set,
-                mut loader,
-                mut sprite_sheet_store,
-                mut sprite_renders,
+                mtl_tex_set,
+                tex_system_data,
+                sprite_sheet_set,
+                loader,
+                sprite_sheet_store,
+                sprite_renders,
             ),
             transform_system_data,
         ): &mut Self::SystemData,
         entities: &[Entity],
     ) -> Result<(), PrefabError> {
         for sprite_sheet in &self.sprite_sheets {
-            sprite_sheet.load_prefab(
+            sprite_sheet.do_load_prefab(
                 entity,
-                &mut (
-                    mtl_tex_set,
-                    tex_system_data,
-                    sprite_sheet_set,
-                    loader,
-                    sprite_sheet_store,
-                ),
+                mtl_tex_set,
+                tex_system_data,
+                sprite_sheet_set,
+                loader,
+                sprite_sheet_store,
                 entities,
             )?;
         }
-        self.sprite
-            .load_prefab(entity, &mut (sprite_sheet_set, sprite_renders), entities)?;
+        self.sprite.as_ref().unwrap().do_load_prefab(
+            entity,
+            sprite_sheet_set,
+            sprite_renders,
+            entities,
+        )?;
         self.transform
-            .load_prefab(entity, &mut transform_system_data, entities)?;
+            .load_prefab(entity, transform_system_data, entities)?;
         Ok(())
     }
 
@@ -221,40 +294,40 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
         progress: &mut ProgressCounter,
         (
             (
-                mut mtl_tex_set,
-                mut tex_system_data,
-                mut sprite_sheet_set,
-                mut loader,
-                mut sprite_sheet_store,
-                mut sprite_renders,
+                mtl_tex_set,
+                tex_system_data,
+                sprite_sheet_set,
+                loader,
+                sprite_sheet_store,
+                sprite_renders,
             ),
             transform_system_data,
         ): &mut Self::SystemData,
     ) -> Result<bool, PrefabError> {
         let mut ret = false;
         for sprite_sheet in &mut self.sprite_sheets {
-            if sprite_sheet.trigger_sub_loading(
+            if sprite_sheet.do_sub_loading(
                 progress,
-                &mut (
-                    mtl_tex_set,
-                    tex_system_data,
-                    sprite_sheet_set,
-                    loader,
-                    sprite_sheet_store,
-                ),
+                mtl_tex_set,
+                tex_system_data,
+                sprite_sheet_set,
+                loader,
+                sprite_sheet_store,
             )? {
                 ret = true;
             }
         }
         if self
             .sprite
-            .trigger_sub_loading(progress, &mut (sprite_sheet_set, sprite_renders))?
+            .as_mut()
+            .unwrap()
+            .do_sub_loading(progress, sprite_sheet_set, sprite_renders)?
         {
             ret = true;
         }
         if self
             .transform
-            .trigger_sub_loading(progress, &mut transform_system_data)?
+            .trigger_sub_loading(progress, transform_system_data)?
         {
             ret = true;
         }
