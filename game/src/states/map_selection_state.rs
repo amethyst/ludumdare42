@@ -1,16 +1,20 @@
 use amethyst::ecs::prelude::*;
 use amethyst::input::{is_close_requested, is_key_down};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
-use amethyst::core::Time;
+use amethyst::core::{GlobalTransform,Transform,Time};
+use amethyst::renderer::{Camera,Projection};
 use amethyst::shrev::{EventChannel, ReaderId};
 use amethyst::ui::{Anchor, FontAsset, FontHandle, TtfFormat, UiButtonBuilder};
 use amethyst::{GameData, State, StateData, Trans};
+use amethyst::core::cgmath::{Matrix4,Vector3, Ortho};
+
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
 use super::map_selection::*;
 use utils::{list_beatmaps, load_beatmap};
 use GamePlayState;
 use MapSelectionEvent;
+use data::BeatPoint;
 
 /// Where the player chooses which song to play
 #[derive(Default, new)]
@@ -21,6 +25,8 @@ pub struct MapSelectionState {
     buttons: Vec<Entity>,
     #[new(default)]
     font: Option<FontHandle>,
+    #[new(value = "false")]
+    cam_init: bool,
 }
 
 impl MapSelectionState {
@@ -94,6 +100,31 @@ impl MapSelectionState {
 impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting MapSelectionState");
+        data.world.register::<BeatPoint>();
+
+        // We don't have an EntryState, so this needs to go here.
+        if !self.cam_init {
+            self.cam_init = true;
+            // The Z coordinate of the camera is how far along it should be before it faces the
+            // entities. Anything greater than this will be culled.
+            let translation = Matrix4::from_translation(Vector3::new(0.0, 0.0, 100.0));
+            let global_transform = GlobalTransform(translation);
+
+            let camera = data.world
+                .create_entity()
+                .with(Camera::from(Projection::Orthographic(Ortho {
+                    left: 0.0,
+                    right: 1.0,
+                    top: 1.0,
+                    bottom: 0.0,
+                    near: 0.0,
+                    far: 2000.,
+                })))
+                .with(global_transform)
+                .build();
+        }
+
+
         self.initialize_map_selection_event_channel(&mut data.world);
         self.reload_menu(&mut data.world);
     }

@@ -9,7 +9,7 @@ pub struct BeatMapData {
     pub name: String,
     pub music_path: String,
     pub audio_offset: f64,
-    pub beat_points: VecDeque<BeatPoint>,
+    //pub beat_points: VecDeque<BeatPoint>,
 }
 
 pub struct BeatMap {

@@ -58,7 +58,7 @@ pub fn load_beatmap(name: String, world: &mut World) -> Option<BeatMap> {
                         name: data.name,
                         music: audio_handle,
                         audio_offset: data.audio_offset,
-                        beat_points: data.beat_points,
+                        beat_points: VecDeque::new(),
                         runtime_start: 0.0,
                     });
                 } else {

@@ -107,9 +107,42 @@ Prefab (
                 ),
                 transform: (
                     translation: (
-                        x: 4,
-                        y: 1,
+                        x: 0.0,
+                        y: 0.0,
                         z: 0,
+                    ),
+                    scale: (
+                        x: 0.001,
+                        y: 0.001,
+                        z: 1.0,
+                    ),
+                ),
+            ),
+        ),
+        // beatpoint1
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Up(),
+                    time: 1.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.275,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
                     ),
                 ),
             ),

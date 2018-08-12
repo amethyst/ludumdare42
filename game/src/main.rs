@@ -81,10 +81,10 @@ fn main() -> Result<()> {
         ).with(ChangeControlListener, "change_control", &[])
         .with(MapSelectionUiEventHandlerSystem::new(), "map_selection_ui_event_handler_system", &["ui_button_system"])
         .with(ScoreMenuAnimation::new(), "score_menu_animation", &[])
-        //.with(CameraFollowPlayerSystem, "camera_follow_player", &[])
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
+
     Application::build(resources_directory, MapSelectionState::new())?
         .with_resource(asset_loader)
         .with_resource(::utils::Music::default())

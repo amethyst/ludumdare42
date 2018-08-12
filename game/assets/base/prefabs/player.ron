@@ -101,9 +101,14 @@ Prefab (
                 ),
                 transform: (
                     translation: (
-                        x: 100,
-                        y: 131,
+                        x: 0.2,
+                        y: 0.15,
                         z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
                     ),
                 ),
                 // what is this for?

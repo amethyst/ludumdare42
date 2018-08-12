@@ -766,7 +766,8 @@ impl<'a> System<'a> for NormalOrthoCameraSystem {
             let x_offset = (aspect - 1.0) / 2.0;
 
             for mut camera in (&mut cameras).join() {
-                //println!("CHANGING CAM RATIO! {:?}",Ortho{left: -x_offset,right: 1.0 + x_offset,bottom: 0.0,top: 1.0,near: 0.1,far: 2000.0});
+
+                println!("CHANGING CAM RATIO! {:?}",Ortho{left: -x_offset,right: 1.0 + x_offset,bottom: 0.0,top: 1.0,near: 0.1,far: 2000.0});
                 camera.proj = Ortho {
                     left: -x_offset,
                     right: 1.0 + x_offset,

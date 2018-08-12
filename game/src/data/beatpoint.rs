@@ -12,11 +12,6 @@ impl Component for BeatPoint {
     type Storage = DenseVecStorage<Self>;
 }
 
-/*#[derive(Default, Clone, Deserialize, Serialize)]
-pub struct RemovalPrefab<I> {
-    id: I,
-}*/
-
 impl<'a> PrefabData<'a> for BeatPoint {
     type SystemData = (
         WriteStorage<'a, BeatPoint>,
