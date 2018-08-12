@@ -57,11 +57,11 @@ impl GamePlayState {
         dispatcher_builder.add(PlayerMovementSystem::new(), "player_movement", &[]);
 
         //TODO test it
-        /*dispatcher_builder.add(
+        dispatcher_builder.add(
             CameraFollowPlayerSystem,
             "camera_follow_player_system",
             &["gameplay_input_system"],
-        );*/
+        );
 
         let mut dispatcher = dispatcher_builder.build();
         dispatcher.setup(&mut world.res);

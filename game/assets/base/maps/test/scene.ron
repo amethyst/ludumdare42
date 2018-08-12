@@ -147,5 +147,33 @@ Prefab (
                 ),
             ),
         ),
+        // beatpoint2
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 3,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Left(),
+                    time: 2.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.4,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+            ),
+        ),
     ]
 )
