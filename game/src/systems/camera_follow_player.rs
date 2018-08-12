@@ -26,12 +26,15 @@ impl<'a> System<'a> for CameraFollowPlayerSystem {
             // 0 hp = player totally to the left (16/9) ratio
 
             // assumes max_hp = 10
-            if hp != 0 {
+            if hp != 0.0 {
+                // where we want it on the screen
                 let target_player_pos_abs = (10.0 / hp) * (2.0 / 3.0);
 
                 // normal ortho camera goes from [0,1] on x axis
-                let cam_x = position_x + 0.5 - target_player_pos_abs;
+                //let cam_x = position_x + 0.5 - target_player_pos_abs;
+                let cam_x = position_x - target_player_pos_abs;
 
+                // expect 0.666
                 info!("Updating cam pos to {}", cam_x);
 
                 transform.0 = Matrix4::from_translation(Vector3::new(cam_x, 0.0, 100.0));
