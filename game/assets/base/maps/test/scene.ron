@@ -114,54 +114,5 @@ Prefab (
                 ),
             ),
         ),
-        // Beat Points
-        (
-            data: (
-                sprite_sheets: [],
-                sprite: (
-                    sheet: 1,
-                    sprite_number: 0,
-                    flip_horizontal: false,
-                    flip_vertical: false,
-                ),
-                transform: (translation: (x: 100, y: 100, z: 0, )),
-            )
-        ),
-        (
-            data: (
-                sprite_sheets: [],
-                sprite: (
-                    sheet: 2,
-                    sprite_number: 0,
-                    flip_horizontal: false,
-                    flip_vertical: false,
-                ),
-                transform: (translation: (x: 400, y: 100, z: 0, )),
-            )
-        ),
-        (
-            data: (
-                sprite_sheets: [],
-                sprite: (
-                    sheet: 3,
-                    sprite_number: 0,
-                    flip_horizontal: false,
-                    flip_vertical: false,
-                ),
-                transform: (translation: (x: 700, y: 100, z: 0, )),
-            )
-        ),
-        (
-            data: (
-                sprite_sheets: [],
-                sprite: (
-                    sheet: 4,
-                    sprite_number: 0,
-                    flip_horizontal: false,
-                    flip_vertical: false,
-                ),
-                transform: (translation: (x: 1000, y: 100, z: 0, )),
-            )
-        ),
     ]
 )

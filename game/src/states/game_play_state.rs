@@ -5,7 +5,8 @@ use amethyst::core::{GlobalTransform, Transform};
 use amethyst::ecs::prelude::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{
-    Camera, ElementState, Event, Projection, ScreenDimensions, VirtualKeyCode,
+    Camera, ElementState, Event, Projection, ScreenDimensions, SpriteRender, SpriteSheetSet,
+    VirtualKeyCode,
 };
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::*;
@@ -117,7 +118,17 @@ impl GamePlayState {
         // BeatPoints
         let mut beatpoint_entities = beat_points
             .into_iter()
-            .map(|beat_point| world.create_entity().with(beat_point).build())
+            .map(|beat_point| {
+                let mut transform = Transform::default();
+                transform.translation =
+                    Vector3::new((beat_point.time * 220.0 + 50.) as f32, 140., 1.);
+                world
+                    .create_entity()
+                    .with(beat_point)
+                    .with(transform)
+                    .with(GlobalTransform::default())
+                    .build()
+            })
             .collect::<Vec<Entity>>();
 
         self.entities.extend(beatpoint_entities);
@@ -251,6 +262,9 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
             // This loop makes it look like you wanted to store the BeatPoint definition somewhere
             // else and then modify the BeatMap.
             //
+            // Note, I attach sprite renders to the beat point entities after loading is complete
+            // because the arrows are loaded by the scene prefab. It's a hack, but I have to go soon
+            //
             // - az
             //
             // let mut beatpoints = Vec::<BeatPoint>::new();
@@ -259,6 +273,49 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
             // }
             // beatpoints.sort_by(|a, b| a.time.partial_cmp(&b.time).unwrap());
             // data.world.write_resource::<BeatMap>().beat_points = beatpoints.into();
+
+            data.world.exec(
+                |(entities, beat_points, sprite_sheet_set, mut sprite_renders): (
+                    Entities,
+                    ReadStorage<BeatPoint>,
+                    Read<SpriteSheetSet>,
+                    WriteStorage<SpriteRender>,
+                )| {
+                    let (up, down, left, right) = (
+                        sprite_sheet_set
+                            .handle(1)
+                            .expect("No sprite sheet handle found for up arrow."),
+                        sprite_sheet_set
+                            .handle(2)
+                            .expect("No sprite sheet handle found for down arrow."),
+                        sprite_sheet_set
+                            .handle(3)
+                            .expect("No sprite sheet handle found for left arrow."),
+                        sprite_sheet_set
+                            .handle(4)
+                            .expect("No sprite sheet handle found for right arrow."),
+                    );
+                    for (entity, beat_point) in (&*entities, &beat_points).join() {
+                        let sprite_sheet = match beat_point.direction {
+                            Direction::Up => up.clone(),
+                            Direction::Down => down.clone(),
+                            Direction::Left => left.clone(),
+                            Direction::Right => right.clone(),
+                        };
+                        let sprite_render = SpriteRender {
+                            sprite_sheet,
+                            sprite_number: 0,
+                            flip_horizontal: false,
+                            flip_vertical: false,
+                        };
+                        sprite_renders.insert(entity, sprite_render).expect(
+                            "Failed to attach sprite render component to beat point entity",
+                        );
+                    }
+
+                    info!("Attached sprite renders to beat points.");
+                },
+            );
 
             // Play music
             data.world
