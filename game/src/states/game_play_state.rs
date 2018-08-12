@@ -50,6 +50,9 @@ impl GamePlayState {
             &["gameplay_input_system"],
         );
 
+        // TODO: remove this. ew
+        world.register::<BeatPoint>();
+
         let mut dispatcher = dispatcher_builder.build();
         dispatcher.setup(&mut world.res);
         self.dispatcher = Some(dispatcher);
