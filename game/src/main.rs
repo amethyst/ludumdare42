@@ -85,7 +85,7 @@ fn main() -> Result<()> {
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
-    Application::build(resources_directory, ScoreState::new())?
+    Application::build(resources_directory, GamePlayState::new())?
         .with_resource(asset_loader)
         .with_resource(::utils::Music::default())
         .with_resource(AssetLoaderInternal::<Texture>::new())
