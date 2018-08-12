@@ -123,7 +123,7 @@ impl GamePlayState {
             )| {
                 let path = resolver.resolve_path(&format!("maps/{}/audio.mp3", beatmap_name))
                 // TODO use some fallback
-                .unwrap_or_else(|| "assets/base/maps/tesst/audio.mp3".to_owned());
+                .unwrap_or_else(|| "assets/base/maps/test/audio.mp3".to_owned());
                 loader.load(path, Mp3Format, (), &mut progress_counter, &sources)
             },
         );
