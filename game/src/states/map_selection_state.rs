@@ -145,10 +145,9 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
             // Maps should start in 3 seconds from now.
             beatmap.runtime_start =
                 data.world.read_resource::<Time>().absolute_time_seconds() + 3.0;
-            //data.world.add_resource(beatmap);
+            data.world.add_resource(beatmap);
 
-            use states::ChangeControlState;
-            Trans::Push(Box::new(ChangeControlState::new()))
+            Trans::Push(Box::new(GamePlayState::new()))
         } else {
             Trans::None
         }
