@@ -317,10 +317,10 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ChangeControlState {
 }
 
 fn cleanup(world: &mut World) {
-    let mut to_delete = world.exec(
+    world.exec(
         |(entities, cleanup_store): (Entities, ReadStorage<CleanupControl>)| {
             for (e, _) in (&*entities, &cleanup_store).join() {
-                entities.delete(e);
+                entities.delete(e).unwrap();
             }
         },
     );

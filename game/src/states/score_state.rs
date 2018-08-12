@@ -489,10 +489,11 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
 }
 
 fn cleanup(world: &mut World) {
-    let cleanup_store = world.read_storage::<CleanupScore>();
-    let entities = world.read_resource::<Entities>();
-
-    for (e, _) in (&**entities, &cleanup_store).join() {
-        entities.delete(e).unwrap();
-    }
+    world.exec(
+        |(entities, cleanup_store): (Entities, ReadStorage<CleanupScore>)| {
+            for (e, _) in (&*entities, &cleanup_store).join() {
+                entities.delete(e).unwrap();
+            }
+        },
+    );
 }
