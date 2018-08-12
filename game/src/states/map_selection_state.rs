@@ -1,6 +1,7 @@
 use amethyst::ecs::prelude::*;
 use amethyst::input::{is_close_requested, is_key_down};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
+use amethyst::core::Time;
 use amethyst::shrev::{EventChannel, ReaderId};
 use amethyst::ui::{Anchor, FontAsset, FontHandle, TtfFormat, UiButtonBuilder};
 use amethyst::{GameData, State, StateData, Trans};
@@ -124,12 +125,10 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
 
         // sorry for bad memory management, but this is a game jam
         let beatmap_name = {
-            let map_selection_event_channel = data
-                .world
+            let map_selection_event_channel = data.world
                 .read_resource::<EventChannel<MapSelectionEvent>>();
 
-            let mut reader_id = self
-                .map_selection_event_reader
+            let mut reader_id = self.map_selection_event_reader
                 .as_mut()
                 .expect("Expected map_selection_event_reader to be set");
 
@@ -141,10 +140,12 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
 
         if let Some(beatmap_name) = beatmap_name {
             debug!("Beatmap selected: {}", &beatmap_name);
-            let mut beatmap = load_beatmap(beatmap_name, &mut data.world);
+            let mut beatmap =
+                load_beatmap(beatmap_name, &mut data.world).expect("Failed to load beatmap :(");
             // Maps should start in 3 seconds from now.
-            beatmap.runtime_start = data.world.read_resource::<Time>().absolute_time_seconds() + 3.0;
-            data.world.add_resource(beatmap.unwrap());
+            beatmap.runtime_start =
+                data.world.read_resource::<Time>().absolute_time_seconds() + 3.0;
+            data.world.add_resource(beatmap);
 
             Trans::Push(Box::new(GamePlayState::new()))
         } else {

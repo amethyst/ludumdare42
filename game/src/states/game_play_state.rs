@@ -1,8 +1,12 @@
 use amethyst::core::Transform;
 use amethyst::ecs::prelude::*;
+use amethyst::assets::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 use amethyst::{GameData, State, StateData, Trans};
+use amethyst_extra::*;
+
+use std::collections::VecDeque;
 
 use CameraFollowPlayerSystem;
 use GameplayInputSystem;
@@ -10,6 +14,9 @@ use GameplayResult;
 use GameplayStatus;
 use Player;
 use ScoreState;
+use utils::prefabs::SpriteScenePrefab;
+use systems::PlayerMovementSystem;
+use data::*;
 
 /// Where the player is running out of space
 #[derive(Default, new)]
@@ -23,6 +30,12 @@ pub struct GamePlayState {
     /// All entities in game.
     #[new(default)]
     entities: Vec<Entity>,
+    /// Map has been fully loaded
+    #[new(value = "false")]
+    loaded: bool,
+    /// The progress counter of the scene
+    #[new(value = "None")]
+    progress_counter: Option<ProgressCounter>,
 }
 
 impl GamePlayState {
@@ -55,15 +68,25 @@ impl GamePlayState {
 
         self.entities.push(player);
 
-        // Load scene prefab
+        // Find prefab file to load
         let mut beatmap_name = world.write_resource::<BeatMap>().name.clone();
-        let scene_path = world.read_resource::<AssetLoader>().resolve_path(&format!("maps/{}/map.ron", beatmap_name)).expect(&format!("Please ensure map.ron::name == name of the folder containing map.ron for map {}",beatmap_name));
+        let scene_path = world
+            .read_resource::<AssetLoader>()
+            .resolve_path(&format!("maps/{}/scene.ron", beatmap_name))
+            .expect(&format!(
+                "Please ensure map.ron::name == name of the folder containing map.ron for map {}",
+                beatmap_name
+            ));
 
+        // Load the map!
+        let mut progress_counter = ProgressCounter::default();
+        let prefab_handle = world.exec(|loader: PrefabLoader<SpriteScenePrefab>| {
+            // might fail with abs path??
+            loader.load(scene_path, RonFormat, (), &mut progress_counter)
+        });
+        world.create_entity().with(prefab_handle).build();
 
-
-        // Map beatpoint visual components to beatmap beatpoints
-        //world.write_resource::<BeatMap>().beat_points =
-        let beatpoints = (&world.read_storage::<BeatPoint>(),).join().iter().cloned().
+        self.progress_counter = Some(progress_counter);
     }
 
     fn terminate_entities(&mut self, world: &mut World) {
@@ -110,13 +133,24 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
         }
     }
 
-    fn update(&mut self, data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
+    fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
         data.data.update(data.world);
 
         // TODO: Probably render something on screen to say "the game is paused"
         // Should we also add an entity with a `Paused` component that indicates the paused state?
         if !self.paused {
             self.dispatcher.as_mut().unwrap().dispatch(&data.world.res);
+        }
+
+        // Map beatpoint visual components to beatmap logical beatpoints
+        if self.progress_counter.as_ref().unwrap().is_complete() && !self.loaded {
+            self.loaded = true;
+            let mut beatpoints = Vec::<BeatPoint>::new();
+            for (b,) in (&data.world.read_storage::<BeatPoint>(),).join() {
+                beatpoints.push(b.clone());
+            }
+            beatpoints.sort_by(|a, b| a.time.partial_cmp(&b.time).unwrap());
+            data.world.write_resource::<BeatMap>().beat_points = beatpoints.into();
         }
 
         let gameplay_result = &data.world.read_resource::<GameplayResult>();

@@ -1,5 +1,5 @@
 use amethyst::assets::AssetStorage;
-use amethyst::audio::{output::Output, Source, SourceHandle};
+use amethyst::audio::{Source, SourceHandle, output::Output};
 use amethyst::core::Time;
 use amethyst::ecs::*;
 use amethyst::input::InputHandler;

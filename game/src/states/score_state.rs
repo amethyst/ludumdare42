@@ -3,10 +3,8 @@ use amethyst::input::{get_key, is_close_requested, is_key_down};
 use amethyst::prelude::Builder;
 use amethyst::renderer::{ElementState, Event, PngFormat, Texture, VirtualKeyCode};
 use amethyst::shrev::EventChannel;
-use amethyst::ui::{
-    Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiEvent, UiEventType, UiImage, UiText,
-    UiTransform,
-};
+use amethyst::ui::{Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiEvent, UiEventType, UiImage,
+                   UiText, UiTransform};
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
@@ -359,7 +357,10 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             .with_size(100.0, 32.0)
             .build_from_world(world);
 
-        world.write_storage::<CleanupScore>().insert(retry_button, CleanupScore).unwrap();
+        world
+            .write_storage::<CleanupScore>()
+            .insert(retry_button, CleanupScore)
+            .unwrap();
 
         let menu = {
             world
@@ -416,7 +417,10 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             .with_size(100.0, 32.0)
             .build_from_world(world);
 
-        world.write_storage::<CleanupScore>().insert(menu_button, CleanupScore).unwrap();
+        world
+            .write_storage::<CleanupScore>()
+            .insert(menu_button, CleanupScore)
+            .unwrap();
 
         *world.write_resource::<Option<ResultEntities>>() = Some(ResultEntities {
             title,
@@ -457,8 +461,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
 
         let mut new_command: Option<GameplayCommand> = None;
 
-        for ev in data
-            .world
+        for ev in data.world
             .read_resource::<EventChannel<UiEvent>>()
             .read(&mut self.ui_events.as_mut().unwrap())
         {

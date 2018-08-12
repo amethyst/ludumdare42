@@ -1,13 +1,13 @@
-use amethyst::ecs::{Join, Read, ReadStorage, Resources, System, SystemData, Write, WriteExpect,
-                    WriteStorage};
+use amethyst::ecs::{Join, Read, ReadExpect, ReadStorage, Resources, System, SystemData, Write,
+                    WriteExpect, WriteStorage};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 use amethyst::input::get_key;
-use amethyst::core::Time;
+use amethyst::core::{Time, Transform};
 use amethyst::shrev::{EventChannel, ReaderId};
 
 use data::*;
 
-pub struct PlayerMovementSystem{
+pub struct PlayerMovementSystem {
     last_beatpoint: Option<BeatPoint>,
     /// TODO: Remove and use the timing logic instead
     /// Will break with multiple players (lol)
@@ -32,17 +32,14 @@ impl<'a> System<'a> for PlayerMovementSystem {
         Read<'a, GameplayResult>,
     );
 
-    fn run(
-        &mut self,
-        (players, mut transforms, time, beatmap, gameplay_result): Self::SystemData,
-    ) {
+    fn run(&mut self, (players, mut transforms, time, beatmap, gameplay_result): Self::SystemData) {
         let time_to_node_mult = 0.1;
         let rel_time = time.absolute_time_seconds() - beatmap.runtime_start;
 
-        if let Some(front) = beatmap.beat_points.peek_front() {
+        if let Some(front) = beatmap.beat_points.front() {
             if self.last_beatpoint.is_none() {
                 self.last_beatpoint = Some(front.clone());
-            } else if self.last_beatpoint.unwrap() != front && !self.in_transit {
+            } else if self.last_beatpoint.as_ref().unwrap() != front && !self.in_transit {
                 self.last_beatpoint = Some(front.clone());
             }
 

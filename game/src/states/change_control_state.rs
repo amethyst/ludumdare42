@@ -1,10 +1,8 @@
 use amethyst::ecs::*;
 use amethyst::input::is_close_requested;
 use amethyst::renderer::{Event, PngFormat, Texture, TextureHandle};
-use amethyst::ui::{
-    Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiEvent, UiEventType, UiImage, UiText,
-    UiTransform,
-};
+use amethyst::ui::{Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiEvent, UiEventType, UiImage,
+                   UiText, UiTransform};
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 

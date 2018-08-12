@@ -1,4 +1,4 @@
-#[derive(Deserialize, PartialEq)]
+#[derive(Deserialize, PartialEq, Clone)]
 pub enum Direction {
     Left,
     Right,
