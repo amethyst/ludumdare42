@@ -67,7 +67,7 @@ fn main() -> Result<()> {
         .with_bundle(AnimationBundle::<u32, Material>::new(
             "animation_control_system",
             "sampler_interpolation_system",
-        ))?.with_bundle(AudioBundle::new(|_: &mut Time| None))?
+        ))?.with_bundle(AudioBundle::new(|music: &mut ::utils::Music| music.next()))?
         .with(
             PrefabLoaderSystem::<SpriteScenePrefab>::default(),
             "",
@@ -87,6 +87,7 @@ fn main() -> Result<()> {
     let resources_directory = format!("");
     Application::build(resources_directory, MapSelectionState::new())?
         .with_resource(asset_loader)
+        .with_resource(::utils::Music::default())
         .with_resource(AssetLoaderInternal::<Texture>::new())
         .with_resource(AssetLoaderInternal::<FontAsset>::new())
         .with_resource(AssetLoaderInternal::<amethyst::audio::Source>::new())
