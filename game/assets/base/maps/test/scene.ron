@@ -1,0 +1,40 @@
+#![enable(implicit_some)]
+Prefab (
+    entities: [
+        (
+            data: (
+                sprite_sheets: [
+                    (
+                        id: 0,
+                        texture: (0, File("texture.png", Png, ())),
+                        sprites: [
+                            (
+                                left: 0,
+                                right: 1,
+                                bottom: 0,
+                                top: 1,
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+        ),
+        (
+            data: (
+                sprite: (
+                    sheet: 0,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                transform: (
+                    translation: (
+                        x: 4,
+                        y, 1,
+                        z: 0,
+                    ),
+                ),
+            ),
+        ),
+    ]
+)

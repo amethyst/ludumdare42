@@ -10,17 +10,17 @@ extern crate fern;
 extern crate partial_function;
 extern crate rand;
 
-
-use rand::{thread_rng,Rng};
+use rand::{thread_rng, Rng};
 
 use amethyst::animation::AnimationBundle;
-use amethyst::assets::{Asset, AssetStorage, Format, Handle, Loader};
+use amethyst::assets::{Asset, AssetStorage, Format, Handle, Loader, PrefabData, PrefabError};
 use amethyst::audio::{AudioBundle, SourceHandle};
 use amethyst::core::cgmath::Ortho;
 use amethyst::core::cgmath::{SquareMatrix, Vector4};
 use amethyst::core::timing::Time;
 use amethyst::core::*;
 use amethyst::ecs::storage::NullStorage;
+use amethyst::ecs::world::EntitiesRes;
 use amethyst::ecs::*;
 use amethyst::input::*;
 use amethyst::prelude::*;
@@ -28,6 +28,7 @@ use amethyst::renderer::*;
 use amethyst::ui::{UiBundle, UiText};
 use amethyst::Result;
 use dirty::Dirty;
+use partial_function::*;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::collections::HashMap;
@@ -38,10 +39,9 @@ use std::io::Read as IORead;
 use std::io::Write as IOWrite;
 use std::iter::Cycle;
 use std::marker::PhantomData;
+use std::ops::{Add, Sub};
 use std::path::Path;
 use std::vec::IntoIter;
-use partial_function::*;
-
 
 /*use crossterm::cursor::*;
 use crossterm::input::*;
@@ -110,7 +110,7 @@ impl AssetLoader {
 
     pub fn resolve_path(&self, path: &str) -> Option<String> {
         // Try to get from default path
-        let mut res = self.resolve_path_for_pack(path,&self.default_pack);
+        let mut res = self.resolve_path_for_pack(path, &self.default_pack);
 
         // Try to find overrides
         for p in &self.asset_packs {
@@ -134,7 +134,7 @@ impl AssetLoader {
         if path.exists() {
             Some(abs.clone())
         } else {
-            warn!("Failed to find file at path: {}",abs);
+            warn!("Failed to find file at path: {}", abs);
             None
         }
     }
@@ -338,9 +338,25 @@ mod test {
     fn asset_loader_resolve_unique_main() {
         let asset_loader = load_asset_loader();
         #[cfg(windows)]
-        assert_eq!(asset_loader.resolve_path("config/unique"),Some(format!("{}\\test\\assets\\main\\config\\unique",env!("CARGO_MANIFEST_DIR")).to_string()));
+        assert_eq!(
+            asset_loader.resolve_path("config/unique"),
+            Some(
+                format!(
+                    "{}\\test\\assets\\main\\config\\unique",
+                    env!("CARGO_MANIFEST_DIR")
+                ).to_string()
+            )
+        );
         #[cfg(not(windows))]
-        assert_eq!(asset_loader.resolve_path("config/unique"),Some(format!("{}/test/assets/main/config/unique",env!("CARGO_MANIFEST_DIR")).to_string()));
+        assert_eq!(
+            asset_loader.resolve_path("config/unique"),
+            Some(
+                format!(
+                    "{}/test/assets/main/config/unique",
+                    env!("CARGO_MANIFEST_DIR")
+                ).to_string()
+            )
+        );
     }
 
     /*#[test]
@@ -360,7 +376,6 @@ mod test {
         let asset_loader = load_asset_loader();
         assert_eq!(asset_loader.resolve_path("config/ovall"),Some(format!("{}/test/assets/mod2/config/ovall",env!("CARGO_MANIFEST_DIR")).to_string()))
     }*/
-
 
     /*#[test]
     pub fn crossterm() {
@@ -522,15 +537,58 @@ pub fn generate_circle_vertices(radius: f32, resolution: usize) -> Vec<PosTex> {
     vertices
 }
 
+pub fn material_from_color(
+    color: [f32; 4],
+    loader: &Loader,
+    storage: &AssetStorage<Texture>,
+    material_defaults: &MaterialDefaults,
+) -> Material {
+    let albedo = loader.load_from_data(color.into(), (), &storage);
+    material_from_texture(albedo, material_defaults)
+}
+
+pub fn material_from_texture(texture: Handle<Texture>, defaults: &MaterialDefaults) -> Material {
+    Material {
+        albedo: texture,
+        ..defaults.0.clone()
+    }
+}
+
+pub fn value_near<B: Add<Output = B> + Sub<Output = B> + PartialOrd + Copy>(
+    number: B,
+    target: B,
+    margin: B,
+) -> bool {
+    number >= target - margin && number <= target + margin
+}
+
+pub fn material_from_png(
+    path: &str,
+    loader: &Loader,
+    storage: &AssetStorage<Texture>,
+    material_defaults: &MaterialDefaults,
+) -> Material {
+    material_from_texture(
+        loader.load(path, PngFormat, TextureMetadata::default(), (), &storage),
+        material_defaults,
+    )
+}
+
 /// Doesn't work if you run `cargo run` while you are not in the root directory
 pub fn get_working_dir() -> String {
-    let mut base_path = String::from(std::env::current_exe().expect("Failed to find executable path.").parent().expect("Failed to get parent directory of the executable.").to_str().unwrap());
-    if base_path.contains("target/") || base_path.contains("target\\"){
+    let mut base_path = String::from(
+        std::env::current_exe()
+            .expect("Failed to find executable path.")
+            .parent()
+            .expect("Failed to get parent directory of the executable.")
+            .to_str()
+            .unwrap(),
+    );
+    if base_path.contains("target/") || base_path.contains("target\\") {
         base_path = String::from(".");
     }
     base_path
 }
-
 
 pub struct Music {
     pub music: Cycle<IntoIter<SourceHandle>>,
@@ -621,13 +679,16 @@ where
         }
         Self::SystemData::setup(res);
     }
-    fn run(&mut self, (mut d,): Self::SystemData){
-    	if d.dirty(){
-    		d.clear();
-        	let v = d.read();
-            let s = ron::ser::to_string(&v).expect(&format!("Unable to serialize the save struct for: {}",self.save_path));
+    fn run(&mut self, (mut d,): Self::SystemData) {
+        if d.dirty() {
+            d.clear();
+            let v = d.read();
+            let s = ron::ser::to_string(&v).expect(&format!(
+                "Unable to serialize the save struct for: {}",
+                self.save_path
+            ));
             let mut f = File::create(&self.save_path);
-            if f.is_ok(){
+            if f.is_ok() {
                 let file = f.as_mut().ok().unwrap();
                 let res = file.write_all(s.as_bytes());
                 if res.is_err() {
@@ -773,14 +834,24 @@ impl Component for FollowMouse {
 }
 
 #[derive(Default)]
-pub struct FollowMouseSystem<A,B>{
-    phantom: PhantomData<(A,B)>,
+pub struct FollowMouseSystem<A, B> {
+    phantom: PhantomData<(A, B)>,
 }
 
-impl<'a,A,B> System<'a> for FollowMouseSystem<A,B> where A: Send+Sync+Hash+Eq+'static+Clone, B: Send+Sync+Hash+Eq+'static+Clone{
-    type SystemData = (ReadStorage<'a,FollowMouse>,WriteStorage<'a,Transform>,ReadStorage<'a,GlobalTransform>,ReadExpect<'a,ScreenDimensions>,
-    	ReadExpect<'a,InputHandler<A,B>>,ReadStorage<'a,Camera>);
-    fn run(&mut self, (follow_mouses,mut transforms, global_transforms, dimension,input,cameras): Self::SystemData){
+impl<'a, A, B> System<'a> for FollowMouseSystem<A, B>
+where
+    A: Send + Sync + Hash + Eq + 'static + Clone,
+    B: Send + Sync + Hash + Eq + 'static + Clone,
+{
+    type SystemData = (
+        ReadStorage<'a, FollowMouse>,
+        WriteStorage<'a, Transform>,
+        ReadStorage<'a, GlobalTransform>,
+        ReadExpect<'a, ScreenDimensions>,
+        ReadExpect<'a, InputHandler<A, B>>,
+        ReadStorage<'a, Camera>,
+    );
+fn run(&mut self, (follow_mouses,mut transforms, global_transforms, dimension,input,cameras): Self::SystemData){
         fn fancy_normalize(v: f32, a: f32) -> f32 {
             // [0, a]
             // [-1,1]
@@ -829,11 +900,8 @@ pub struct LootTreeBuilder<R> {
 }
 
 impl<R: Clone + 'static> LootTreeBuilder<R> {
-
     pub fn new() -> Self {
-        LootTreeBuilder {
-            nodes: vec![],
-        }
+        LootTreeBuilder { nodes: vec![] }
     }
 
     pub fn build(self) -> LootTree<R> {
@@ -841,7 +909,7 @@ impl<R: Clone + 'static> LootTreeBuilder<R> {
         let mut accum = 0;
         for n in self.nodes.into_iter() {
             let tmp = n.chances;
-            f = f.with(accum, move |_| {n.result.clone()});
+            f = f.with(accum, move |_| n.result.clone());
             accum = accum + tmp;
         }
         LootTree {
@@ -866,8 +934,8 @@ impl<R: Clone + 'static> LootTreeBuilder<R> {
 /// Chances will effectively be:
 /// [0,4] (5) -> item1
 /// [5,6] (2) -> item2
-pub struct LootTree<R>{
-    partial_func: LowerPartialFunction<i32,R>,
+pub struct LootTree<R> {
+    partial_func: LowerPartialFunction<i32, R>,
     max: i32,
 }
 
@@ -875,6 +943,58 @@ impl<R> LootTree<R> {
     pub fn roll(&self) -> Option<R> {
         let rng = thread_rng().gen_range(0, self.max);
         self.partial_func.eval(rng)
+    }
+}
+
+pub struct Removal<I> {
+    id: I,
+}
+
+impl<I> Removal<I> {
+    pub fn new(id: I) -> Self {
+        Removal { id }
+    }
+}
+
+impl<I: Send + Sync + 'static> Component for Removal<I> {
+    type Storage = DenseVecStorage<Self>;
+}
+
+
+#[derive(Default, Clone, Deserialize, Serialize)]
+pub struct RemovalPrefab<I> {
+    id: I,
+}
+
+impl<'a, I: PartialEq+Clone+Send+Sync+'static> PrefabData<'a> for RemovalPrefab<I> {
+    type SystemData = (
+        WriteStorage<'a, Removal<I>>,
+    );
+    type Result = ();
+
+    fn load_prefab(
+        &self,
+        entity: Entity,
+        system_data: &mut Self::SystemData,
+        _entities: &[Entity],
+    ) -> std::result::Result<(), PrefabError> {
+        system_data.0.insert(entity, Removal::new(self.id.clone()))?;
+        Ok(())
+    }
+}
+
+
+pub fn exec_removal<I: Send + Sync + PartialEq + 'static>(
+    entities: &EntitiesRes,
+    removal_storage: &ReadStorage<Removal<I>>,
+    removal_id: I,
+) {
+    for (e, r) in (&*entities, removal_storage).join() {
+        if r.id == removal_id {
+            if let Err(err) = entities.delete(e) {
+                error!("Failed to delete entity during exec_removal: {:?}", err);
+            }
+        }
     }
 }
 

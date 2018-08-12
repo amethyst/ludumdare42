@@ -1,0 +1,12 @@
+#![enable(implicit_some)]
+Prefab (
+    entities: [
+        (
+            data: (
+                transform: (),
+                // TODO: add player sprite
+                removal: ((id: 1)),
+            ),
+        ),
+    ],
+)

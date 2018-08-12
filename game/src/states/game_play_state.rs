@@ -60,13 +60,13 @@ impl GamePlayState {
     }
 
     fn initialize_entities(&mut self, world: &mut World) {
-        let player = world
+        /*let player = world
             .create_entity()
             .with(Player::default())
             .with(Transform::default())
             .build();
 
-        self.entities.push(player);
+        self.entities.push(player);*/
 
         // Find prefab file to load
         let mut beatmap_name = world.write_resource::<BeatMap>().name.clone();
