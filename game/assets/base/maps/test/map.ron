@@ -2,4 +2,22 @@
     name: "test",
     music_path: "maps/test/audio.mp3",
     audio_offset: 0.0,
+    beat_points: [
+        (
+            direction: Up,
+            time: 1.0,
+        ),
+        (
+            direction: Down,
+            time: 2.0,
+        ),
+        (
+            direction: Left,
+            time: 3.0,
+        ),
+        (
+            direction: Right,
+            time: 4.0,
+        ),
+    ],
 )

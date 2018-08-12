@@ -1,10 +1,11 @@
 #![enable(implicit_some)]
 Prefab (
     entities: [
-        // Ground
+        // Common
         (
             data: (
                 sprite_sheets: [
+                    // Ground
                     (
                         id: 0,
                         texture: (0, File("./assets/base/maps/test/test_ground.png", Png, ())),
@@ -12,7 +13,76 @@ Prefab (
                             (
                                 width: 1099,
                                 height: 131,
-                                offsets: (0.0,0.0),
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    // Beat point arrows
+                    (
+                        id: 1,
+                        texture: (1, File("./assets/base/sprites/beat_point_up.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    (
+                        id: 2,
+                        texture: (2, File("./assets/base/sprites/beat_point_down.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    (
+                        id: 3,
+                        texture: (3, File("./assets/base/sprites/beat_point_left.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    (
+                        id: 4,
+                        texture: (4, File("./assets/base/sprites/beat_point_right.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
                                 tex_coords: (
                                     left: 0.0,
                                     right: 1.0,
@@ -23,6 +93,12 @@ Prefab (
                         ],
                     ),
                 ],
+            ),
+        ),
+        // Ground
+        (
+            data: (
+                sprite_sheets: [],
                 sprite: (
                     sheet: 0,
                     sprite_number: 0,
@@ -37,6 +113,55 @@ Prefab (
                     ),
                 ),
             ),
+        ),
+        // Beat Points
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                transform: (translation: (x: 100, y: 100, z: 0, )),
+            )
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 2,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                transform: (translation: (x: 400, y: 100, z: 0, )),
+            )
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 3,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                transform: (translation: (x: 700, y: 100, z: 0, )),
+            )
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 4,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                transform: (translation: (x: 1000, y: 100, z: 0, )),
+            )
         ),
     ]
 )

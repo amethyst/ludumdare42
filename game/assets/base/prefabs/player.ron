@@ -5,8 +5,8 @@ Prefab (
             data: (
                 sprite_sheets: [
                     (
-                        id: 1,
-                        texture: (1, File("./assets/base/sprites/astronaut.png", Png, ())),
+                        id: 100,
+                        texture: (100, File("./assets/base/sprites/astronaut.png", Png, ())),
                         sprites: [
                             // Top row
                             (
@@ -94,7 +94,7 @@ Prefab (
                     ),
                 ],
                 sprite: (
-                    sheet: 1,
+                    sheet: 100,
                     sprite_number: 0,
                     flip_horizontal: true,
                     flip_vertical: false,

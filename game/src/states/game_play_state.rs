@@ -98,22 +98,39 @@ impl GamePlayState {
         // === BeatMap === //
 
         // Find prefab file to load
-        let mut beatmap_name = world.write_resource::<BeatMap>().name.clone();
-        let scene_path = world
-            .read_resource::<AssetLoader>()
-            .resolve_path(&format!("maps/{}/scene.ron", beatmap_name))
-            .expect(&format!(
-                "Please ensure map.ron::name == name of the folder containing map.ron for map {}",
-                beatmap_name
-            ));
+        let beatmap_name;
+        let scene_path;
+        let beat_points;
+        {
+            let beatmap = &world.read_resource::<BeatMap>();
+            beatmap_name = beatmap.name.clone();
+            scene_path = world
+                .read_resource::<AssetLoader>()
+                .resolve_path(&format!("maps/{}/scene.ron", beatmap_name))
+                .expect(&format!(
+                    "Please ensure map.ron::name == name of the folder containing map.ron for map {}",
+                    beatmap_name
+                ));
+            beat_points = beatmap.beat_points.clone();
+        }
 
-        // Load the map!
+        // BeatPoints
+        let mut beatpoint_entities = beat_points
+            .into_iter()
+            .map(|beat_point| world.create_entity().with(beat_point).build())
+            .collect::<Vec<Entity>>();
+
+        self.entities.extend(beatpoint_entities);
+
+        // === Background prefab === //
+
+        // Load the map background!
         let prefab_handle = world.exec(|loader: PrefabLoader<SpriteScenePrefab>| {
             // might fail with abs path??
             loader.load(scene_path, RonFormat, (), &mut progress_counter)
         });
-        let beatmap_entity = world.create_entity().with(prefab_handle).build();
-        self.entities.push(beatmap_entity);
+        let background_entity = world.create_entity().with(prefab_handle).build();
+        self.entities.push(background_entity);
 
         let music = world.exec(
             |(resolver, loader, sources): (
@@ -186,8 +203,6 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
         self.initialize_dispatcher(&mut data.world);
         self.initialize_camera(&mut data.world);
         self.initialize_entities(&mut data.world);
-
-        // TODO: create beat points from BeatMap
     }
 
     fn on_stop(&mut self, mut data: StateData<GameData>) {
@@ -229,12 +244,21 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
         // Map beatpoint visual components to beatmap logical beatpoints
         if self.progress_counter.as_ref().unwrap().is_complete() && !self.loaded {
             self.loaded = true;
-            let mut beatpoints = Vec::<BeatPoint>::new();
-            for (b,) in (&data.world.read_storage::<BeatPoint>(),).join() {
-                beatpoints.push(b.clone());
-            }
-            beatpoints.sort_by(|a, b| a.time.partial_cmp(&b.time).unwrap());
-            data.world.write_resource::<BeatMap>().beat_points = beatpoints.into();
+            // @jojo:
+            //
+            // how were you going to define BeatPoints?
+            // I put them inside the BeatMap definition for now and spawn the entities from that.
+            // This loop makes it look like you wanted to store the BeatPoint definition somewhere
+            // else and then modify the BeatMap.
+            //
+            // - az
+            //
+            // let mut beatpoints = Vec::<BeatPoint>::new();
+            // for (b,) in (&data.world.read_storage::<BeatPoint>(),).join() {
+            //     beatpoints.push(b.clone());
+            // }
+            // beatpoints.sort_by(|a, b| a.time.partial_cmp(&b.time).unwrap());
+            // data.world.write_resource::<BeatMap>().beat_points = beatpoints.into();
 
             // Play music
             data.world

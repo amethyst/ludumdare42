@@ -1,5 +1,5 @@
-use amethyst::audio::Source;
 use amethyst::assets::Handle;
+use amethyst::audio::Source;
 
 use data::BeatPoint;
 use std::collections::VecDeque;
@@ -9,6 +9,7 @@ pub struct BeatMapData {
     pub name: String,
     pub music_path: String,
     pub audio_offset: f64,
+    pub beat_points: VecDeque<BeatPoint>,
 }
 
 pub struct BeatMap {

@@ -278,12 +278,14 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
                 entities,
             )?;
         }
-        self.sprite.as_ref().unwrap().do_load_prefab(
-            entity,
-            sprite_sheet_set,
-            sprite_renders,
-            entities,
-        )?;
+        if self.sprite.is_some() {
+            self.sprite.as_ref().unwrap().do_load_prefab(
+                entity,
+                sprite_sheet_set,
+                sprite_renders,
+                entities,
+            )?;
+        }
         self.transform
             .load_prefab(entity, transform_system_data, entities)?;
         Ok(())
@@ -317,12 +319,12 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
                 ret = true;
             }
         }
-        if self
-            .sprite
-            .as_mut()
-            .unwrap()
-            .do_sub_loading(progress, sprite_sheet_set, sprite_renders)?
-        {
+        if self.sprite.is_some() {
+            self.sprite.as_mut().unwrap().do_sub_loading(
+                progress,
+                sprite_sheet_set,
+                sprite_renders,
+            )?;
             ret = true;
         }
         if self
