@@ -163,6 +163,7 @@ impl GamePlayState {
                 .delete_entity(entity)
                 .expect("Failed to delete game entity.")
         });
+        exec_removal(&world.read_resource(),&world.read_storage(), 1);
     }
 }
 

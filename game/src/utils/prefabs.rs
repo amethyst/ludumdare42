@@ -4,6 +4,7 @@ use amethyst::ecs::*;
 use amethyst::renderer::*;
 
 use data::*;
+use amethyst_extra::RemovalPrefab;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct SpriteSheetPrefab {
@@ -228,6 +229,7 @@ pub struct SpriteScenePrefab {
     sprite: Option<SpriteRenderPrefab>,
     transform: Option<Transform>,
     beat_point: Option<BeatPoint>,
+    removal: Option<RemovalPrefab<i32>>,
 }
 
 impl Default for SpriteScenePrefab {
@@ -237,6 +239,7 @@ impl Default for SpriteScenePrefab {
             sprite: None,
             transform: None,
             beat_point: None,
+            removal: None,
         }
     }
 }
@@ -253,6 +256,7 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
         ),
         <Transform as PrefabData<'a>>::SystemData,
         <BeatPoint as PrefabData<'a>>::SystemData,
+        <RemovalPrefab<i32> as PrefabData<'a>>::SystemData,
     );
     type Result = ();
 
@@ -270,6 +274,7 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
             ),
             transform_system_data,
             beatpoint_system_data,
+            removal_system_data,
         ): &mut Self::SystemData,
         entities: &[Entity],
     ) -> Result<(), PrefabError> {
@@ -301,6 +306,13 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
                 entities,
             )?;
         }
+        if self.removal.is_some() {
+            self.removal.as_ref().unwrap().load_prefab(
+                entity,
+                removal_system_data,
+                entities,
+            )?;
+        }
         Ok(())
     }
 
@@ -318,6 +330,7 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
             ),
             transform_system_data,
             beatpoint_system_data,
+            removal_system_data,
         ): &mut Self::SystemData,
     ) -> Result<bool, PrefabError> {
         let mut ret = false;

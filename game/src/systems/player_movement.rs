@@ -12,9 +12,6 @@ use std::collections::VecDeque;
 pub struct PlayerMovementSystem {
     last_beatpoint: Option<(Vector3<f32>,f64)>,
     beat_points: Option<VecDeque<(Vector3<f32>,f64)>>,
-    /// TODO: Remove and use the timing logic instead
-    /// Will break with multiple players (lol)
-    in_transit: bool,
 }
 
 impl PlayerMovementSystem {
@@ -22,7 +19,6 @@ impl PlayerMovementSystem {
         PlayerMovementSystem {
             last_beatpoint: None,
             beat_points: None,
-            in_transit: false,
         }
     }
 }
@@ -34,19 +30,16 @@ impl<'a> System<'a> for PlayerMovementSystem {
         Read<'a, Time>,
         ReadExpect<'a, BeatMap>,
         ReadStorage<'a, BeatPoint>,
-        Read<'a, GameplayResult>,
+        Write<'a, GameplayResult>,
     );
 
-    fn run(&mut self, (players, mut transforms, time, beatmap, beatpoints, gameplay_result): Self::SystemData) {
-        let time_to_node_mult = 0.1;
+    fn run(&mut self, (players, mut transforms, time, beatmap, beatpoints, mut gameplay_result): Self::SystemData) {
+        let time_to_node_mult = 0.5;
         let rel_time = time.absolute_time_seconds() - beatmap.runtime_start;
 
-        info!("1");
         if self.beat_points.is_none() {
-            info!("2");
             let mut v = Vec::<(Vector3<f32>,f64)>::new();
             for (transform,beatpoint) in (&transforms, &beatpoints).join() {
-                info!("boi");
                 v.push((transform.translation.clone(),beatpoint.time));
             }
             if !v.is_empty() {
@@ -54,17 +47,14 @@ impl<'a> System<'a> for PlayerMovementSystem {
                 self.beat_points = Some(v.into());
             }
         } else {
-            info!("3");
             // FIXME: Skips the first frame
 
             while !self.beat_points.as_ref().unwrap().is_empty() && self.beat_points.as_ref().unwrap().front().map(|t| t.1) != beatmap.beat_points.front().map(|b| b.time) {
-                info!("4");
                 self.beat_points.as_mut().unwrap().pop_front();
             }
 
             for (mut transform,_) in (&mut transforms, &players).join() {
                 if self.last_beatpoint.is_none() {
-                    info!("5");
                     self.last_beatpoint = Some((transform.translation.clone(),0.0));
                 }
 
@@ -87,6 +77,11 @@ impl<'a> System<'a> for PlayerMovementSystem {
                     if rel_time >= trans_time_start + trans_duration {
                         self.last_beatpoint = Some(self.beat_points.as_ref().unwrap().front().unwrap().clone());
                         transform.translation = self.beat_points.as_ref().unwrap().front().unwrap().0.clone();
+
+                        // if this is the last point, the game is done.
+                        if self.beat_points.as_ref().unwrap().len() <= 1 {
+                            gameplay_result.status = GameplayStatus::Completed;
+                        }
                     }
                 }
 
