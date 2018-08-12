@@ -147,7 +147,36 @@ Prefab (
                             ),
                         ],
                     ),
+                    // Background
+                    (
+                        id: 5,
+                        texture: (5, File("./assets/base/sprites/moon_background.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 1920,
+                                height: 1080,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
                 ],
+            ),
+        ),
+        // Background
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 5, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.000925926, y: 0.000925926, z: 1.0 ),
+                ),
             ),
         ),
         // Ground
