@@ -1,7 +1,8 @@
-use amethyst::ecs::{Component, DenseVecStorage};
+use amethyst::ecs::{Component, DenseVecStorage, Entity,WriteStorage};
+use amethyst::assets::{PrefabData,PrefabError};
 use data::Direction;
 
-#[derive(Deserialize, PartialEq, Clone)]
+#[derive(Deserialize, PartialEq, Clone,Serialize)]
 pub struct BeatPoint {
     pub direction: Direction,
     pub time: f64,
@@ -9,4 +10,26 @@ pub struct BeatPoint {
 
 impl Component for BeatPoint {
     type Storage = DenseVecStorage<Self>;
+}
+
+/*#[derive(Default, Clone, Deserialize, Serialize)]
+pub struct RemovalPrefab<I> {
+    id: I,
+}*/
+
+impl<'a> PrefabData<'a> for BeatPoint {
+    type SystemData = (
+        WriteStorage<'a, BeatPoint>,
+    );
+    type Result = ();
+
+    fn load_prefab(
+        &self,
+        entity: Entity,
+        system_data: &mut Self::SystemData,
+        _entities: &[Entity],
+    ) -> Result<(), PrefabError> {
+        system_data.0.insert(entity, self.clone())?;
+        Ok(())
+    }
 }
