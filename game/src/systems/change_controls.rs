@@ -1,6 +1,6 @@
 use amethyst::ecs::*;
 use amethyst::input::{Axis, Button, InputEvent, InputHandler};
-use amethyst::renderer::VirtualKeyCode;
+use amethyst::renderer::{VirtualKeyCode};
 
 const CONTROLS_BLACKLIST: [VirtualKeyCode; 1] = [VirtualKeyCode::Escape];
 

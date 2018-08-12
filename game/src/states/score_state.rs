@@ -71,11 +71,18 @@ fn compute_grade(result: &GameplayResult) -> Grade {
     }
 }
 
+struct CleanupScore;
+impl Component for CleanupScore {
+    type Storage = VecStorage<CleanupScore>;
+}
+
 impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting ScoreState");
 
         let world = data.world;
+
+        world.register::<CleanupScore>();
 
         let font = world
             .write_resource::<AssetLoader>()
@@ -207,6 +214,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                     2,
                 ).as_transparent(),
             )
+            .with(CleanupScore)
             .build();
 
         let score_text = world
@@ -229,6 +237,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                     2,
                 ).as_transparent(),
             )
+            .with(CleanupScore)
             .build();
 
         let score = world
@@ -251,6 +260,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                     2,
                 ).as_transparent(),
             )
+            .with(CleanupScore)
             .build();
 
         let comment = world
@@ -273,6 +283,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                     2,
                 ).as_transparent(),
             )
+            .with(CleanupScore)
             .build();
 
         let grade = world
@@ -290,6 +301,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
                     2,
                 ).as_transparent(),
             )
+            .with(CleanupScore)
             .build();
 
         let retry = {
@@ -347,6 +359,8 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             .with_size(100.0, 32.0)
             .build_from_world(world);
 
+        world.write_storage::<CleanupScore>().insert(retry_button, CleanupScore).unwrap();
+
         let menu = {
             world
                 .write_resource::<AssetLoader>()
@@ -402,6 +416,8 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             .with_size(100.0, 32.0)
             .build_from_world(world);
 
+        world.write_storage::<CleanupScore>().insert(menu_button, CleanupScore).unwrap();
+
         *world.write_resource::<Option<ResultEntities>>() = Some(ResultEntities {
             title,
             score_text,
@@ -433,10 +449,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             return Trans::Quit;
         }
 
-        match get_key(&event) {
-            Some((VirtualKeyCode::Escape, ElementState::Pressed)) => Trans::Pop,
-            _ => Trans::None,
-        }
+        Trans::None
     }
 
     fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
@@ -472,4 +485,11 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
     }
 }
 
-fn cleanup(world: &mut World) {}
+fn cleanup(world: &mut World) {
+    let cleanup_store = world.read_storage::<CleanupScore>();
+    let entities = world.read_resource::<Entities>();
+
+    for (e, _) in (&**entities, &cleanup_store).join() {
+        entities.delete(e).unwrap();
+    }
+}
