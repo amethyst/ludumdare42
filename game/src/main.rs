@@ -72,7 +72,13 @@ fn main() -> Result<()> {
             PrefabLoaderSystem::<SpriteScenePrefab>::default(),
             "",
             &[],
-        ).with(TimedDestroySystem, "timed_destroy", &[])
+        )
+        .with(
+            PrefabLoaderSystem::<BeatPoint>::default(),
+            "",
+            &[],
+        )
+        .with(TimedDestroySystem, "timed_destroy", &[])
         .with(NormalOrthoCameraSystem::default(), "aspect_ratio", &[])
         .with(
             VisibilitySortingSystem::new(),
