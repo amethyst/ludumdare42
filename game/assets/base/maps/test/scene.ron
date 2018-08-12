@@ -311,7 +311,7 @@ Prefab (
                     flip_vertical: false,
                 ),
                 beat_point: (
-                    direction: Up(),
+                    direction: Up,
                     time: 1.0,
                 ),
                 transform: (
@@ -339,7 +339,7 @@ Prefab (
                     flip_vertical: false,
                 ),
                 beat_point: (
-                    direction: Left(),
+                    direction: Left,
                     time: 2.0,
                 ),
                 transform: (
