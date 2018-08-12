@@ -6,13 +6,15 @@ Prefab (
                 sprite_sheets: [
                     (
                         id: 0,
-                        texture: (0, File("texture.png", Png, ())),
+                        texture: (0, File("test_ground.png", Png, ())),
                         sprites: [
+                            width: 1099,
+                            height: 131,
                             (
-                                left: 0,
-                                right: 1,
-                                bottom: 0,
-                                top: 1,
+                                left: 0.0,
+                                right: 1.0,
+                                bottom: 0.0,
+                                top: 1.0,
                             ),
                         ],
                     ),

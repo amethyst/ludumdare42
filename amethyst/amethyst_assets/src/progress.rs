@@ -144,6 +144,11 @@ impl Tracker for ProgressCounterTracker {
         asset_name: String,
         error: Error,
     ) {
+        error!(
+            "error loading handle {}, {}, with name {}, caused by: {:?}",
+            handle_id, asset_type_name, asset_name, error
+        );
+
         self.errors.lock().push(AssetErrorMeta {
             error,
             handle_id,
