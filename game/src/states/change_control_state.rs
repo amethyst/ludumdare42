@@ -1,13 +1,19 @@
 use amethyst::ecs::*;
 use amethyst::input::is_close_requested;
 use amethyst::renderer::{Event, PngFormat, Texture, TextureHandle};
-use amethyst::ui::{Anchor, FontAsset, TtfFormat, UiButtonBuilder, UiEvent, UiEventType, UiImage,
-                   UiText, UiTransform};
+use amethyst::shrev::EventChannel;
+use amethyst::ui::{
+    Anchor, FontAsset, TtfFormat, UiButton, UiButtonBuilder, UiEvent, UiEventType, UiImage, UiText,
+    UiTransform,
+};
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
 #[derive(Default, new)]
 pub struct ChangeControlState {
+    #[new(default)]
+    ui_events: Option<ReaderId<UiEvent>>,
+
     #[new(default)]
     back_entity: Option<Entity>,
     #[new(default)]
@@ -206,6 +212,44 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ChangeControlState {
             .insert(change_button, CleanupControl)
             .unwrap();
         self.down_entity = Some(change_button);
+
+        let bottom_thing = world
+            .write_resource::<AssetLoader>()
+            .load(
+                "ui/bottom_thing.png",
+                PngFormat,
+                Default::default(),
+                &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                &mut world.write_resource(),
+                &mut world.read_resource(),
+            )
+            .expect("Failed to load button press").clone();
+
+        world
+            .create_entity()
+            .with(UiImage {
+                texture: bottom_thing,
+            })
+            .with(
+                UiTransform::new(
+                    "bottom_thing".to_owned(),
+                    Anchor::BottomRight,
+                    -376.0,
+                    -55.0,
+                    -3.0,
+                    752.0,
+                    110.0,
+                    2,
+                ).as_transparent(),
+            )
+            .with(CleanupControl)
+            .build();
+
+        self.ui_events = Some(
+            world
+                .write_resource::<EventChannel<UiEvent>>()
+                .register_reader(),
+        );
     }
 
     fn handle_event(&mut self, data: StateData<GameData>, event: Event) -> Trans<GameData<'a, 'b>> {
@@ -213,13 +257,83 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ChangeControlState {
             return Trans::Quit;
         }
 
-        Trans::None
+        use systems::ChangeControl;
+        use amethyst::input::InputHandler;
+
+        if data.world.exec(
+            |(channel, mut change, handler): (
+                Read<EventChannel<UiEvent>>,
+                Write<ChangeControl>,
+                Read<InputHandler<String, String>>,
+            )| {
+                let value = handler.axis_value("X").unwrap();
+                if value != 0.0 {
+                    println!("hey X {}", value);
+                }
+                let value = handler.axis_value("Y").unwrap();
+                if value != 0.0 {
+                    println!("hey Y {}", value);
+                }
+
+                if let Some(reader) = self.ui_events.as_mut() {
+                    for ev in channel.read(reader) {
+                        match ev.event_type {
+                            UiEventType::Click => {
+                                if ev.target == self.back_entity.unwrap() {
+                                    *change = ChangeControl::None;
+                                    return true;
+                                } else if ev.target == self.left_entity.unwrap() {
+                                    println!("ah ok");
+                                    *change = ChangeControl::Axis {
+                                        name: "X".to_owned(),
+                                        positive: true,
+                                    };
+                                } else if ev.target == self.right_entity.unwrap() {
+                                    *change = ChangeControl::Axis {
+                                        name: "X".to_owned(),
+                                        positive: false,
+                                    };
+                                } else if ev.target == self.up_entity.unwrap() {
+                                    *change = ChangeControl::Axis {
+                                        name: "Y".to_owned(),
+                                        positive: true,
+                                    };
+                                } else if ev.target == self.down_entity.unwrap() {
+                                    *change = ChangeControl::Axis {
+                                        name: "Y".to_owned(),
+                                        positive: false,
+                                    };
+                                }
+                                break;
+                            }
+                            _ => {}
+                        }
+                    }
+                }
+                false
+            },
+        ) {
+            cleanup(data.world);
+            Trans::Pop
+        } else {
+            Trans::None
+        }
     }
 
     fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
         data.data.update(data.world);
         Trans::None
     }
+}
+
+fn cleanup(world: &mut World) {
+    let mut to_delete = world.exec(
+        |(entities, cleanup_store): (Entities, ReadStorage<CleanupControl>)| {
+            for (e, _) in (&*entities, &cleanup_store).join() {
+                entities.delete(e);
+            }
+        },
+    );
 }
 
 fn load_button_images(
