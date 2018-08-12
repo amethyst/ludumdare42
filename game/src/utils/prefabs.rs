@@ -3,6 +3,8 @@ use amethyst::core::Transform;
 use amethyst::ecs::*;
 use amethyst::renderer::*;
 
+use data::*;
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct SpriteSheetPrefab {
     pub id: u64,
@@ -225,6 +227,7 @@ pub struct SpriteScenePrefab {
     sprite_sheets: Vec<SpriteSheetPrefab>,
     sprite: Option<SpriteRenderPrefab>,
     transform: Option<Transform>,
+    beat_point: Option<BeatPoint>,
 }
 
 impl Default for SpriteScenePrefab {
@@ -233,6 +236,7 @@ impl Default for SpriteScenePrefab {
             sprite_sheets: Vec::new(),
             sprite: None,
             transform: None,
+            beat_point: None,
         }
     }
 }
@@ -248,6 +252,7 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
             WriteStorage<'a, SpriteRender>,
         ),
         <Transform as PrefabData<'a>>::SystemData,
+        <BeatPoint as PrefabData<'a>>::SystemData,
     );
     type Result = ();
 
@@ -264,6 +269,7 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
                 sprite_renders,
             ),
             transform_system_data,
+            beatpoint_system_data,
         ): &mut Self::SystemData,
         entities: &[Entity],
     ) -> Result<(), PrefabError> {
@@ -288,6 +294,13 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
         }
         self.transform
             .load_prefab(entity, transform_system_data, entities)?;
+        if self.beat_point.is_some() {
+            self.beat_point.as_ref().unwrap().load_prefab(
+                entity,
+                beatpoint_system_data,
+                entities,
+            )?;
+        }
         Ok(())
     }
 
@@ -304,6 +317,7 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
                 sprite_renders,
             ),
             transform_system_data,
+            beatpoint_system_data,
         ): &mut Self::SystemData,
     ) -> Result<bool, PrefabError> {
         let mut ret = false;
@@ -333,6 +347,13 @@ impl<'a> PrefabData<'a> for SpriteScenePrefab {
         {
             ret = true;
         }
+        /*if self.beatpoint.is_some() {
+            self.beatpoint.as_ref().unwrap().do_sub_loading(
+                progress,
+                beatpoint_system_data
+            )?;
+            ret = true;
+        }*/
         Ok(ret)
     }
 }
