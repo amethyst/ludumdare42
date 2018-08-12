@@ -7,7 +7,7 @@ use amethyst::shrev::{EventChannel, ReaderId};
 
 use data::*;
 
-/*pub struct PlayerMovementSystem{
+pub struct PlayerMovementSystem{
     last_beatpoint: Option<BeatPoint>,
     /// TODO: Remove and use the timing logic instead
     /// Will break with multiple players (lol)
@@ -57,7 +57,7 @@ impl<'a> System<'a> for PlayerMovementSystem {
             /*if self.last_beatpoint !=
             let last_beatpoint = ???;*/
 
-            if self.last_beatpoint.is_none() ||
+            //if self.last_beatpoint.is_none() ||
         }
     }
-}*/
+}

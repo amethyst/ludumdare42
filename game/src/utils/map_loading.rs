@@ -1,6 +1,7 @@
 use std::fs;
 use std::fs::File;
 use std::io::Read;
+use std::collections::VecDeque;
 
 use amethyst::audio::Mp3Format;
 use amethyst::ecs::World;
@@ -57,7 +58,7 @@ pub fn load_beatmap(name: String, world: &mut World) -> Option<BeatMap> {
                         name: data.name,
                         music: audio_handle,
                         audio_offset: data.audio_offset,
-                        beat_points: data.beat_points.into(),
+                        beat_points: VecDeque::new(),
                         runtime_start: 0.0,
                     });
                 } else {

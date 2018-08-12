@@ -141,7 +141,9 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
 
         if let Some(beatmap_name) = beatmap_name {
             debug!("Beatmap selected: {}", &beatmap_name);
-            let beatmap = load_beatmap(beatmap_name, &mut data.world);
+            let mut beatmap = load_beatmap(beatmap_name, &mut data.world);
+            // Maps should start in 3 seconds from now.
+            beatmap.runtime_start = data.world.read_resource::<Time>().absolute_time_seconds() + 3.0;
             data.world.add_resource(beatmap.unwrap());
 
             Trans::Push(Box::new(GamePlayState::new()))

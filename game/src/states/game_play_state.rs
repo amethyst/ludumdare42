@@ -29,8 +29,8 @@ impl GamePlayState {
     fn initialize_dispatcher(&mut self, world: &mut World) {
         let mut dispatcher_builder = DispatcherBuilder::new();
 
-        // FIXME: jojolepro is this correct?
         dispatcher_builder.add(GameplayInputSystem::new(), "gameplay_input_system", &[]);
+        dispatcher_builder.add(PlayerMovementSystem::new(), "player_movement", &[]);
         dispatcher_builder.add(
             CameraFollowPlayerSystem,
             "camera_follow_player_system",
@@ -54,6 +54,16 @@ impl GamePlayState {
             .build();
 
         self.entities.push(player);
+
+        // Load scene prefab
+        let mut beatmap_name = world.write_resource::<BeatMap>().name.clone();
+        let scene_path = world.read_resource::<AssetLoader>().resolve_path(&format!("maps/{}/map.ron", beatmap_name)).expect(&format!("Please ensure map.ron::name == name of the folder containing map.ron for map {}",beatmap_name));
+
+
+
+        // Map beatpoint visual components to beatmap beatpoints
+        //world.write_resource::<BeatMap>().beat_points =
+        let beatpoints = (&world.read_storage::<BeatPoint>(),).join().iter().cloned().
     }
 
     fn terminate_entities(&mut self, world: &mut World) {
