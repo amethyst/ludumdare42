@@ -51,6 +51,8 @@ impl<'a> System<'a> for PlayerMovementSystem {
             transition = move player pos lerp  lastnode->current  * (deltatime / time_to_node_mult)
             */
 
+            // TODO: finish it, see previous comment for planned algorithm
+
             /*if self.last_beatpoint !=
             let last_beatpoint = ???;*/
 
