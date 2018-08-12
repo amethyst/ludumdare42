@@ -6,7 +6,7 @@ Prefab (
                 sprite_sheets: [
                     (
                         id: 0,
-                        texture: (0, File("test_ground.png", Png, ())),
+                        texture: (0, File("./assets/base/maps/test/test_ground.png", Png, ())),
                         sprites: [
                             (
                                 width: 1099,
@@ -22,10 +22,6 @@ Prefab (
                         ],
                     ),
                 ],
-            ),
-        ),
-        (
-            data: (
                 sprite: (
                     sheet: 0,
                     sprite_number: 0,
