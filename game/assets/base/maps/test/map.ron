@@ -1,5 +1,5 @@
-{
+(
     name: "test",
     music_path: "maps/test/audio.mp3",
     audio_offset: 0.0,
-}
+)

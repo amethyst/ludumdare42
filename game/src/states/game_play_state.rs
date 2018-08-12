@@ -1,6 +1,6 @@
+use amethyst::assets::*;
 use amethyst::core::Transform;
 use amethyst::ecs::prelude::*;
-use amethyst::assets::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 use amethyst::{GameData, State, StateData, Trans};
@@ -8,15 +8,15 @@ use amethyst_extra::*;
 
 use std::collections::VecDeque;
 
+use data::*;
+use systems::PlayerMovementSystem;
+use utils::prefabs::SpriteScenePrefab;
 use CameraFollowPlayerSystem;
 use GameplayInputSystem;
 use GameplayResult;
 use GameplayStatus;
 use Player;
 use ScoreState;
-use utils::prefabs::SpriteScenePrefab;
-use systems::PlayerMovementSystem;
-use data::*;
 
 /// Where the player is running out of space
 #[derive(Default, new)]
