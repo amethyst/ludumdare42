@@ -819,6 +819,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "floating-duration"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "fluent"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1162,6 +1167,7 @@ dependencies = [
  "amethyst-extra 0.3.0",
  "amethyst-rhusics 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "floating-duration 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "ron 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2361,6 +2367,7 @@ dependencies = [
 "checksum failure_derive 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "946d0e98a50d9831f5d589038d2ca7f8f455b1c21028c0db0e84116a12696426"
 "checksum fern 0.5.6 (registry+https://github.com/rust-lang/crates.io-index)" = "57915fe00a83af935983eb2d00b0ecc62419c4741b28c207ecbf98fd4a1b94c8"
 "checksum flate2 0.2.20 (registry+https://github.com/rust-lang/crates.io-index)" = "e6234dd4468ae5d1e2dbb06fe2b058696fdc50a339c68a393aefbf00bc81e423"
+"checksum floating-duration 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b2c60b71d9dbcd810a3be879dc9aafac6cec5c50dc2346e245f61f54a61fdf22"
 "checksum fluent 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7ca07a6446535f7014d8e34d6c8129a5952ca79665d5745c56c8d51bb5cfe36c"
 "checksum fluent-locale 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "f9817c2cefa0c6f1d00f35dfaf0e506c0135ead9020c4f9118539f66b2292dfd"
 "checksum fnv 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "2fad85553e09a6f881f739c29f0b00b0f01357c743266d478b68951ce23285f3"

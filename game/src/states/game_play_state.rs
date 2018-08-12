@@ -140,6 +140,8 @@ impl GamePlayState {
 
         self.entities.push(player);
 
+        *world.write_resource::<AnimationState>() = AnimationState::Running;
+
         let music = world.exec(
             |(resolver, loader, sources): (
                 ReadExpect<AssetLoader>,

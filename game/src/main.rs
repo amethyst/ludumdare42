@@ -10,6 +10,7 @@ extern crate rand;
 extern crate ron;
 #[macro_use]
 extern crate serde;
+extern crate floating_duration;
 
 use amethyst::animation::*;
 use amethyst::assets::*;
@@ -89,6 +90,7 @@ fn main() -> Result<()> {
         .with(ScoreMenuAnimation::new(), "score_menu_animation", &[])
         .with(MakeObjectsFall, "make_objects_fall", &[])
         .with(MakeObjectsRotate, "make_objects_rotate", &[])
+        .with(AnimationVisual::new(), "animation_visual", &[])
         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     let resources_directory = format!("");
