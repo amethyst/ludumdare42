@@ -3,9 +3,111 @@ Prefab (
     entities: [
         (
             data: (
-                transform: (),
-                // TODO: add player sprite
-                removal: ((id: 1)),
+                sprite_sheets: [
+                    (
+                        id: 1,
+                        texture: (1, File("./assets/base/sprites/astronaut.png", Png, ())),
+                        sprites: [
+                            // Top row
+                            (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.25,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+                                                        (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.25,
+                                    right: 0.5,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+                            (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.5,
+                                    right: 0.75,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+
+                            // Middle row
+                            (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.25,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+                            (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.25,
+                                    right: 0.5,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+                            (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.5,
+                                    right: 0.75,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+
+                            // Bottom
+                            (
+                                width: 512,
+                                height: 409,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.25,
+                                    bottom: 0.4,
+                                    top: 0.6,
+                                ),
+                            ),
+                        ],
+                    ),
+                ],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: true,
+                    flip_vertical: false,
+                ),
+                transform: (
+                    translation: (
+                        x: 100,
+                        y: 131,
+                        z: 0,
+                    ),
+                ),
+                // what is this for?
+                // removal: ((id: 1)),
             ),
         ),
     ],

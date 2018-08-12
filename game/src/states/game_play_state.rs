@@ -69,13 +69,29 @@ impl GamePlayState {
     }
 
     fn initialize_entities(&mut self, world: &mut World) {
-        /*let player = world
+        let mut progress_counter = ProgressCounter::default();
+
+        // === Player === //
+        let player_prefab_path = world
+            .read_resource::<AssetLoader>()
+            .resolve_path("prefabs/player.ron")
+            .expect("Please ensure prefabs/player.ron exists inside assets/<directory>/");
+
+        // Load the player!
+        let prefab_handle = world.exec(|loader: PrefabLoader<SpriteScenePrefab>| {
+            loader.load(player_prefab_path, RonFormat, (), &mut progress_counter)
+        });
+
+        let player = world
             .create_entity()
             .with(Player::default())
-            .with(Transform::default())
+            // .with(Transform::default())
+            .with(prefab_handle)
             .build();
 
-        self.entities.push(player);*/
+        self.entities.push(player);
+
+        // === BeatMap === //
 
         // Find prefab file to load
         let mut beatmap_name = world.write_resource::<BeatMap>().name.clone();
@@ -88,12 +104,12 @@ impl GamePlayState {
             ));
 
         // Load the map!
-        let mut progress_counter = ProgressCounter::default();
         let prefab_handle = world.exec(|loader: PrefabLoader<SpriteScenePrefab>| {
             // might fail with abs path??
             loader.load(scene_path, RonFormat, (), &mut progress_counter)
         });
-        world.create_entity().with(prefab_handle).build();
+        let beatmap_entity = world.create_entity().with(prefab_handle).build();
+        self.entities.push(beatmap_entity);
 
         self.progress_counter = Some(progress_counter);
     }

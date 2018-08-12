@@ -1,6 +1,7 @@
 #![enable(implicit_some)]
 Prefab (
     entities: [
+        // Ground
         (
             data: (
                 sprite_sheets: [
