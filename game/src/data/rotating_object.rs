@@ -7,7 +7,7 @@ pub struct RotatingObject {
 }
 
 impl Component for RotatingObject {
-    type Storage = VecStorage<FallingObject>;
+    type Storage = VecStorage<RotatingObject>;
 }
 
 impl<'a> PrefabData<'a> for RotatingObject {
