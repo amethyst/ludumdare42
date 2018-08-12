@@ -30,7 +30,6 @@ impl<'a> System<'a> for ChangeControlListener {
         if let ChangeControl::None = *change {
             return;
         }
-        println!("heya!");
         let new_key = {
             handler
                 .keys_that_are_down()
@@ -38,7 +37,6 @@ impl<'a> System<'a> for ChangeControlListener {
                 .next()
         };
         if let Some(new_key) = new_key {
-            println!("key");
             if let ChangeControl::Axis {
                 ref name,
                 ref positive,
@@ -48,7 +46,6 @@ impl<'a> System<'a> for ChangeControlListener {
                     .bindings
                     .remove_axis(name)
                     .unwrap_or_else(|| panic!("Unknown input axis '{}' to change", name));
-                println!("caught axis");
                 if *positive {
                     if let Axis::Emulated { neg: old_neg, .. } = axis {
                         handler.bindings.insert_axis(

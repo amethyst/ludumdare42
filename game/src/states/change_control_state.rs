@@ -266,15 +266,6 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ChangeControlState {
                 Write<ChangeControl>,
                 Read<InputHandler<String, String>>,
             )| {
-                let value = handler.axis_value("X").unwrap();
-                if value != 0.0 {
-                    println!("hey X {}", value);
-                }
-                let value = handler.axis_value("Y").unwrap();
-                if value != 0.0 {
-                    println!("hey Y {}", value);
-                }
-
                 if let Some(reader) = self.ui_events.as_mut() {
                     for ev in channel.read(reader) {
                         match ev.event_type {
@@ -283,7 +274,6 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ChangeControlState {
                                     *change = ChangeControl::None;
                                     return true;
                                 } else if ev.target == self.left_entity.unwrap() {
-                                    println!("ah ok");
                                     *change = ChangeControl::Axis {
                                         name: "X".to_owned(),
                                         positive: true,
