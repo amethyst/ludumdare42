@@ -20,7 +20,7 @@ Prefab (
                                     top: 1.0,
                                 ),
                             ),
-                                                        (
+                            (
                                 width: 512,
                                 height: 409,
                                 offsets: (256.0, 0.0),
