@@ -261,10 +261,9 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ChangeControlState {
         use amethyst::input::InputHandler;
 
         if data.world.exec(
-            |(channel, mut change, handler): (
+            |(channel, mut change): (
                 Read<EventChannel<UiEvent>>,
                 Write<ChangeControl>,
-                Read<InputHandler<String, String>>,
             )| {
                 if let Some(reader) = self.ui_events.as_mut() {
                     for ev in channel.read(reader) {

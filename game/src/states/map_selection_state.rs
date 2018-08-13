@@ -6,7 +6,10 @@ use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 
 use amethyst::core::cgmath::{Matrix4, Ortho, Vector3};
 use amethyst::shrev::{EventChannel, ReaderId};
-use amethyst::ui::{Anchor, FontAsset, FontHandle, TtfFormat, UiButtonBuilder};
+use amethyst::ui::{
+    Anchor, FontAsset, TtfFormat, UiButton, UiButtonBuilder, UiEvent, UiEventType, UiImage, UiText,
+    UiTransform, FontHandle
+};
 use amethyst::{GameData, State, StateData, Trans};
 
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
@@ -28,6 +31,10 @@ pub struct MapSelectionState {
     font: Option<FontHandle>,
     #[new(value = "false")]
     cam_init: bool,
+    #[new(default)]
+    controls_button: Option<Entity>,
+    #[new(default)]
+    ui_events: Option<ReaderId<UiEvent>>,
 }
 
 impl MapSelectionState {
@@ -62,6 +69,27 @@ impl MapSelectionState {
                 .expect("Failed to load font.");
             self.font = Some(font.clone());
         }
+
+        let controls = world
+            .write_resource::<AssetLoader>()
+            .load(
+                "ui/controls.png",
+                PngFormat,
+                Default::default(),
+                &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                &mut world.write_resource(),
+                &mut world.read_resource(),
+            )
+            .expect("Failed to load retry")
+            .clone();
+
+        let controls_button = UiButtonBuilder::new("controls_button", "")
+            .with_position(85.0, 36.0)
+            .with_image(controls)
+            .with_anchor(Anchor::TopLeft)
+            .with_size(130.0, 32.0)
+            .build_from_world(world);
+        self.controls_button = Some(controls_button);
 
         let font = self.font.as_ref().unwrap();
         // let mut index = 0;
@@ -124,6 +152,13 @@ impl MapSelectionState {
                 entity
             })
             .collect::<Vec<Entity>>();
+        self.buttons.push(controls_button);
+
+        self.ui_events = Some(
+            world
+                .write_resource::<EventChannel<UiEvent>>()
+                .register_reader(),
+        );
     }
 
     fn clear_menu(&mut self, world: &mut World) {
@@ -186,7 +221,29 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
             return Trans::Quit;
         }
 
-        Trans::None
+        if data
+            .world
+            .exec(|channel: Read<EventChannel<UiEvent>>| {
+                if let Some(reader) = self.ui_events.as_mut() {
+                    for ev in channel.read(reader) {
+                        match ev.event_type {
+                            UiEventType::Click => {
+                                if ev.target == self.controls_button.unwrap() {
+                                    return true;
+                                }
+                            }
+                            _ => { }
+                        }
+                    }
+                }
+                false
+            })
+        {
+            use states::ChangeControlState;
+            Trans::Push(Box::new(ChangeControlState::new()))
+        } else {
+            Trans::None
+        }
     }
 
     fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
