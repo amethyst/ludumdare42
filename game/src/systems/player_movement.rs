@@ -83,6 +83,8 @@ impl<'a> System<'a> for PlayerMovementSystem {
                     let new_pos = self.last_beatpoint.as_ref().unwrap().0
                         + dir * ((rel_time - trans_time_start) / trans_duration) as f32;
 
+                    transform.translation = new_pos;
+
                     // if arrived, last beatpoint = current
                     if rel_time >= trans_time_start + trans_duration {
                         self.last_beatpoint =
