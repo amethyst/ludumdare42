@@ -618,5 +618,117 @@ Prefab (
                 removal: ( id: 1),
             ),
         ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Up,
+                    time: 6.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 1.2,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Down,
+                    time: 6.5,
+                ),
+                transform: (
+                    translation: (
+                        x: 1.3,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Left,
+                    time: 7.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 1.5,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Right,
+                    time: 7.5,
+                ),
+                transform: (
+                    translation: (
+                        x: 1.6,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
     ]
 )
