@@ -140,6 +140,7 @@ impl GamePlayState {
         let player = world
             .create_entity()
             .with(Player::default())
+            .with(Transparent)
             .with(prefab_handle)
             .build();
 
