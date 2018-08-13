@@ -38,7 +38,8 @@ impl<'a> System<'a> for AnimationVisual {
                     if self.current_anim != AnimationState::Running {
                         self.current_anim = AnimationState::Running;
                         self.time = 0.0;
-                        sprite.sprite_sheet = set.handle(101).expect("Running spritesheet not found");
+                        sprite.sprite_sheet =
+                            set.handle(101).expect("Running spritesheet not found");
                     } else {
                         self.time = (self.time + time.delta_time().as_fractional_secs())
                             % (RUNNING_ANIMATION_SLICE_TIME * 4.0);
@@ -54,12 +55,13 @@ impl<'a> System<'a> for AnimationVisual {
                         sprite.sprite_number = 3;
                     }
                 }
-            },
+            }
             AnimationState::Jumping => {
                 if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
-                    if self.current_anim != AnimationState::Running {
-                        sprite.sprite_sheet = set.handle(100).expect("Running spritesheet not found");
-                        self.current_anim = AnimationState::Running;
+                    if self.current_anim != AnimationState::Jumping {
+                        sprite.sprite_sheet =
+                            set.handle(100).expect("Jumping spritesheet not found");
+                        self.current_anim = AnimationState::Jumping;
                         self.time = 0.0;
                     } else {
                         self.time = (self.time + time.delta_time().as_fractional_secs())
@@ -78,12 +80,13 @@ impl<'a> System<'a> for AnimationVisual {
                         sprite.sprite_number = 4;
                     }
                 }
-            },
+            }
             AnimationState::Falling => {
                 if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
-                    if self.current_anim != AnimationState::Running {
-                        sprite.sprite_sheet = set.handle(102).expect("Running spritesheet not found");
-                        self.current_anim = AnimationState::Running;
+                    if self.current_anim != AnimationState::Falling {
+                        sprite.sprite_sheet =
+                            set.handle(102).expect("Falling spritesheet not found");
+                        self.current_anim = AnimationState::Falling;
                         self.time = 0.0;
                     } else {
                         self.time = (self.time + time.delta_time().as_fractional_secs())
@@ -124,7 +127,7 @@ impl<'a> System<'a> for AnimationVisual {
                         sprite.sprite_number = 15;
                     } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 17.0 {
                         sprite.sprite_number = 16;
-                        // TODO: kms
+                    // TODO: kms
                     } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 18.0 {
                         sprite.sprite_number = 17;
                     } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 19.0 {
@@ -135,8 +138,8 @@ impl<'a> System<'a> for AnimationVisual {
                         sprite.sprite_number = 20;
                     }
                 }
-            },
-            _ => {},
+            }
+            _ => {}
         }
     }
 }

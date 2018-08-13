@@ -86,12 +86,237 @@ Prefab (
                             (
                                 width: 600,
                                 height: 600,
-                                offsets: (0.0, 0.0),
+                                offsets: (256.0, 0.0),
                                 tex_coords: (
                                     left: 0.0,
                                     right: 0.2,
                                     bottom: 0.8,
                                     top: 1.0,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.8,
+                                    top: 1.0,
+                                ),
+                            ),
+
+
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.6,
+                                    top: 0.8,
+                                ),
+                            ),
+
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.4,
+                                    top: 0.6,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.4,
+                                    top: 0.6,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.4,
+                                    top: 0.6,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.4,
+                                    top: 0.6,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.4,
+                                    top: 0.6,
+                                ),
+                            ),
+
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.2,
+                                    top: 0.4,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.2,
+                                    top: 0.4,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.2,
+                                    top: 0.4,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.2,
+                                    top: 0.4,
+                                ),
+                            ),
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.2,
+                                    top: 0.4,
+                                ),
+                            ),
+
+                            (
+                                width: 600,
+                                height: 600,
+                                offsets: (256.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.0,
+                                    top: 0.2,
                                 ),
                             ),
                         ],
