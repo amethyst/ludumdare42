@@ -11,6 +11,7 @@ extern crate ron;
 #[macro_use]
 extern crate serde;
 extern crate floating_duration;
+extern crate gfx;
 
 use amethyst::animation::*;
 use amethyst::assets::*;
