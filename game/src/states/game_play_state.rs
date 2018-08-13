@@ -1,7 +1,7 @@
 use amethyst::assets::*;
 use amethyst::audio::{AudioSink, Mp3Format, Source as AudioSource, SourceHandle};
 use amethyst::core::cgmath::{Matrix4, Ortho, Vector3};
-use amethyst::core::{GlobalTransform, Transform};
+use amethyst::core::{GlobalTransform, Transform,Time};
 use amethyst::ecs::prelude::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{
@@ -228,6 +228,8 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
             // Play music
             data.world
                 .add_resource(Music::new(self.music.as_ref().unwrap().clone()));
+            let cur_time = data.world.read_resource::<Time>().absolute_time_seconds();
+            data.world.write_resource::<BeatMap>().runtime_start = cur_time;
 
             // ._. this doesn't work to restart the music on re-entering the game.
             // let source_store = data.world.read_resource::<AssetStorage<AudioSource>>();
