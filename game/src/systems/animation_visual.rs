@@ -129,8 +129,12 @@ impl<'a> System<'a> for AnimationVisual {
                         // TODO: kms
                     } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 18.0 {
                         sprite.sprite_number = 17;
-                    } else {
+                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 19.0 {
                         sprite.sprite_number = 18;
+                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 20.0 {
+                        sprite.sprite_number = 19;
+                    } else {
+                        sprite.sprite_number = 20;
                     }
                 }
             },
