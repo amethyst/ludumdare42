@@ -70,7 +70,7 @@ impl MapSelectionState {
             self.font = Some(font.clone());
         }
 
-        let controls = world
+        /*let controls = world
             .write_resource::<AssetLoader>()
             .load(
                 "ui/controls.png",
@@ -89,7 +89,7 @@ impl MapSelectionState {
             .with_anchor(Anchor::TopLeft)
             .with_size(130.0, 32.0)
             .build_from_world(world);
-        self.controls_button = Some(controls_button);
+        self.controls_button = Some(controls_button);*/
 
         let font = self.font.as_ref().unwrap();
         // let mut index = 0;
@@ -152,13 +152,13 @@ impl MapSelectionState {
                 entity
             })
             .collect::<Vec<Entity>>();
-        self.buttons.push(controls_button);
+        /*self.buttons.push(controls_button);
 
         self.ui_events = Some(
             world
                 .write_resource::<EventChannel<UiEvent>>()
                 .register_reader(),
-        );
+        );*/
     }
 
     fn clear_menu(&mut self, world: &mut World) {
@@ -221,7 +221,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
             return Trans::Quit;
         }
 
-        if data
+        /*if data
             .world
             .exec(|channel: Read<EventChannel<UiEvent>>| {
                 if let Some(reader) = self.ui_events.as_mut() {
@@ -243,7 +243,8 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
             Trans::Push(Box::new(ChangeControlState::new()))
         } else {
             Trans::None
-        }
+        }*/
+        Trans::None
     }
 
     fn update(&mut self, mut data: StateData<GameData>) -> Trans<GameData<'a, 'b>> {
