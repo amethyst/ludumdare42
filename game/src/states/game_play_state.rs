@@ -172,6 +172,8 @@ impl GamePlayState {
 impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting GamePlayState");
+        // Reset game play result
+        data.world.add_resource(GameplayResult::default());
         self.initialize_dispatcher(&mut data.world);
         self.initialize_entities(&mut data.world);
     }
