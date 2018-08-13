@@ -57,8 +57,8 @@ impl<'a> System<'a> for AnimationVisual {
             },
             AnimationState::Jumping => {
                 if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
-                    sprite.sprite_sheet = set.handle(100).expect("Running spritesheet not found");
                     if self.current_anim != AnimationState::Running {
+                        sprite.sprite_sheet = set.handle(100).expect("Running spritesheet not found");
                         self.current_anim = AnimationState::Running;
                         self.time = 0.0;
                     } else {
@@ -83,8 +83,8 @@ impl<'a> System<'a> for AnimationVisual {
             },
             AnimationState::Falling => {
                 if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
-                    sprite.sprite_sheet = set.handle(102).expect("Running spritesheet not found");
                     if self.current_anim != AnimationState::Running {
+                        sprite.sprite_sheet = set.handle(102).expect("Running spritesheet not found");
                         self.current_anim = AnimationState::Running;
                         self.time = 0.0;
                     } else {
