@@ -25,14 +25,14 @@ impl AnimationVisual {
 
 impl<'a> System<'a> for AnimationVisual {
     type SystemData = (
-        Read<'a, AnimationStateRes>,
+        Write<'a, AnimationStateRes>,
         Read<'a, SpriteSheetSet>,
         ReadStorage<'a, Player>,
         WriteStorage<'a, SpriteRender>,
         Read<'a, Time>,
     );
 
-    fn run(&mut self, (state, set, player, mut sprites, time): Self::SystemData) {
+    fn run(&mut self, (mut state, set, player, mut sprites, time): Self::SystemData) {
         match state.state {
             AnimationState::Running => {
                 if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
@@ -91,7 +91,7 @@ impl<'a> System<'a> for AnimationVisual {
                         self.time = 0.0;
                     } else {
                         self.time = (self.time + time.delta_time().as_fractional_secs())
-                            % (FALLING_ANIMATION_SLICE_TIME * 18.0);
+                            % (FALLING_ANIMATION_SLICE_TIME * 21.0);
                     }
 
                     if self.time < FALLING_ANIMATION_SLICE_TIME {
@@ -136,7 +136,7 @@ impl<'a> System<'a> for AnimationVisual {
                     } else if self.time < FALLING_ANIMATION_SLICE_TIME * 20.0 {
                         sprite.sprite_number = 19;
                     } else {
-                        sprite.sprite_number = 20;
+                        state.state = AnimationState::Running;
                     }
                 }
             }
