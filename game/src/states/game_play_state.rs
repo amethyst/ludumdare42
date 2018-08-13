@@ -211,7 +211,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
 
         // TODO: Probably render something on screen to say "the game is paused"
         // Should we also add an entity with a `Paused` component that indicates the paused state?
-        if !self.paused {
+        if !self.paused && self.loaded{
             self.dispatcher.as_mut().unwrap().dispatch(&data.world.res);
         }
 
