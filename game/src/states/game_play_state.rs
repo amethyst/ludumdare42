@@ -173,6 +173,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
     fn on_start(&mut self, mut data: StateData<GameData>) {
         debug!("Starting GamePlayState");
         // Reset game play result
+        self.loaded = false;
         data.world.add_resource(GameplayResult::default());
         self.initialize_dispatcher(&mut data.world);
         self.initialize_entities(&mut data.world);
@@ -226,6 +227,13 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
             // Play music
             data.world
                 .add_resource(Music::new(self.music.as_ref().unwrap().clone()));
+
+            // ._. this doesn't work to restart the music on re-entering the game.
+            // let source_store = data.world.read_resource::<AssetStorage<AudioSource>>();
+            // data.world
+            //     .read_resource::<AudioSink>()
+            //     .append(source_store.get(self.music.as_ref().unwrap()).unwrap())
+            //     .unwrap();
         }
 
         let gameplay_result = &data.world.read_resource::<GameplayResult>();
