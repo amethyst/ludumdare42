@@ -94,15 +94,15 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             )
             .expect("Failed to load font");
 
-        //let result = world.read_resource::<GameplayResult>().clone();
+        let result = world.read_resource::<GameplayResult>().clone();
 
-        /*let (title_text, grade) = if result.status == GameplayStatus::Completed {
+        let (title_text, grade) = if result.status == GameplayStatus::Completed {
             ("Congratulations!".to_owned(), compute_grade(&result))
         } else {
             ("Oh no!".to_owned(), Grade::F)
-        };*/
+        };
 
-        let (title_text, grade) = ("Congratulations!".to_owned(), Grade::S);
+        //let (title_text, grade) = ("Congratulations!".to_owned(), Grade::S);
 
         let (grade, comment) = match grade {
             Grade::C => (
@@ -431,7 +431,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for ScoreState {
             menu_button,
             retry_button,
 
-            target_score: 12345//compute_score(&result),
+            target_score: compute_score(&result),
         });
 
         self.menu_button = Some(menu_button);
