@@ -229,6 +229,9 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
         let gameplay_result = &data.world.read_resource::<GameplayResult>();
         match gameplay_result.status {
             GameplayStatus::Failed | GameplayStatus::Completed => {
+                // Stop playing music
+                data.world.read_resource::<AudioSink>().stop();
+
                 Trans::Switch(Box::new(ScoreState::new()))
             }
             _ => Trans::None,
