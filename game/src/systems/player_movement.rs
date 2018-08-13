@@ -76,17 +76,17 @@ impl<'a> System<'a> for PlayerMovementSystem {
                     let trans_time_start = self.last_beatpoint.as_ref().unwrap().1;
                     let trans_time_stop = self.beat_points.as_ref().unwrap().front().unwrap().1;
 
-                    let trans_duration = (trans_time_stop - trans_time_start) * time_to_node_mult;
+                    let trans_duration = (trans_time_stop - trans_time_start);
 
                     let dir = self.beat_points.as_ref().unwrap().front().unwrap().0
                         - self.last_beatpoint.as_ref().unwrap().0;
                     let new_pos = self.last_beatpoint.as_ref().unwrap().0
-                        + dir * ((rel_time - trans_time_start) / trans_duration) as f32;
+                        + dir * ((rel_time - trans_time_start)*time_to_node_mult / trans_duration) as f32;
 
                     transform.translation = new_pos;
 
                     // if arrived, last beatpoint = current
-                    if rel_time >= trans_time_start + trans_duration {
+                    if rel_time >= (trans_time_start + trans_duration) / time_to_node_mult {
                         self.last_beatpoint =
                             Some(self.beat_points.as_ref().unwrap().front().unwrap().clone());
                         transform.translation = self

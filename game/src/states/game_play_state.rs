@@ -14,7 +14,7 @@ use amethyst_extra::*;
 use std::collections::VecDeque;
 
 use data::*;
-use systems::PlayerMovementSystem;
+use systems::*;
 use utils::{Music, SpriteScenePrefab};
 use CameraFollowPlayerSystem;
 use GameplayInputSystem;
@@ -62,6 +62,7 @@ impl GamePlayState {
             "camera_follow_player_system",
             &["gameplay_input_system"],
         );
+        dispatcher_builder.add(BeatPointAnimationSystem, "beatpoint_animation", &[]);
 
         let mut dispatcher = dispatcher_builder.build();
         dispatcher.setup(&mut world.res);

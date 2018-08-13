@@ -3,3 +3,4 @@ amethyst/target
 **/*.rs.bk
 **/export.zip
 **/.idea/
+game/export
