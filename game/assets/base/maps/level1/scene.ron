@@ -685,7 +685,7 @@ Prefab (
                 ),
                 beat_point: (
                     direction: Left,
-                    time: 7.0,
+                    time: 7.5,
                 ),
                 transform: (
                     translation: (
@@ -713,7 +713,7 @@ Prefab (
                 ),
                 beat_point: (
                     direction: Right,
-                    time: 7.5,
+                    time: 8.0,
                 ),
                 transform: (
                     translation: (
