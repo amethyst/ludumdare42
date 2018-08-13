@@ -1,6 +1,8 @@
+use std::cmp;
+
+use amethyst::core::cgmath::{Matrix4, Vector3};
+use amethyst::core::{GlobalTransform, Transform};
 use amethyst::ecs::{Join, ReadStorage, System, WriteStorage};
-use amethyst::core::{Transform,GlobalTransform};
-use amethyst::core::cgmath::{Matrix4,Vector3};
 use amethyst::renderer::Camera;
 use data::Player;
 
@@ -32,7 +34,12 @@ impl<'a> System<'a> for CameraFollowPlayerSystem {
 
                 // normal ortho camera goes from [0,1] on x axis
                 //let cam_x = position_x + 0.5 - target_player_pos_abs;
-                let cam_x = position_x - target_player_pos_abs;
+                let mut cam_x = position_x - target_player_pos_abs;
+
+                // Don't go out of bounds
+                if cam_x < 0.16 {
+                    cam_x = 0.16;
+                }
 
                 // expect 0.666
                 info!("Updating cam pos to {}", cam_x);
