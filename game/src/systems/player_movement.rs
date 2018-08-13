@@ -39,7 +39,7 @@ impl<'a> System<'a> for PlayerMovementSystem {
         &mut self,
         (players, mut transforms, time, beatmap, beatpoints, mut gameplay_result): Self::SystemData,
     ) {
-        let time_to_node_mult = 0.5;
+        let time_to_node_mult = 1.0; // is there a reason for this being 0.5 before?
         let rel_time = time.absolute_time_seconds() - beatmap.runtime_start;
 
         if self.beat_points.is_none() {
