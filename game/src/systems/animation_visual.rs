@@ -7,6 +7,7 @@ use floating_duration::{TimeAsFloat, TimeFormat};
 use data::*;
 
 const RUNNING_ANIMATION_SLICE_TIME: f64 = 0.1;
+const FALLING_ANIMATION_SLICE_TIME: f64 = 0.02;
 
 pub struct AnimationVisual {
     current_anim: AnimationState,
@@ -90,49 +91,49 @@ impl<'a> System<'a> for AnimationVisual {
                         self.time = 0.0;
                     } else {
                         self.time = (self.time + time.delta_time().as_fractional_secs())
-                            % (RUNNING_ANIMATION_SLICE_TIME * 18.0);
+                            % (FALLING_ANIMATION_SLICE_TIME * 18.0);
                     }
 
-                    if self.time < RUNNING_ANIMATION_SLICE_TIME {
+                    if self.time < FALLING_ANIMATION_SLICE_TIME {
                         sprite.sprite_number = 0;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 2.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 2.0 {
                         sprite.sprite_number = 1;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 3.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 3.0 {
                         sprite.sprite_number = 2;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 4.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 4.0 {
                         sprite.sprite_number = 3;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 5.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 5.0 {
                         sprite.sprite_number = 4;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 6.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 6.0 {
                         sprite.sprite_number = 5;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 7.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 7.0 {
                         sprite.sprite_number = 6;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 8.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 8.0 {
                         sprite.sprite_number = 7;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 9.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 9.0 {
                         sprite.sprite_number = 8;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 10.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 10.0 {
                         sprite.sprite_number = 9;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 11.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 11.0 {
                         sprite.sprite_number = 10;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 12.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 12.0 {
                         sprite.sprite_number = 11;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 13.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 13.0 {
                         sprite.sprite_number = 12;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 14.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 14.0 {
                         sprite.sprite_number = 13;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 15.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 15.0 {
                         sprite.sprite_number = 14;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 16.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 16.0 {
                         sprite.sprite_number = 15;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 17.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 17.0 {
                         sprite.sprite_number = 16;
                     // TODO: kms
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 18.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 18.0 {
                         sprite.sprite_number = 17;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 19.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 19.0 {
                         sprite.sprite_number = 18;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 20.0 {
+                    } else if self.time < FALLING_ANIMATION_SLICE_TIME * 20.0 {
                         sprite.sprite_number = 19;
                     } else {
                         sprite.sprite_number = 20;
