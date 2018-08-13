@@ -1,21 +1,21 @@
+use amethyst::core::{GlobalTransform, Time, Transform};
 use amethyst::ecs::prelude::*;
 use amethyst::input::{is_close_requested, is_key_down};
+use amethyst::renderer::{Camera, PngFormat, Projection, Texture};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
-use amethyst::core::{GlobalTransform,Transform,Time};
-use amethyst::renderer::{Camera,Projection,PngFormat,Texture};
 
+use amethyst::core::cgmath::{Matrix4, Ortho, Vector3};
 use amethyst::shrev::{EventChannel, ReaderId};
 use amethyst::ui::{Anchor, FontAsset, FontHandle, TtfFormat, UiButtonBuilder};
 use amethyst::{GameData, State, StateData, Trans};
-use amethyst::core::cgmath::{Matrix4,Vector3, Ortho};
 
 use amethyst_extra::{AssetLoader, AssetLoaderInternal};
 
 use super::map_selection::*;
+use data::BeatPoint;
 use utils::{list_beatmaps, load_beatmap};
 use GamePlayState;
 use MapSelectionEvent;
-use data::BeatPoint;
 
 /// Where the player chooses which song to play
 #[derive(Default, new)]
@@ -111,7 +111,7 @@ impl MapSelectionState {
                     .with_size(150.0, 150.0)
                     .with_tab_order(i as i32)
                     .with_anchor(Anchor::Middle)
-                    // .with_font(font.clone())
+                    .with_font(font.clone())
                     .with_image(img)
                     .with_hover_image(imghover)
                     .build_from_world(world);
@@ -148,7 +148,8 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
             let translation = Matrix4::from_translation(Vector3::new(0.0, 0.0, 100.0));
             let global_transform = GlobalTransform(translation);
 
-            let camera = data.world
+            let camera = data
+                .world
                 .create_entity()
                 .with(Camera::from(Projection::Orthographic(Ortho {
                     left: 0.0,
@@ -161,7 +162,6 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
                 .with(global_transform)
                 .build();
         }
-
 
         self.initialize_map_selection_event_channel(&mut data.world);
         self.reload_menu(&mut data.world);
@@ -194,10 +194,12 @@ impl<'a, 'b> State<GameData<'a, 'b>> for MapSelectionState {
 
         // sorry for bad memory management, but this is a game jam
         let beatmap_name = {
-            let map_selection_event_channel = data.world
+            let map_selection_event_channel = data
+                .world
                 .read_resource::<EventChannel<MapSelectionEvent>>();
 
-            let mut reader_id = self.map_selection_event_reader
+            let mut reader_id = self
+                .map_selection_event_reader
                 .as_mut()
                 .expect("Expected map_selection_event_reader to be set");
 
