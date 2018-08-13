@@ -277,7 +277,7 @@ impl PngFormat {
         use gfx::texture::{FilterMethod, SamplerInfo, WrapMode};
         let options = options.with_sampler(SamplerInfo::new(
                                 FilterMethod::Trilinear,
-                                WrapMode::Tile,
+                                WrapMode::Border,
                             ));
         imagefmt::png::read(&mut Cursor::new(data), ColFmt::RGBA)
             .map(|raw| TextureData::Image(ImageData { raw }, options))
