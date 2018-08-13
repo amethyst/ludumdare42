@@ -20,6 +20,7 @@ impl GameplayInputSystem {
 impl<'a> System<'a> for GameplayInputSystem {
     type SystemData = (
         WriteStorage<'a, Player>,
+        Write<'a, AnimationStateRes>,
         Read<'a, EventChannel<Event>>,
         Read<'a, Time>,
         WriteExpect<'a, BeatMap>,
@@ -29,7 +30,7 @@ impl<'a> System<'a> for GameplayInputSystem {
     // TODO: Update player HP
     fn run(
         &mut self,
-        (mut players, input, time, mut beatmap, mut gameplay_result): Self::SystemData,
+        (mut players, mut anim, input, time, mut beatmap, mut gameplay_result): Self::SystemData,
     ) {
         let offset = 0.2;
         let rel_time = time.absolute_time_seconds() - beatmap.runtime_start;
@@ -47,6 +48,7 @@ impl<'a> System<'a> for GameplayInputSystem {
             gameplay_result
                 .results
                 .push((missed.time, HitResult::MissLate));
+            anim.state = AnimationState::Falling;
         }
 
         // check input
@@ -81,15 +83,24 @@ impl<'a> System<'a> for GameplayInputSystem {
                                 gameplay_result
                                     .results
                                     .push((beatpoint.time, HitResult::Hit));
+                                
+                                // TODO: if next platform is higher -> jetpack else -> running
+                                
+                                anim.state = AnimationState::Running;
                             } else {
                                 gameplay_result
                                     .results
                                     .push((beatpoint.time, HitResult::MissKey));
+                                anim.state = AnimationState::Falling;
                             }
                         }
                     }
                 }
             }
+        }
+        // if this is the last point, the game is done.
+        if beatmap.beat_points.len() == 0 {
+            gameplay_result.status = GameplayStatus::Completed;
         }
     }
 

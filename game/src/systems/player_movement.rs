@@ -100,10 +100,6 @@ impl<'a> System<'a> for PlayerMovementSystem {
                             .0
                             .clone();
 
-                        // if this is the last point, the game is done.
-                        if self.beat_points.as_ref().unwrap().len() <= 1 {
-                            gameplay_result.status = GameplayStatus::Completed;
-                        }
                     }
                 }
             }

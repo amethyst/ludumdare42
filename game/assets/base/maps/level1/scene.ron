@@ -533,6 +533,35 @@ Prefab (
                 removal: ( id: 1),
             ),
         ),
+        // beatpoint3 (vertical)
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Left,
+                    time: 2.5,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.4,
+                        y: 0.25,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
         (
             data: (
                 sprite_sheets: [],

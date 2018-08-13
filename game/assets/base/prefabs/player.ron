@@ -149,8 +149,7 @@ Prefab (
                         z: 1.0,
                     ),
                 ),
-                // what is this for?
-                // removal: ((id: 1)),
+                removal: (id: 1),
             ),
         ),
     ],
