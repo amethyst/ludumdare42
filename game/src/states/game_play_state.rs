@@ -150,7 +150,7 @@ impl GamePlayState {
             )| {
                 let path = resolver.resolve_path(&format!("maps/{}/audio.mp3", beatmap_name))
                 // TODO use some fallback
-                .unwrap_or_else(|| "assets/base/maps/test/audio.mp3".to_owned());
+                .unwrap_or_else(|| "assets/base/maps/level1/audio.mp3".to_owned());
                 loader.load(path, Mp3Format, (), &mut progress_counter, &sources)
             },
         );
@@ -165,7 +165,7 @@ impl GamePlayState {
                 .delete_entity(entity)
                 .expect("Failed to delete game entity.")
         });
-        exec_removal(&world.read_resource(),&world.read_storage(), 1);
+        exec_removal(&world.read_resource(), &world.read_storage(), 1);
     }
 }
 
@@ -214,67 +214,12 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
         // Map beatpoint visual components to beatmap logical beatpoints
         if self.progress_counter.as_ref().unwrap().is_complete() && !self.loaded {
             self.loaded = true;
-            // @jojo:
-            //
-            // how were you going to define BeatPoints?
-            // I put them inside the BeatMap definition for now and spawn the entities from that.
-            // This loop makes it look like you wanted to store the BeatPoint definition somewhere
-            // else and then modify the BeatMap.
-            //
-            // Note, I attach sprite renders to the beat point entities after loading is complete
-            // because the arrows are loaded by the scene prefab. It's a hack, but I have to go soon
-            //
-            // - az
-            //
             let mut beatpoints = Vec::<BeatPoint>::new();
             for (b,) in (&data.world.read_storage::<BeatPoint>(),).join() {
                 beatpoints.push(b.clone());
             }
             beatpoints.sort_by(|a, b| a.time.partial_cmp(&b.time).unwrap());
             data.world.write_resource::<BeatMap>().beat_points = beatpoints.into();
-
-            /*data.world.exec(
-                |(entities, beat_points, sprite_sheet_set, mut sprite_renders): (
-                    Entities,
-                    ReadStorage<BeatPoint>,
-                    Read<SpriteSheetSet>,
-                    WriteStorage<SpriteRender>,
-                )| {
-                    let (up, down, left, right) = (
-                        sprite_sheet_set
-                            .handle(1)
-                            .expect("No sprite sheet handle found for up arrow."),
-                        sprite_sheet_set
-                            .handle(2)
-                            .expect("No sprite sheet handle found for down arrow."),
-                        sprite_sheet_set
-                            .handle(3)
-                            .expect("No sprite sheet handle found for left arrow."),
-                        sprite_sheet_set
-                            .handle(4)
-                            .expect("No sprite sheet handle found for right arrow."),
-                    );
-                    for (entity, beat_point) in (&*entities, &beat_points).join() {
-                        let sprite_sheet = match beat_point.direction {
-                            Direction::Up => up.clone(),
-                            Direction::Down => down.clone(),
-                            Direction::Left => left.clone(),
-                            Direction::Right => right.clone(),
-                        };
-                        let sprite_render = SpriteRender {
-                            sprite_sheet,
-                            sprite_number: 0,
-                            flip_horizontal: false,
-                            flip_vertical: false,
-                        };
-                        sprite_renders.insert(entity, sprite_render).expect(
-                            "Failed to attach sprite render component to beat point entity",
-                        );
-                    }
-
-                    info!("Attached sprite renders to beat points.");
-                },
-            );*/
 
             // Play music
             data.world
