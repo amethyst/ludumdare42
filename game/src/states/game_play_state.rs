@@ -1,7 +1,7 @@
 use amethyst::assets::*;
 use amethyst::audio::{AudioSink, Mp3Format, Source as AudioSource, SourceHandle};
 use amethyst::core::cgmath::{Matrix4, Ortho, Vector3};
-use amethyst::core::{GlobalTransform, Transform,Time};
+use amethyst::core::{GlobalTransform, Time, Transform};
 use amethyst::ecs::prelude::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{
@@ -141,7 +141,9 @@ impl GamePlayState {
 
         self.entities.push(player);
 
-        *world.write_resource::<AnimationStateRes>() = AnimationStateRes{ state: AnimationState::Running };
+        *world.write_resource::<AnimationStateRes>() = AnimationStateRes {
+            state: AnimationState::Running,
+        };
 
         let music = world.exec(
             |(resolver, loader, sources): (
@@ -211,7 +213,7 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
 
         // TODO: Probably render something on screen to say "the game is paused"
         // Should we also add an entity with a `Paused` component that indicates the paused state?
-        if !self.paused && self.loaded{
+        if !self.paused && self.loaded {
             self.dispatcher.as_mut().unwrap().dispatch(&data.world.res);
         }
 
@@ -237,13 +239,19 @@ impl<'a, 'b> State<GameData<'a, 'b>> for GamePlayState {
             //     .read_resource::<AudioSink>()
             //     .append(source_store.get(self.music.as_ref().unwrap()).unwrap())
             //     .unwrap();
+
+            // Resume music
+            data.world.read_resource::<AudioSink>().play();
         }
 
         let gameplay_result = &data.world.read_resource::<GameplayResult>();
         match gameplay_result.status {
             GameplayStatus::Failed | GameplayStatus::Completed => {
                 // Stop playing music
-                data.world.read_resource::<AudioSink>().stop();
+                data.world.read_resource::<AudioSink>().pause();
+                *data.world.write_resource::<AnimationStateRes>() = AnimationStateRes {
+                    state: AnimationState::None,
+                };
 
                 Trans::Switch(Box::new(ScoreState::new()))
             }

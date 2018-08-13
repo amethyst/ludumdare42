@@ -139,7 +139,9 @@ impl<'a> System<'a> for AnimationVisual {
                     }
                 }
             }
-            _ => {}
+            _ => {
+                self.current_anim = AnimationState::None;
+            }
         }
     }
 }
