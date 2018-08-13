@@ -35,10 +35,10 @@ impl<'a> System<'a> for AnimationVisual {
         match *state {
             AnimationState::Running => {
                 if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
-                    sprite.sprite_sheet = set.handle(101).expect("Running spritesheet not found");
                     if self.current_anim != AnimationState::Running {
                         self.current_anim = AnimationState::Running;
                         self.time = 0.0;
+                        sprite.sprite_sheet = set.handle(101).expect("Running spritesheet not found");
                     } else {
                         self.time = (self.time + time.delta_time().as_fractional_secs())
                             % (RUNNING_ANIMATION_SLICE_TIME * 4.0);
