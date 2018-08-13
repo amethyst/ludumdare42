@@ -81,68 +81,230 @@ Prefab (
                     // Beat point arrows
                     (
                         id: 1,
-                        texture: (1, File("./assets/base/sprites/beat_point_up.png", Png, ())),
+                        texture: (1, File("./assets/base/sprites/beatpoint_spritesheet.png", Png, ())),
                         sprites: [
+                            // UP
                             (
-                                width: 165,
-                                height: 181,
-                                offsets: (82.5, 90.5),
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
                                 tex_coords: (
                                     left: 0.0,
-                                    right: 1.0,
-                                    bottom: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.75,
                                     top: 1.0,
                                 ),
                             ),
-                        ],
-                    ),
-                    (
-                        id: 2,
-                        texture: (2, File("./assets/base/sprites/beat_point_down.png", Png, ())),
-                        sprites: [
                             (
-                                width: 165,
-                                height: 181,
-                                offsets: (82.5, 90.5),
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
                                 tex_coords: (
-                                    left: 0.0,
-                                    right: 1.0,
-                                    bottom: 0.0,
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.75,
                                     top: 1.0,
                                 ),
                             ),
-                        ],
-                    ),
-                    (
-                        id: 3,
-                        texture: (3, File("./assets/base/sprites/beat_point_left.png", Png, ())),
-                        sprites: [
                             (
-                                width: 165,
-                                height: 181,
-                                offsets: (82.5, 90.5),
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
                                 tex_coords: (
-                                    left: 0.0,
-                                    right: 1.0,
-                                    bottom: 0.0,
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.75,
                                     top: 1.0,
                                 ),
                             ),
-                        ],
-                    ),
-                    (
-                        id: 4,
-                        texture: (4, File("./assets/base/sprites/beat_point_right.png", Png, ())),
-                        sprites: [
                             (
-                                width: 165,
-                                height: 181,
-                                offsets: (82.5, 90.5),
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.75,
+                                    top: 1.0,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.75,
+                                    top: 1.0,
+                                ),
+                            ),
+                            // Down  
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
                                 tex_coords: (
                                     left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.5,
+                                    top: 0.75,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.5,
+                                    top: 0.75,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.5,
+                                    top: 0.75,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.5,
+                                    top: 0.75,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.5,
+                                    top: 0.75,
+                                ),
+                            ),
+                            // Right
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.25,
+                                    top: 0.5,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.25,
+                                    top: 0.5,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.25,
+                                    top: 0.5,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.25,
+                                    top: 0.5,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.8,
+                                    right: 1.0,
+                                    bottom: 0.25,
+                                    top: 0.5,
+                                ),
+                            ),
+                            // Left
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.2,
+                                    bottom: 0.0,
+                                    top: 0.25,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.2,
+                                    right: 0.4,
+                                    bottom: 0.0,
+                                    top: 0.25,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.4,
+                                    right: 0.6,
+                                    bottom: 0.0,
+                                    top: 0.25,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.6,
+                                    right: 0.8,
+                                    bottom: 0.0,
+                                    top: 0.25,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 200,
+                                offsets: (0, 0),
+                                tex_coords: (
+                                    left: 0.8,
                                     right: 1.0,
                                     bottom: 0.0,
-                                    top: 1.0,
+                                    top: 0.25,
                                 ),
                             ),
                         ],
@@ -347,7 +509,7 @@ Prefab (
             data: (
                 sprite_sheets: [],
                 sprite: (
-                    sheet: 3,
+                    sheet: 1,
                     sprite_number: 0,
                     flip_horizontal: false,
                     flip_vertical: false,
@@ -371,11 +533,40 @@ Prefab (
                 removal: ( id: 1),
             ),
         ),
+        // beatpoint3 (vertical)
         (
             data: (
                 sprite_sheets: [],
                 sprite: (
-                    sheet: 4,
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Left,
+                    time: 2.5,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.4,
+                        y: 0.25,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
                     sprite_number: 0,
                     flip_horizontal: false,
                     flip_vertical: false,
@@ -403,7 +594,7 @@ Prefab (
             data: (
                 sprite_sheets: [],
                 sprite: (
-                    sheet: 2,
+                    sheet: 1,
                     sprite_number: 0,
                     flip_horizontal: false,
                     flip_vertical: false,

@@ -6,7 +6,7 @@ use amethyst::ecs::prelude::*;
 use amethyst::input::{get_key, is_close_requested};
 use amethyst::renderer::{
     Camera, ElementState, Event, Projection, ScreenDimensions, SpriteRender, SpriteSheetSet,
-    VirtualKeyCode,
+    Transparent, VirtualKeyCode,
 };
 use amethyst::{GameData, State, StateData, Trans};
 use amethyst_extra::*;
@@ -120,7 +120,11 @@ impl GamePlayState {
             // might fail with abs path??
             loader.load(scene_path, RonFormat, (), &mut progress_counter)
         });
-        let background_entity = world.create_entity().with(prefab_handle).build();
+        let background_entity = world
+            .create_entity()
+            .with(prefab_handle)
+            .with(Transparent)
+            .build();
         self.entities.push(background_entity);
 
         // === Player === //

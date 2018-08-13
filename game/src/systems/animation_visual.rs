@@ -141,6 +141,10 @@ impl<'a> System<'a> for AnimationVisual {
             }
             _ => {
                 self.current_anim = AnimationState::None;
+                self.time = 0.0;
+                if let Some((_, sprite)) = (&player, &mut sprites).join().next() {
+                    sprite.sprite_number = 0;
+                }
             }
         }
     }
