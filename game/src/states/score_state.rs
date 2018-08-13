@@ -58,9 +58,9 @@ fn compute_grade(result: &GameplayResult) -> Grade {
         };
     }
     let ratio = successes as f32 / result.results.len() as f32;
-    if ratio < 0.50 {
+    if ratio < 0.40 {
         Grade::C
-    } else if ratio < 0.80 {
+    } else if ratio < 0.70 {
         Grade::B
     } else if ratio < 0.97 {
         Grade::A
