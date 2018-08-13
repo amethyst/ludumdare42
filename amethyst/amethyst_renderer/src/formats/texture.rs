@@ -274,6 +274,11 @@ pub struct PngFormat;
 impl PngFormat {
     /// Load Png from memory buffer
     pub fn from_data(&self, data: Vec<u8>, options: TextureMetadata) -> Result<TextureData> {
+        use gfx::texture::{FilterMethod, SamplerInfo, WrapMode};
+        let options = options.with_sampler(SamplerInfo::new(
+                                FilterMethod::Trilinear,
+                                WrapMode::Border,
+                            ));
         imagefmt::png::read(&mut Cursor::new(data), ColFmt::RGBA)
             .map(|raw| TextureData::Image(ImageData { raw }, options))
             .chain_err(|| "Image decoding failed")
