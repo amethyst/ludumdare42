@@ -1,0 +1,431 @@
+#![enable(implicit_some)]
+Prefab (
+    entities: [
+        // Common
+        (
+            data: (
+                sprite_sheets: [
+                    // Ground
+                    (
+                        id: 0,
+                        texture: (0, File("./assets/base/sprites/ground.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.332781457,
+                                    bottom: 0.759933775,
+                                    top: 0.899006623,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.334437086,
+                                    right: 0.665562914,
+                                    bottom: 0.759933775,
+                                    top: 0.899006623,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.667218543,
+                                    right: 0.998344371,
+                                    bottom: 0.759933775,
+                                    top: 0.899006623,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 0.332781457,
+                                    bottom: 0.432119205,
+                                    top: 0.571192053,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.334437086,
+                                    right: 0.665562914,
+                                    bottom: 0.432119205,
+                                    top: 0.571192053,
+                                ),
+                            ),
+                            (
+                                width: 200,
+                                height: 84,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.667218543,
+                                    right: 0.998344371,
+                                    bottom: 0.432119205,
+                                    top: 0.571192053,
+                                ),
+                            ),
+                        ],
+                    ),
+                    // Beat point arrows
+                    (
+                        id: 1,
+                        texture: (1, File("./assets/base/sprites/beat_point_up.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    (
+                        id: 2,
+                        texture: (2, File("./assets/base/sprites/beat_point_down.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    (
+                        id: 3,
+                        texture: (3, File("./assets/base/sprites/beat_point_left.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    (
+                        id: 4,
+                        texture: (4, File("./assets/base/sprites/beat_point_right.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 165,
+                                height: 181,
+                                offsets: (82.5, 90.5),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                    // Background
+                    (
+                        id: 5,
+                        texture: (5, File("./assets/base/sprites/moon_background.png", Png, ())),
+                        sprites: [
+                            (
+                                width: 1920,
+                                height: 1080,
+                                offsets: (0.0, 0.0),
+                                tex_coords: (
+                                    left: 0.0,
+                                    right: 1.0,
+                                    bottom: 0.0,
+                                    top: 1.0,
+                                ),
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+        ),
+        // Background
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 5, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.000925926, y: 0.000925926, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        // Ground
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.2, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 2, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.4, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.6, y: 0.2, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 2, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 0.8, y: 0.2, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 0, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.2, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.4, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.6, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 1.8, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 1, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 2.0, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: ( sheet: 0, sprite_number: 2, flip_horizontal: false, flip_vertical: false ),
+                transform: (
+                    translation: (x: 2.2, y: 0.0, z: 0 ),
+                    scale: ( x: 0.001, y: 0.001, z: 1.0 ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        // beatpoint1
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 1,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Up,
+                    time: 1.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.275,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        // beatpoint2
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 3,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Left,
+                    time: 2.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.4,
+                        y: 0.15,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 4,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Right,
+                    time: 3.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 0.6,
+                        y: 0.25,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+        (
+            data: (
+                sprite_sheets: [],
+                sprite: (
+                    sheet: 2,
+                    sprite_number: 0,
+                    flip_horizontal: false,
+                    flip_vertical: false,
+                ),
+                beat_point: (
+                    direction: Down,
+                    time: 5.0,
+                ),
+                transform: (
+                    translation: (
+                        x: 1.0,
+                        y: 0.25,
+                        z: 0,
+                    ),
+                    scale: (
+                        x: 0.0005,
+                        y: 0.0005,
+                        z: 1.0,
+                    ),
+                ),
+                removal: ( id: 1),
+            ),
+        ),
+    ]
+)

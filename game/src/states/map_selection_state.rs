@@ -2,7 +2,8 @@ use amethyst::ecs::prelude::*;
 use amethyst::input::{is_close_requested, is_key_down};
 use amethyst::renderer::{ElementState, Event, VirtualKeyCode};
 use amethyst::core::{GlobalTransform,Transform,Time};
-use amethyst::renderer::{Camera,Projection};
+use amethyst::renderer::{Camera,Projection,PngFormat,Texture};
+
 use amethyst::shrev::{EventChannel, ReaderId};
 use amethyst::ui::{Anchor, FontAsset, FontHandle, TtfFormat, UiButtonBuilder};
 use amethyst::{GameData, State, StateData, Trans};
@@ -63,19 +64,56 @@ impl MapSelectionState {
         }
 
         let font = self.font.as_ref().unwrap();
+        // let mut index = 0;
         self.buttons = beatmaps
             .iter()
             .enumerate()
             .map(|(i, beatmap)| {
-                let entity = UiButtonBuilder::new(beatmap, beatmap)
-                    .with_position(0.0, 40.0 + 100.0 * (i as f32 + 1.0))
-                    .with_text_color([0.7; 4])
-                    .with_hover_text_color([1.0; 4])
-                    .with_press_text_color([0.5; 4])
-                    .with_font_size(25.0)
+                // index += 1;
+                debug!("Index...{}", i as f32);
+                let img = {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            &format!("maps/level{}/level.png", (i as f32 + 1.0)),
+                            // "ui/level1.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load retry")
+                        .clone()
+                };
+                let imghover = {
+                    world
+                        .write_resource::<AssetLoader>()
+                        .load(
+                            &format!("maps/level{}/levelhover.png", (i as f32 + 1.0)),
+                            // "ui/level1hover.png",
+                            PngFormat,
+                            Default::default(),
+                            &mut world.write_resource::<AssetLoaderInternal<Texture>>(),
+                            &mut world.write_resource(),
+                            &mut world.read_resource(),
+                        )
+                        .expect("Failed to load retry")
+                        .clone()
+                };
+
+                let entity = UiButtonBuilder::new(beatmap, "")
+                    .with_position(0.0,-400.0 + 100.0 * ((i as f32 + 1.0) * 2.0))
+                    // .with_text_color([0.7; 4])
+                    // .with_hover_text_color([1.0; 4])
+                    // .with_press_text_color([0.5; 4])
+                    // .with_font_size(50.0)
+                    .with_size(150.0, 150.0)
                     .with_tab_order(i as i32)
-                    .with_anchor(Anchor::TopMiddle)
-                    .with_font(font.clone())
+                    .with_anchor(Anchor::Middle)
+                    // .with_font(font.clone())
+                    .with_image(img)
+                    .with_hover_image(imghover)
                     .build_from_world(world);
 
                 let mut beatmap_button_storage = world.write_storage::<BeatmapButton>();
