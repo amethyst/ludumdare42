@@ -74,10 +74,8 @@ impl<'a> System<'a> for AnimationVisual {
                         sprite.sprite_number = 2;
                     } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 4.0 {
                         sprite.sprite_number = 3;
-                    } else if self.time < RUNNING_ANIMATION_SLICE_TIME * 5.0 {
-                        sprite.sprite_number = 4;
                     } else {
-                        sprite.sprite_number = 5;
+                        sprite.sprite_number = 4;
                     }
                 }
             },
